@@ -1,6 +1,17 @@
-<h1>{{name}} </h1>
-<div ng-if="user.facebook">
-	
-<img src="{{pictures}}" alt="">
+<center>
+<h3>Your Profile</h3>
+</center>
+<h4 class="col-sm-2 sidebar">{{name}} </h4>
+<div class="col sm-2 col-sm-offset-2 sidebar" ng-if="user.facebook">
+    <img ng-src="{{pictures}}" alt="">
+    <br>
+    Change Your Profile Picture:
+    <br>
+    <form ng-controller="ProfileCtrl">
+        <input type="file" file-input="files" multiple />
+        <button ng-click="upload()">Upload</button>
+        <li ng-repeat="file in files">{{file.name}}</li>
+    </form>
 </div>
 
+<!-- TODO: Set the response to be the picture in the database and then render it! Set it to user.facebook.pictures -->

@@ -703,6 +703,43 @@ console.log(recipeBox.length);
     })
   })
 
+  //handle POST requests to /upload
+// app.post('/upload', function (req, res, next) {
+//   var query = User.find();
+//   var user = req.user;
+//   if (user.facebook){
+//     query = query.where('user.facebook').equals(user.facebook);
+//   }
+
+//   if (user) {
+//     query = query.where('user.name').equals(user.name);
+//   }
+
+//    query.exec(function(err, files) {
+//     if (err) throw err;
+//     res.send(characters);
+//   });
+
+//     User.findOne({
+//       'facebook.id': req.params.id
+//     }, function (err, user) {
+//       if (err) {
+//         throw err;
+//       }
+//       res.json(user);
+//     });
+//   //use a map to create a new simplified array for response
+//   var files = req.files.file.map(function(file) {
+//     return {
+//       name: file.name,
+//       size: file.size
+//     };
+//   });
+//   console.log(files);
+  
+//   res.send(200, files);
+// });
+
   function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();
     else res.send(401);

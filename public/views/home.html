@@ -19,37 +19,32 @@
 <div class="container">
     <div class="col-sm-2 sidebar">
         <stream-preview>
-
         </stream-preview>
-        
-
     </div>
-
     <div class="col-sm-2 sidebar">
         <recipe-box-preview/>
     </div>
     <div class="panel panel-default col-sm-8">
-        <div class="panel-heading">
-            <div class="col-sm-12" style="margin: 15px 0; border-bottom: 1px solid #c9c9c9; padding-bottom: 10px">
+        <div class="panel-heading col-sm-12 col-sm-offset-1" style="margin: 15px 0; border-bottom: 1px solid #c9c9c9; padding-bottom: 10px">
+            <div class="col-sm-9">
+                <div class="col-sm-2" style="vertical-align: top">
+                    Quick Recipes &#x263A
+                </div>
+                <div class="col-sm-3 col-sm-offset-2">
+                    <input class="search" type="text" ng-model="query.name" ng-keyup="handleEnterKey($event)" placeholder="Search...">
+                </div>
+            </div>
+            <div class=" col-sm-3">
                 Filter by Allergies or Dietary Restrictions:
                 <!-- setting the model here even though not delcared in controller. -->
                 <select ng-model="genre" ng-change="getGenreRecipes(genre)">
                     <option ng-repeat="item in dietaryRestrictions track by $index">{{item}}</option>
                 </select>
-                <!-- <select class="form-control">
-                    <option ng-repeat="item in dietaryRestrictions track by $index" ng-model="item" ng-change="getGenreRecipes(item)">{{item}}</option>
-                </select> -->
-           <span class="col-sm-3">
-                Quick Recipes for Today &#x263A
-           </span>
-    
-            <div class="col-sm-3">
-                <input class="search" type="text" ng-model="query.name" ng-keyup="handleEnterKey($event)" placeholder="Search...">
             </div>
         </div>
-        <div class="panel-body">
-            <div class="row show-list">
-                <div class="fade-repeat col-xs-4 col-md-2 col-md-offset-1 fixer" ng-repeat="recipe in quickRecipes" style="outline:1px solid red">
+        <div class="panel-body" style="vertical-align: top">
+            <div class="row show-list fix">
+                <div class="fade-repeat col-xs-4 col-md-2 col-md-offset-1 fixer" ng-repeat="recipe in quickRecipes" style="outline:1px solid red fix">
                     <img class="img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
                     <div class="text-center">
                         <!-- {# create a new route recipe, and recipe:id #} -->
