@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{ recipe.name }}
+        </div>
+        <div class="panel-body">
+            <img ng-src="{{ recipe.images[0].hostedLargeUrl }}" style="max-width: 400px; max-height: 400px" />
+
+            <br>
+            <br>
+            <br>
+
+            <div>
+              <!-- TODO: style this -->
+            <a href="{{recipe.source.sourceRecipeUrl}}"> Full Recipe </a>
+            </div>
+            <br>
+            
+             <p>Total Preparation Time: {{recipe.totalTime}}</p>
+             <p>Number of Servings: {{recipe.numberOfServings}}</p>
+
+            <p>Ingredients:</p>
+            <p>
+              <ul>
+                <li ng-repeat="ingredient in recipe.ingredientLines track by $index" >{{ ingredient }}</li>
+              </ul>
+            </p>
+
+            
+
+             <p>Nutrition Info:</p>
+            <p>
+              <ul>
+
+                <li ng-repeat="nutrition in recipe.nutritionEstimates track by $index | filter:{name: '!!'}" >
+                                        <!-- TODO: filter out null values -->
+
+                    {{ nutrition.description }} : {{nutrition.value}} {{nutrition.unit.plural}}
+                 
+                </li>
+
+
+              </ul>
+            </p>
+
+        </div>
+    </div>
+</div>

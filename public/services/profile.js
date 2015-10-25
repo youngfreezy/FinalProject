@@ -1,0 +1,27 @@
+angular.module('MyApp')
+  .factory('Profile', function ($rootScope) {
+    //I have everything stored in $rootScope.currentUser
+    //refactor to pull users from the database, will need that for the stream!
+    function getUserJSON() {
+      // console.log($rootScope.currentUser);
+      if ($rootScope.currentUser.facebook) {
+        return $rootScope.currentUser;
+      } else {
+        return $rootScope.currentUser;
+      }
+    }
+
+    return {
+      getName: function () {
+        var name = getUserJSON().name;
+
+        if($rootScope.currentUser.facebook) {
+          return name.split(" ")[0];
+        }
+        return name.charAt(0).toUpperCase() + name.slice(1);
+      },
+      getEmail: function () {
+        return getUserJSON().email;
+      }
+    };
+  });
