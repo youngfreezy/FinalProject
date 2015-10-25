@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .factory('Auth', function($http, $location, $rootScope, $alert, $window) {
+  .factory('Auth', function($http, $location, $rootScope, $alert, $window, $cookies) {
   
     return {
       login: function(user) {
@@ -8,6 +8,7 @@ angular.module('MyApp')
           .success(function(data) {
             // $window.localStorage.token = data.token;
             // var payload = JSON.parse($window.atob(data.token.split('.')[1]));
+            $cookies.user = JSON.stringify(data);
             $rootScope.currentUser = data;
             console.log(data);
             $location.path('/#!');
@@ -53,7 +54,8 @@ angular.module('MyApp')
           });
       },
       logout: function() {
-        delete $window.localStorage.token;
+        window.$rootScope = $rootScope;
+        delete $cookies.user;
         $rootScope.currentUser = null;
         $alert({
           content: 'You have been logged out.',

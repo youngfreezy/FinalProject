@@ -3,7 +3,8 @@
         <div class="panel-heading">Your Recipes</div>
         <div class="panel-body">
             <div class="row show-list">
-                <div class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes ">
+                <h2 ng-if="currentUser == undefined">Login to add recipes!</h2>
+                <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes ">
                     <p>
                         <img ng-src="{{recipe.image}}">
                         <input type="checkbox" ng-model="recipeDone" ng-change="saveDoneRecipe(recipeDone, recipe)">

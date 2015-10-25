@@ -25,8 +25,10 @@
         </div>
         <ul class="nav navbar-nav">
             <li data-match-route="/$"><a href="/">Home</a></li>
-            <li data-match-route="/add"><a href="/#!/add">Recipe Box <span class="badge">{{recipeBox.recipeCount}}</span> </a></li>
-            <li> <a href="/#!/stream"> Stream<span class="badge">{{$root.stream.unseen}}</span> </a> </li>
+            <li data-match-route="/add">
+                <a href="/#!/add">Recipe Box <span ng-cloak class="badge" ng-if="currentUser != undefined">{{recipeBox.recipeCount}}</span> 
+                </a></li>
+            <li> <a href="/#!/stream"> Stream<span ng-cloak class="badge">{{$root.stream.unseen}}</span> </a> </li>
         </ul>
         <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
             <li data-match-route="/login"><a href="/#!/login">Login</a></li>
@@ -60,7 +62,6 @@
     <script src="services/profile.js"></script>
     <script src="services/recipes.js"></script>
     <script src="services/recipeBox.js"></script>
-
     <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
     <script src="services/ioService.js"></script>
     <!-- // when deployed: <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56291b7e64e798d6" async="async"></script> -->

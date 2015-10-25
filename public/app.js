@@ -11,7 +11,9 @@
       
       var user = $cookies.user;
 
-      // console.log(user);
+      // $rootScope.$watch(function() { $cookies.user }, function() { $rootScope.currentUser = $cookies.user; })
+
+      console.log(user);
       if (user) {
         user = JSON.parse(user);
       }

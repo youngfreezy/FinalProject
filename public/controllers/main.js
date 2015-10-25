@@ -1,5 +1,5 @@
 angular.module('MyApp')
-    .controller('MainCtrl', function($scope, Recipes, $alert, $http, RecipeBox) {
+    .controller('MainCtrl', function($scope, Recipes, $alert, $http, $location, RecipeBox) {
 
         $scope.genres = ['Mexican', 'Italian', 'Chinese', 'Korean',
             'American', 'Comfort Food', 'New American', 'Dessert', 'Fruit', 'Vegetarian',
@@ -59,16 +59,18 @@ angular.module('MyApp')
         // $scope.save = function(checked) {
         //   localStorage.setItem('CONFIG', $scope.CONFIG);
         // };
-
+window.$location = $location;
         $scope.addRecipe = function(recipe) {
+            if ($scope.currentUser === undefined) {
+                $location.path('/login');
+                return;
+            }
             Recipes.getIndividualRecipe(recipe.id).then(function(response) {
                 // console.log(response);
                 Recipes.save(response)
                     .then(function(response) {
 
                         $scope.getUserRecipes();
-
-                        RecipeBox.recipeCount = $scope.userRecipes.length;
                         // if (response.data.recipeBox) {
 
                         //   $scope.userRecipes = response.data.recipeBox;
@@ -139,6 +141,8 @@ angular.module('MyApp')
         $scope.getUserRecipes = function() {
             Recipes.getUserRecipes().then(function(response) {
                 $scope.userRecipes = response;
+                //probably better to store everything in RecipeBox service. 
+                // there could be a reset function.  
                 RecipeBox.recipeCount = $scope.userRecipes.length;
                 // $scope.$apply();
                 // console.log('recipes to display', $scope.userRecipes);

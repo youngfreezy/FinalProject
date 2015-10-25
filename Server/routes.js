@@ -221,7 +221,7 @@ module.exports = function (app, io) {
         //associate local/facebook logins?
         if (req.user) {
           // console.log("This is the user from routes.js", req.user);
-          res.cookie('user', JSON.stringify(req.user));
+          // res.cookie('user', JSON.stringify(req.user));
         }
         req.login(user, function (err) {
           if (err) {
@@ -277,8 +277,8 @@ module.exports = function (app, io) {
         return res.redirect('/#!/signup');
       }
       if (req.user) {
-        // console.log("This is the user from routes.js", req.user);
-        res.cookie('user', JSON.stringify(req.user));
+        // console.log("==================== This is the user from routes.js", req.user);
+        res.cookie('user', JSON.stringify(user));
       }
       //actually storing the fact that they are logged in:
       req.login(user, function (err) {
@@ -286,6 +286,7 @@ module.exports = function (app, io) {
           return res.redirect('/#!/login');
         }
 
+        // console.log('=========== here!', user);
         return res.redirect('/');
       });
     })(req, res, next);
