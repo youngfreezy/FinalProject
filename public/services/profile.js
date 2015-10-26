@@ -23,6 +23,10 @@ angular.module('MyApp')
       SaveProfileImage: function () {
         return $http.post('/upload/save');
       },
+
+      GetProfileImage: function () {
+        return $http.get('/getpicture');
+      },
       getEmail: function () {
         return getUserJSON().email;
       }

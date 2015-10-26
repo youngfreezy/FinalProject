@@ -15,6 +15,7 @@
 
       // console.log(user);
       if (user) {
+        console.log(user);
         user = JSON.parse(user);
       }
       $rootScope.currentUser = user;

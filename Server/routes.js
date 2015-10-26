@@ -11,7 +11,12 @@ var fs = require('fs');
 var moment = require('moment');
 var multer = require('multer');
 var storage = multer.memoryStorage();
-var upload = multer({ storage: storage });
+var upload = multer({
+  storage: storage
+});
+var upload2 = multer({
+  dest: '/tmp/'
+});
 
 module.exports = function (app, io) {
   var CronJob = require('cron').CronJob;
@@ -27,7 +32,7 @@ module.exports = function (app, io) {
 
     // here you are adding socket connections to the sockets array
     sockets[socket.id] = socket;
-    if(!userSockets[userId]) {
+    if (!userSockets[userId]) {
       userSockets[userId] = [];
     }
     userSockets[userId][socket.id] = socket;
@@ -35,16 +40,16 @@ module.exports = function (app, io) {
     // console.log('GOT CONNECTION: ' + socket.id);
 
 
-    socket.on('stream', function() {
+    socket.on('stream', function () {
       BroadCastStream();
     });
 
     socket.on('disconnect', function (socket) {
       // console.log('SOCKET DISCONNECTED: ' + socket.id);
       delete sockets[socket.id];
-      userSockets.each(function(sockets) {
-        for(var s in sockets) {
-          if(s == socket.id) {
+      userSockets.each(function (sockets) {
+        for (var s in sockets) {
+          if (s == socket.id) {
             delete sockets[s];
           }
         }
@@ -54,7 +59,11 @@ module.exports = function (app, io) {
 
   function BroadCastStream() {
     var anHourAgo = moment().subtract(1, 'hour');
-    RecipeStream.find({createdAt: {$gt: anHourAgo}}).populate('comments').exec(function(err, recipes) {
+    RecipeStream.find({
+      createdAt: {
+        $gt: anHourAgo
+      }
+    }).populate('comments').exec(function (err, recipes) {
       if (err) {
         recipes = [];
       }
@@ -272,6 +281,7 @@ module.exports = function (app, io) {
     passport.authenticate('facebook', function (err, user, redirectURL) {
       // console.log(' in the callback ');
       if (err) {
+        console.log(err);
         return res.redirect('/#!/login');
       }
 
@@ -322,7 +332,9 @@ module.exports = function (app, io) {
   }
   //handles the querying:
   function setRecipeDone(userId, recipeId, done, res) {
-    User.where({_id: userId}).findOne(function (err, user) {
+    User.where({
+      _id: userId
+    }).findOne(function (err, user) {
       if (err) {
         console.log(err);
         res.status(500).send(err);
@@ -354,7 +366,9 @@ module.exports = function (app, io) {
 
   function deleteRecipe(userId, recipeId, res) {
     // console.log("============= this is the userId:", userId);
-    User.where({_id: userId}).findOne(function (err, user) {
+    User.where({
+      _id: userId
+    }).findOne(function (err, user) {
       if (err) {
         res.status(500).send(err);
         return;
@@ -367,32 +381,31 @@ module.exports = function (app, io) {
 
       var recipeBox = user.recipeBox;
       if (recipeId === "deleteAll") {
-      recipeBox = [];
-      // console.log("inside the lookup and this is it:",recipeBox)
-      
-    }
-      else {
+        recipeBox = [];
+        // console.log("inside the lookup and this is it:",recipeBox)
+
+      } else {
 
 
-//       console.log(user);
-// console.log(recipeBox.length);
+        //       console.log(user);
+        // console.log(recipeBox.length);
 
-      for (var r = 0; r < recipeBox.length; r++) {
+        for (var r = 0; r < recipeBox.length; r++) {
 
-        // console.log(r, recipeBox[r]);
-        // console.log(recipeBox[r]._id.toString(), recipeId.toString());
-        if (recipeBox[r]._id.toString() == recipeId.toString()) {
-          // console.log("we're deleting", recipeId);
-          if(recipeBox.length == 1) {
-            recipeBox = [];
-            
+          // console.log(r, recipeBox[r]);
+          // console.log(recipeBox[r]._id.toString(), recipeId.toString());
+          if (recipeBox[r]._id.toString() == recipeId.toString()) {
+            // console.log("we're deleting", recipeId);
+            if (recipeBox.length == 1) {
+              recipeBox = [];
+
+            }
+
+            recipeBox.splice(r, 1);
           }
-
-          recipeBox.splice(r, 1);
         }
       }
-    }
-// console.log(recipeBox.length);
+      // console.log(recipeBox.length);
       user.recipeBox = recipeBox;
       user.save(function (err, resp) {
         if (err) {
@@ -529,19 +542,19 @@ module.exports = function (app, io) {
       } else {
         //found the user, get all their recipes
 
-          if (user.recipeBox.length > 0) {
-            Recipe
-              .where('_id').in(user.recipeBox)
-              .exec(function (err, result) {
-                if (err) {
-                  res.send(500, err);
-                  return;
-                }
+        if (user.recipeBox.length > 0) {
+          Recipe
+            .where('_id').in(user.recipeBox)
+            .exec(function (err, result) {
+              if (err) {
+                res.send(500, err);
+                return;
+              }
 
-                res.json(result);
-              });
-            return;
-          }
+              res.json(result);
+            });
+          return;
+        }
 
         // res.json(result);
       }
@@ -587,9 +600,9 @@ module.exports = function (app, io) {
   app.delete('/api/users/:userid/recipes', function (req, res) {
     //the user has a recipe box array.  set it to undefined or null.
 
-     var userId = req.user._id;
+    var userId = req.user._id;
     // console.log("THIS IS THE MOFO REQUEST:", userId);
-     deleteRecipe(userId, "deleteAll", res);
+    deleteRecipe(userId, "deleteAll", res);
   });
   //this is middleware for the recipeStream items. handles :recipe
 
@@ -642,12 +655,12 @@ module.exports = function (app, io) {
   //this = '/posts/:post'
   app.get('/api/stream/:recipe', function (req, res) {
     //use populate to get all comments associate with this recipe!
-    req.recipe.populate('comments', function(err, recipe) {
-      if(err){
+    req.recipe.populate('comments', function (err, recipe) {
+      if (err) {
         return next(err);
       }
 
-    res.json(recipe);
+      res.json(recipe);
     });
   });
 
@@ -678,9 +691,9 @@ module.exports = function (app, io) {
     });
   });
 
-//route for upvoting comments
+  //route for upvoting comments
 
- app.put('/api/stream/:recipe/comments/:comment/upvote', function (req, res, next) {
+  app.put('/api/stream/:recipe/comments/:comment/upvote', function (req, res, next) {
     req.comment.upvote(function (err, comment) {
       if (err) {
         return next(err);
@@ -700,20 +713,30 @@ module.exports = function (app, io) {
       if (err) {
         return next(err);
       }
-  
-    RecipeStream.findByIdAndUpdate(req.recipe._id, {$push: {comments: comment._id}}).populate('comments').exec(function(err, _recipe) {
-      if (err) {
-        return next(err);
-      }
-     BroadCastStream();
-      res.json(_recipe);
-    })
+
+      RecipeStream.findByIdAndUpdate(req.recipe._id, {
+        $push: {
+          comments: comment._id
+        }
+      }).populate('comments').exec(function (err, _recipe) {
+        if (err) {
+          return next(err);
+        }
+        BroadCastStream();
+        res.json(_recipe);
+      })
     });
   });
 
   app.delete('/api/stream/:recipe/comments/:comment', function (req, res, next) {
-    Comments.remove({_id: req.comment._id}).exec(function(err, removedComment) {
-      RecipeStream.findByIdAndUpdate(req.recipe._id, {$pull: {comments: req.comment._id}}).exec(function(err, recipe) {
+    Comments.remove({
+      _id: req.comment._id
+    }).exec(function (err, removedComment) {
+      RecipeStream.findByIdAndUpdate(req.recipe._id, {
+        $pull: {
+          comments: req.comment._id
+        }
+      }).exec(function (err, recipe) {
         if (err) {
           return next(err);
         }
@@ -723,42 +746,79 @@ module.exports = function (app, io) {
   });
 
   //handle POST requests to /upload
+  var Grid = require('gridfs-stream'),
+    mongoose = require('mongoose'),
+    GridFS = Grid(mongoose.connection.db, mongoose.mongo);
 
-app.post('/upload', upload.single('file'), function (req, res, next) {
-  // console.log('file', req.file);
-  // console.log('content', req.file.buffer.toString('base64'));
-  console.log(file);
-  var file = req.file.buffer;
-  
-  res.send(200, file.toString('base64'));
-  
-  // console.log(file);
-});
-// confirm user wants to save it first after they see it
 
-app.post('/upload/save', upload.single('file'), function (req, res, next) {
-   // console.log(file);
-   var userId = req.user._id;
-   var query = {'_id': userId};
-   var newData = req.file.buffer.toString('base64');
-  console.log(newData);
-    // console.log(newData);
-    User.findOneAndUpdate(query, {
-      "picture": newData
-    }, {
-      upsert: true
-    }, function (err, data) {
-      if (err) {
-        return res.send(500, {
-          error: err
-        });
-      }
-      res.json(data);
+  app.post('/upload', upload.single('file'), function (req, res, next) {
+    // console.log('file', req.file);
+    // console.log('content', req.file.buffer.toString('base64'));
+    var file = req.file.buffer;
+    console.log(req.file);
+
+    res.send(200, file.toString('base64'));
+
+    // console.log(file);
+  });
+  // confirm user wants to save it first after they see it
+
+  app.post('/upload/save', upload2.single('file'), function (req, res, next) {
+
+
+    var file = req.file;
+    console.log('file', file);
+
+    var writestream = GridFS.createWriteStream({
+      filename: file.name,
+      mode: 'w',
+      content_type: file.mimetype,
+      metadata: req.body,
     });
-  
+    fs.createReadStream(file.path).pipe(writestream);
+
+    writestream.on('close', function (file) {
+      console.log("============", file);
+     
+      var userId = req.user._id;
+      var query = {
+        '_id': userId
+      };
+      console.log('query', query);
+      // console.log(newData);
+      User.findOneAndUpdate(query, {
+        //reference to gridFS saved file.  
+        "picture": file._id
+      }, {
+        'upsert': true,
+        'new': true
+      }, function (err, data) {
+        if (err) {
+          return res.send(500, {
+            error: err
+          });
+        }
+        console.log(data);
+        res.json(data);
+      });
+    });
+  });
+//this succesfully gets the picture. now i need to 
+//construct image tag ng-click= to a function makes a call to this route
+
+app.get('/getpicture', function(req, res, next) {
+  var id = mongoose.Types.ObjectId(req.query.id);
+  var readStream = GridFS.createReadStream({
+    _id: id
+  });
+
+  //error handling, e.g. file does not exist
+  readStream.on('error', function (err) {
+    throw new Error(err);
+  });
+
+  readStream.pipe(res);
 });
-
-
 
 
   function ensureAuthenticated(req, res, next) {

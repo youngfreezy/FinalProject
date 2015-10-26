@@ -16,7 +16,7 @@ var userSchema = new Schema({
   password: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
-  picture: String,
+  picture: ObjectId,
   name: String,
   facebook: {
     id: String,

@@ -3,14 +3,11 @@
 </center>
 <h4 class="col-sm-2 sidebar">{{name}} </h4>
 <br>
-<!-- <pre>
+<pre>
     {{ currentUser || json }}
-</pre> -->
-<div class="col sm-2 col-sm-offset-2 sidebar" ng-if="user.facebook">
-    <img data-ng-src="{{pictures}}">
-</div>
-<div class="col sm-2 col-sm-offset-2 sidebar" ng-if="user.picture" >
-    <img data-ng-src="{{picture}}">
+</pre>
+<div class="col sm-2 col-sm-offset-2 sidebar"> 
+    <img ng-src="{{getRightImage()}}"> 
 </div>
 <div>
     <br>
@@ -20,7 +17,7 @@
     <br>
     <br>
 
-    <form ng-controller="ProfileCtrl">
+    <form>
         <input type="file" file-input="files" multiple />
         <br>
         <br>
@@ -30,10 +27,11 @@
             Save New Profile Picture
         </button>
         <li ng-repeat="file in files">{{file.name}}
-        <img ng-src="data:image/png;base64,{{imageData}}" alt="">
+        <img ng-src="{{imageData}}" alt="">
+
         
         </li>
     </form>
 </div>
 <!-- TODO: Set the response to be the picture in the database and then render it! Set it to user.facebook.pictures -->
-<!-- <img data-ng-src="data:image/png;base64,{{user.data}}" data-err-src="images/png/avatar.png"/ -->
+<!-- <img data-ng-src="data:image/png;base64,{{user.data}}" data-err-src="images/png/avatar.png"/ -->## user.picture
