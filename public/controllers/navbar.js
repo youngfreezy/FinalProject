@@ -24,10 +24,6 @@ angular.module('MyApp')
     //watching the currentUser property on rootscope
     //when it does, get the name from the profile.
 
-    $scope.$on('cleanup', function(){
-      // $scope.recipeBox = [];
-      // $scope.streamActivityLength = 0;
-    });
 
     $rootScope.$watch("currentUser", function (newValue, oldValue) {
       if (newValue) {

@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
-    <div class="center-form panel">
-      <div class="panel-body">
+    <div class="center-form panel" style="margin-top: 0">
+      <div class="panel-body" style="vertical-align: top">
         <h2 class="text-center">Log in</h2>
         <form ng-submit="login()" name="loginForm">
           <!-- <pre>{{ loginForm | json }}</pre> -->
@@ -13,6 +13,7 @@
         <div class="form-group has-feedback" ng-class="{ 'has-error': loginForm.password.$invalid }">
           <input class="form-control input-lg" type="password" name="password" ng-model="password" placeholder="Password" required>
           <span class="ion-key form-control-feedback"></span>
+          <div ng-if="loginForm.password.$error.required">Please Enter a Password</div>
         </div>
         <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-lg btn-block btn-success">Log in</button>
         <br/>

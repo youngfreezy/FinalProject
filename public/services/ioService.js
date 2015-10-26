@@ -3,7 +3,7 @@ angular.module('MyApp')
     
     this.start = function(io, user) {
 
-      console.log('ioService loaded');
+      // console.log('ioService loaded');
 
       var self = this;
 
@@ -12,7 +12,7 @@ angular.module('MyApp')
       var socket = io.connect(window.location.origin, {query: 'userId='+userId+'&email='+email});
 
       socket.on('connect', function() {
-        console.info('Connected to server wia socket io');
+        // console.info('Connected to server wia socket io');
       });
 
       $rootScope.stream = {};
@@ -22,7 +22,7 @@ angular.module('MyApp')
       // stream
       var firsRun = true;
       socket.on('stream', function(data) {
-        console.log('got stream event');
+        // console.log('got stream event');
         for(var r=0; r < data.length; r++) {
           var recipe = data[r];
           recipe = 'user:'+recipe.userId+'|recipe:'+recipe._id;

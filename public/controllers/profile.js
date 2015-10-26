@@ -3,7 +3,9 @@ angular.module('MyApp')
     // $rootScope.currentUser = user;
     $scope.user = $rootScope.currentUser;
     $scope.name = $scope.user.name;
-    $scope.pictures = $scope.user.facebook.pictures;
+    // $scope.imageData = null;
+    $scope.pictures = $scope.user.facebook ? $scope.user.facebook.pictures : $scope.imageData;
+
     // console.log($scope.user);
     $scope.filesChanged = function (elm) {
       $scope.files = elm.files;
@@ -23,12 +25,12 @@ angular.module('MyApp')
         }
 
       }).success(function (data) {
-        // console.log(data);
-       $scope.pictures = data;
-       console.log($scope.pictures);
+        $scope.imageData = data;
+        console.log($scope.imageData);
       });
     };
-  }).directive('fileInput', ['$parse',
+  })
+  .directive('fileInput', ['$parse',
     function ($parse) {
       return {
         restrict: 'A',

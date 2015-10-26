@@ -56,6 +56,30 @@ angular.module('MyApp')
                 console.log("error occured when deleting", err);
             });
         };
+
+        $scope.deleteAllUserRecipes = function() {
+            Recipes.deleteAllRecipes().then(function(response) {
+                // RecipeBox.recipeCount = 0;
+                // $scope.userRecipes = null;
+
+                $scope.userRecipes = response.data.recipeBox;
+                RecipeBox.recipeCount = response.data.recipeBox.length;
+
+                //console.log('$scope.userRecipes', $scope.userRecipes);
+                //console.log('RecipeBox.recipeCount', RecipeBox.recipeCount);
+                // console.log(response.data.);
+                // console.log($scope.currentUser);
+
+                //  $scope.userRecipes = response;
+                // //probably better to store everything in RecipeBox service. 
+                // // there could be a reset function.  
+                // RecipeBox.recipeCount = $scope.userRecipes.length;
+                // // $scope.$apply();
+                // // console.
+            }, function(err) {
+                console.log("error occured when deleting", err);
+            });
+        };
         // $scope.save = function(checked) {
         //   localStorage.setItem('CONFIG', $scope.CONFIG);
         // };
@@ -79,7 +103,7 @@ window.$location = $location;
                         //   //ideal case would be recipeBox would live in the service
                         //   RecipeBox.recipeCount = $scope.userRecipes.length;
                         // }
-                        console.log(response);
+                        // console.log(response);
                         $alert({
                             content: response.data.recipeBox ? 'recipe has been added.' : 'This recipe is already in your recipe box',
                             animation: 'fadeZoomFadeDown',
@@ -170,7 +194,7 @@ window.$location = $location;
             template: [
                 'Name: {{lasthourRecipes.userName}}',
                 '<ul>',
-                '<li class="animate-repeat" ng-repeat="recipe in lasthourRecipes | orderBy:\'createdAt\':true | limitTo : 5">',
+                '<li class="animate-repeat" ng-repeat="recipe in lasthourRecipes | orderBy:\'createdAt\':true">',
                 '{{recipe.userName}}  Added: {{recipe.name}}',
                 '</li>',
                 '</ul>'
@@ -182,7 +206,7 @@ window.$location = $location;
             template: [
                 'Your Recipe Box: ',
                 '<ul>',
-                '<li class="animate-repeat" ng-repeat="recipe in userRecipes | orderBy:\'createdAt\':true | limitTo : 5">',
+                '<li class="animate-repeat" ng-repeat="recipe in userRecipes | orderBy:\'createdAt\':true">',
                 '{{recipe.name}}',
                 '<a href="{{recipe.recipeUrl}}" target="_blank">Recipe Link</a>',
                 '</li>',

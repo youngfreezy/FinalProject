@@ -4,9 +4,10 @@ angular.module('MyApp')
   $rootScope.data = {};
   $rootScope.data.count = 0;
   $scope.lasthourRecipes = [];
+  $scope.lasthourRecipesFull = [];
   $scope.txtcomment = "";
   $scope.$watch('lasthourRecipes', function(newRecipes){
-    console.log('lasthourRecipes changed', newRecipes);
+    // console.log('lasthourRecipes changed', newRecipes);
   }, true);
   // $scope.lasthour.upvotes = 0;
   $scope.incrementUpvotes = function (recipe) {
@@ -62,10 +63,20 @@ angular.module('MyApp')
 
   // we can do this because of $broadcast. we are catching the $broadcasted event.  
   $scope.$on('stream', function(event, data) {
+    if(!$scope.lasthourRecipesFull.length){
+      $scope.lasthourRecipesFull = data;
+    } else if($scope.lasthourRecipesFull.length < data.length){
+      $scope.lasthourRecipesFull.push(data[data.length-1]);
+    }
+    //to get socket.io to talk to the animation nicely. 
     if(!$scope.lasthourRecipes.length){
-      $scope.lasthourRecipes = data;
-    } else if($scope.lasthourRecipes.length < data.length){
+      $scope.lasthourRecipes = data.slice(-5);
+    } else {
       $scope.lasthourRecipes.push(data[data.length-1]);
+
+      if($scope.lasthourRecipes.length > 5){
+        $scope.lasthourRecipes.shift();
+      }
     }
 
     /* angular.forEach(data, function(item){

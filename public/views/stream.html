@@ -19,7 +19,7 @@
         <div class="panel-heading">Activity Feed</div>
         <div class="panel-body">
             <div class="row show-list">
-                <div class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in lasthourRecipes | orderBy: '-upvotes' ">
+                <div class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in lasthourRecipesFull | orderBy: '-upvotes' ">
                     <p>
                         <!-- dont display upvotes if -->
                         <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)">{{recipe.upvotes}}</span>

@@ -9,7 +9,9 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport();
 var fs = require('fs');
 var moment = require('moment');
-
+var multer = require('multer');
+var storage = multer.memoryStorage();
+var upload = multer({ storage: storage });
 
 module.exports = function (app, io) {
   var CronJob = require('cron').CronJob;
@@ -30,7 +32,7 @@ module.exports = function (app, io) {
     }
     userSockets[userId][socket.id] = socket;
 
-    console.log('GOT CONNECTION: ' + socket.id);
+    // console.log('GOT CONNECTION: ' + socket.id);
 
 
     socket.on('stream', function() {
@@ -38,7 +40,7 @@ module.exports = function (app, io) {
     });
 
     socket.on('disconnect', function (socket) {
-      console.log('SOCKET DISCONNECTED: ' + socket.id);
+      // console.log('SOCKET DISCONNECTED: ' + socket.id);
       delete sockets[socket.id];
       userSockets.each(function(sockets) {
         for(var s in sockets) {
@@ -125,7 +127,7 @@ module.exports = function (app, io) {
 
         // For every user
         result.forEach(function (c) {
-          console.log(emailData(c));
+          // console.log(emailData(c));
           // Send the email with the urls
           transporter.sendMail(emailData(c));
         });
@@ -344,14 +346,14 @@ module.exports = function (app, io) {
           res.status(500).send(err);
           return;
         }
-        console.log('done saving user recipes', resp);
+        // console.log('done saving user recipes', resp);
         return res.status(200).send(resp);
       });
     });
   }
 
   function deleteRecipe(userId, recipeId, res) {
-    console.log(userId);
+    console.log("============= this is the userId:", userId);
     User.where({_id: userId}).findOne(function (err, user) {
       if (err) {
         res.status(500).send(err);
@@ -364,23 +366,32 @@ module.exports = function (app, io) {
       }
 
       var recipeBox = user.recipeBox;
-      console.log(user);
-console.log(recipeBox.length);
+      if (recipeId === "deleteAll") {
+      recipeBox = [];
+      console.log("inside the lookup and this is it:",recipeBox)
+      
+    }
+      else {
+
+
+//       console.log(user);
+// console.log(recipeBox.length);
 
       for (var r = 0; r < recipeBox.length; r++) {
 
         // console.log(r, recipeBox[r]);
-        console.log(recipeBox[r]._id.toString(), recipeId.toString());
+        // console.log(recipeBox[r]._id.toString(), recipeId.toString());
         if (recipeBox[r]._id.toString() == recipeId.toString()) {
           // console.log("we're deleting", recipeId);
           if(recipeBox.length == 1) {
             recipeBox = [];
-            continue;
+            
           }
 
           recipeBox.splice(r, 1);
         }
       }
+    }
 console.log(recipeBox.length);
       user.recipeBox = recipeBox;
       user.save(function (err, resp) {
@@ -389,7 +400,7 @@ console.log(recipeBox.length);
           return;
         }
         // console.log('done saving user recipes', resp);
-        return res.status(200).send(resp);
+        return res.json(resp);
       });
     });
   }
@@ -532,7 +543,7 @@ console.log(recipeBox.length);
             return;
           }
 
-        res.json(result);
+        // res.json(result);
       }
     });
   });
@@ -573,6 +584,13 @@ console.log(recipeBox.length);
     deleteRecipe(userId, recipeId, res);
   });
 
+  app.delete('/api/users/:userid/recipes', function (req, res) {
+    //the user has a recipe box array.  set it to undefined or null.
+
+     var userId = req.user._id;
+    // console.log("THIS IS THE MOFO REQUEST:", userId);
+     deleteRecipe(userId, "deleteAll", res);
+  });
   //this is middleware for the recipeStream items. handles :recipe
 
   app.param('recipe', function (req, res, next, id) {
@@ -705,41 +723,43 @@ console.log(recipeBox.length);
   })
 
   //handle POST requests to /upload
-// app.post('/upload', function (req, res, next) {
-//   var query = User.find();
-//   var user = req.user;
-//   if (user.facebook){
-//     query = query.where('user.facebook').equals(user.facebook);
-//   }
+app.post('/upload', upload.single('file'), function (req, res, next) {
+  /*var query = User.find();
+  var user = req.user;
+  if (user.facebook){
+    query = query.where('user.facebook').equals(user.facebook);
+  }
 
-//   if (user) {
-//     query = query.where('user.name').equals(user.name);
-//   }
+  if (user) {
+    query = query.where('user.name').equals(user.name);
+  }
 
-//    query.exec(function(err, files) {
-//     if (err) throw err;
-//     res.send(characters);
-//   });
+   query.exec(function(err, files) {
+    if (err) throw err;
+    res.send(characters);
+  });*/
 
-//     User.findOne({
-//       'facebook.id': req.params.id
-//     }, function (err, user) {
-//       if (err) {
-//         throw err;
-//       }
-//       res.json(user);
-//     });
-//   //use a map to create a new simplified array for response
-//   var files = req.files.file.map(function(file) {
-//     return {
-//       name: file.name,
-//       size: file.size
-//     };
-//   });
-//   console.log(files);
+    // User.findOne({
+    //   'facebook.id': req.params.id
+    // }, function (err, user) {
+    //   if (err) {
+    //     throw err;
+    //   }
+    //   res.json(user);
+    // });
+  //use a map to create a new simplified array for response
+  /*var files = req.files.file.map(function(file) {
+    console.log('a file!', file);
+    return {
+      name: file.name,
+      size: file.size
+    };
+  });*/
+  console.log('file', req.file);
+  console.log('content', req.file.buffer.toString('base64'));
   
-//   res.send(200, files);
-// });
+  res.send(200, req.file.buffer.toString('base64'));
+});
 
   function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();

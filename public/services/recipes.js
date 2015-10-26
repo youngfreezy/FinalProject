@@ -58,10 +58,16 @@ angular.module('MyApp')
         var currentUser = $rootScope.currentUser;
         return $http.delete('/api/users/' + currentUser._id + '/recipes/' + recipe._id);
       },
+
+      deleteAllRecipes: function() {
+        // console.log($rootScope.currentUser);
+        var currentUser = $rootScope.currentUser;
+        return $http.delete('/api/users/' + currentUser._id + '/recipes/');
+      },
       getUserRecipes: function () {
         return $http.get('/api/add').then(function (response) {
           //response has a data aray
-          // console.log(response.data);
+          console.log(response.data);
           return response.data;
         });
       },

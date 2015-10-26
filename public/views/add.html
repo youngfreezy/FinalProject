@@ -1,9 +1,21 @@
 <div class="container">
     <div class="panel panel-default">
-        <div class="panel-heading">Your Recipes</div>
+        <div class="panel-heading">Your Recipes
+            <div ng-show="currentUser == undefined">
+                <center>
+                    <a ng-href="/#!/login/" style="text-decoration: underline">
+                        Login</a> to add recipes!
+                </center>
+            </div>
+            <div ng-show="currentUser != undefined" class="pull-right">
+                <button type="submit" ng-click="deleteAllUserRecipes()">
+                        Clear Out Your Recipe Box :-(
+                    </button>
+            </div>
+        </div>
         <div class="panel-body">
             <div class="row show-list">
-                <h2 ng-if="currentUser == undefined">Login to add recipes!</h2>
+                <!-- <pre>{{currentUser | json }}</pre> -->
                 <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes ">
                     <p>
                         <img ng-src="{{recipe.image}}">
@@ -13,20 +25,6 @@
                         <a ng-click="deleteRecipe(recipe)">Delete Recipe</a>
                         <br> {{recipe.name}} {{recipe.numServings}}
                     </p>
-                    <!--    <p>Ingredients:</p>
-          <p>
-            <ul>
-              <li ng-repeat="Ingredient in recipe.Ingredients track by $index" >{{ Ingredient }}</li>
-              
-              
-              
-              <li ng-repeat="nutrition in recipe.NutritionalInformation track by $index" >
-                <! TODO: filter out null values
-                <! {{ nutrition.description }} : {{nutrition.value}} {{nutrition.unit.plural}}
-                
-              </li>
-            </ul>
-          </p> -->
                 </div>
             </div>
             <!-- <div class="addthis_native_toolbox"></div> -->
@@ -35,3 +33,5 @@
 </div>
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <!-- TODO: test this out when deployed -->
+<!-- 
+  -->

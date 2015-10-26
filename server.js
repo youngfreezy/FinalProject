@@ -36,8 +36,6 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-
-
 //for authentication:
 
 var db = mongoose.connect('localhost/seven', {}, function (err) {

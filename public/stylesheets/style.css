@@ -4,11 +4,12 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%; }
 
+/*
 // Hiding things until Angular finishes loading
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
-
+*/
 .fix {
 
     vertical-align: top;
@@ -5373,22 +5374,17 @@ em {
 }
 
 .animate-repeat.ng-move,
-.animate-repeat.ng-enter,
-.animate-repeat.ng-leave {
+.animate-repeat.ng-enter {
   transition: opacity linear 0.5s;
 }
 
-.animate-repeat.ng-leave.ng-leave-active,
 .animate-repeat.ng-enter {
   opacity:0;
-  max-height:0;
 }
 
-.animate-repeat.ng-leave,
 .animate-repeat.ng-move.ng-move-active,
 .animate-repeat.ng-enter.ng-enter-active {
   opacity:1;
-  max-height:40px;
 }
 
 @-webkit-keyframes zoomIn {
