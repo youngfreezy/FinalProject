@@ -29,6 +29,9 @@
                 <a href="/#!/add">Recipe Box <span ng-cloak class="badge" ng-if="currentUser != undefined">{{recipeBox.recipeCount}}</span> 
                 </a></li>
             <li> <a href="/#!/stream"> Stream<span ng-cloak class="badge">{{$root.stream.unseen}}</span> </a> </li>
+            <li>
+                <a href="/#!/profile">Profile</a>
+            </li>
         </ul>
         <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
             <li data-match-route="/login"><a href="/#!/login">Login</a></li>

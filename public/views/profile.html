@@ -2,21 +2,36 @@
     <h3>Your Profile</h3>
 </center>
 <h4 class="col-sm-2 sidebar">{{name}} </h4>
+<br>
+<!-- <pre>
+    {{ currentUser || json }}
+</pre> -->
 <div class="col sm-2 col-sm-offset-2 sidebar" ng-if="user.facebook">
     <img data-ng-src="{{pictures}}">
 </div>
+<div class="col sm-2 col-sm-offset-2 sidebar" ng-if="user.picture" >
+    <img data-ng-src="{{picture}}">
+</div>
 <div>
+    <br>
+    <br>
     
     <br> Change Your Profile Picture:
     <br>
+    <br>
+
     <form ng-controller="ProfileCtrl">
         <input type="file" file-input="files" multiple />
-        <button ng-click="upload()">Upload</button>
-        <li ng-repeat="file in files">{{file.name}}
-        <img ng-src="data:image/png;base64,{{imageData}}" alt="">
-        <button ng-click="saveImage()">
+        <br>
+        <br>
+
+        <button ng-click="upload('/upload')">Upload</button>
+        <button ng-click="upload('/upload/save')">
             Save New Profile Picture
         </button>
+        <li ng-repeat="file in files">{{file.name}}
+        <img ng-src="data:image/png;base64,{{imageData}}" alt="">
+        
         </li>
     </form>
 </div>

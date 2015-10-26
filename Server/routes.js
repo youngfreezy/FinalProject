@@ -353,7 +353,7 @@ module.exports = function (app, io) {
   }
 
   function deleteRecipe(userId, recipeId, res) {
-    console.log("============= this is the userId:", userId);
+    // console.log("============= this is the userId:", userId);
     User.where({_id: userId}).findOne(function (err, user) {
       if (err) {
         res.status(500).send(err);
@@ -368,7 +368,7 @@ module.exports = function (app, io) {
       var recipeBox = user.recipeBox;
       if (recipeId === "deleteAll") {
       recipeBox = [];
-      console.log("inside the lookup and this is it:",recipeBox)
+      // console.log("inside the lookup and this is it:",recipeBox)
       
     }
       else {
@@ -392,7 +392,7 @@ module.exports = function (app, io) {
         }
       }
     }
-console.log(recipeBox.length);
+// console.log(recipeBox.length);
       user.recipeBox = recipeBox;
       user.save(function (err, resp) {
         if (err) {
@@ -717,49 +717,49 @@ console.log(recipeBox.length);
         if (err) {
           return next(err);
         }
-        res.json(recipe)
-      })
-    })
-  })
+        res.json(recipe);
+      });
+    });
+  });
 
   //handle POST requests to /upload
+
 app.post('/upload', upload.single('file'), function (req, res, next) {
-  /*var query = User.find();
-  var user = req.user;
-  if (user.facebook){
-    query = query.where('user.facebook').equals(user.facebook);
-  }
-
-  if (user) {
-    query = query.where('user.name').equals(user.name);
-  }
-
-   query.exec(function(err, files) {
-    if (err) throw err;
-    res.send(characters);
-  });*/
-
-    // User.findOne({
-    //   'facebook.id': req.params.id
-    // }, function (err, user) {
-    //   if (err) {
-    //     throw err;
-    //   }
-    //   res.json(user);
-    // });
-  //use a map to create a new simplified array for response
-  /*var files = req.files.file.map(function(file) {
-    console.log('a file!', file);
-    return {
-      name: file.name,
-      size: file.size
-    };
-  });*/
-  console.log('file', req.file);
-  console.log('content', req.file.buffer.toString('base64'));
+  // console.log('file', req.file);
+  // console.log('content', req.file.buffer.toString('base64'));
+  console.log(file);
+  var file = req.file.buffer;
   
-  res.send(200, req.file.buffer.toString('base64'));
+  res.send(200, file.toString('base64'));
+  
+  // console.log(file);
 });
+// confirm user wants to save it first after they see it
+
+app.post('/upload/save', upload.single('file'), function (req, res, next) {
+   // console.log(file);
+   var userId = req.user._id;
+   var query = {'_id': userId};
+   var newData = req.file.buffer.toString('base64');
+  console.log(newData);
+    // console.log(newData);
+    User.findOneAndUpdate(query, {
+      "picture": newData
+    }, {
+      upsert: true
+    }, function (err, data) {
+      if (err) {
+        return res.send(500, {
+          error: err
+        });
+      }
+      res.json(data);
+    });
+  
+});
+
+
+
 
   function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();

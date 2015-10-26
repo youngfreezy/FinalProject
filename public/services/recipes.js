@@ -26,10 +26,12 @@ angular.module('MyApp')
 
       },
       removeCommentFromStreamRecipe: function(recipeId, commentId) {
-        return $http.delete('/api/stream/' + recipeId + '/comments/' + commentId)
+        return $http.delete('/api/stream/' + recipeId + '/comments/' + commentId);
   //resolve promise in controller where you can handle error. you can also
   //resolve errors with divs in the controller. 
       },
+
+      
       SaveRecipeInStreamWithComments: function (id, comment) {
         return $http.post('/api/stream/' + id + '/comments', comment);
       },
