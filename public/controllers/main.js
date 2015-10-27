@@ -194,7 +194,7 @@ angular.module('MyApp')
     return {
       controller: 'StreamCtrl',
       template: [
-        'Name: {{lasthourRecipes.userName}}',
+        '{{lasthourRecipes.userName}}',
         '<ul>',
         '<li class="animate-repeat" ng-repeat="recipe in lasthourRecipes | orderBy:\'createdAt\':true">',
         '{{recipe.userName}}  Added: {{recipe.name}}',
@@ -209,8 +209,7 @@ angular.module('MyApp')
         'Your Recipe Box: ',
         '<ul>',
         '<li class="animate-repeat" ng-repeat="recipe in userRecipes | orderBy:\'createdAt\':true">',
-        '{{recipe.name}}',
-        '<a href="{{recipe.recipeUrl}}" target="_blank">Recipe Link</a>',
+        '<a href="{{recipe.recipeUrl}}" target="_blank">{{recipe.name}}</a>',
         '</li>',
         '</ul>'
       ].join('')

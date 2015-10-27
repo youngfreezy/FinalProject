@@ -79,7 +79,7 @@ angular.module('MyApp')
             "_app_id": id,
             "_app_key": key,
             "q": query,
-            "maxResult": 12
+            "maxResult": 6
           }
         }).then(function (response) {
           return response.data.matches;
@@ -92,7 +92,7 @@ angular.module('MyApp')
             "_app_id": id,
             "_app_key": key,
             "q": genre,
-            "maxResult": 12
+            "maxResult": 6
           }
         }).then(function (response) {
           console.log(response.data);
@@ -106,7 +106,7 @@ angular.module('MyApp')
             "_app_id": id,
             "_app_key": key,
             "q": genre,
-            "maxResult": 12
+            "maxResult": 6
           }
         }).then(function (response) {
           console.log(response.data);
@@ -120,8 +120,8 @@ angular.module('MyApp')
             "_app_id": id,
             "_app_key": key,
             "q": randGenre,
-            "maxResult": 12,
-            "maxTotalTimeInSeconds": 2000,
+            "maxResult": 6,
+            "maxTotalTimeInSeconds": 1200,
             "requirePictures": true
           }
         }).then(function (response) {
@@ -130,7 +130,7 @@ angular.module('MyApp')
         });
       },
       // this is what the url needs to look like:
-      // http://api.yummly.com/v1/api/recipe/Creamy-Seafood-Alfredo-1252832?_app_id=3ee8ed9f&_app_key=efd918c28d5b710d9583ec24fb2bb362
+      // http://api.yummly.com/v1/api/recipe/Creamy-Seafood-Alfredo-652832?_app_id=3ee8ed9f&_app_key=efd918c28d5b710d9583ec24fb2bb362
       getIndividualRecipe: function (recipeId) {
         return $http.jsonp("http://api.yummly.com/v1/api/recipe/" + recipeId + "?callback=JSON_CALLBACK", {
           params: {

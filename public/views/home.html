@@ -1,13 +1,18 @@
 <div class="jumbotron">
     <div class="container">
-        <ul class="alphabet">
-            <!--   <div>Blog banjo wolf XOXO Neutra forage. Gentrify Echo Park retro stumptown. Wes Anderson cray Bushwick bespoke 3 wolf moon, post-ironic crucifix asymmetrical chillwave before they sold out Pitchfork occupy Helvetica. Small batch readymade trust fund Wes Anderson disrupt tousled, viral Portland lo-fi asymmetrical mlkshk taxidermy cronut synth. </div> -->
-        </ul>
-        <ul class="genres">
-            <li ng-repeat="genre in genres">
-                <span ng-click="getGenreRecipes(genre)">{{genre}}</span>
-            </li>
-        </ul>
+        <center>
+            Search By Genre:
+            <br>
+            <br>
+            <ul class="genres">
+                <li ng-repeat="genre in genres">
+                    <span ng-click="getGenreRecipes(genre)">{{genre}}</span>
+                </li>
+            </ul>
+            <div>
+                <br> Choose a Random Quick Recipe Everday (First Row): Each One Has Only 7 Steps or Takes 20 Minutes Or Less &#x1F4AA;
+            </div>
+        </center>
     </div>
 </div>
 <!-- <div class="container">
@@ -16,52 +21,60 @@
     fdafdafdafdadfa
 </div>
 </div> -->
-<div class="container">
-    <div class="col-sm-2 sidebar">
+<div class="container-fluid">
+    <div class="col-sm-3 sidebar">
+         Allergies or Dietary Restrictions?
+                <!-- setting the model here even though not delcared in controller. -->
+                <select ng-model="genre" class="form-control" ng-change="getGenreRecipes(genre)">
+                    <option ng-repeat="item in dietaryRestrictions track by $index">{{item}}</option>
+                </select>
+                <br>
+                <br>
+                What Other Users Are Adding:
         <stream-preview>
         </stream-preview>
-    </div>
-    <div class="col-sm-2 sidebar">
+
+        <br><br>
         <recipe-box-preview/>
     </div>
     <div class="row col-sm-8">
-        <div class="panel-heading col-sm-12" style="margin: 15px 0; border-bottom: 1px solid #c9c9c9; padding-bottom: 10px">
-            <div class="col-sm-9">
-                <div class="col-sm-2" style="vertical-align: top">
-                    Quick Recipes &#x263A
-                </div>
-                <div class="col-sm-3 col-sm-offset-4">
-                    <input class="search" type="text" ng-model="query.name" ng-keyup="handleEnterKey($event)" placeholder="Search...">
-                </div>
-            </div>
-            <div class=" col-sm-3">
-                Filter by Allergies or Dietary Restrictions:
-                <!-- setting the model here even though not delcared in controller. -->
-                <select ng-model="genre" ng-change="getGenreRecipes(genre)">
-                    <option ng-repeat="item in dietaryRestrictions track by $index">{{item}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="panel-body" style="vertical-align: top">
-            <div class="row show-list fix">
-                <div class="fade-repeat col-xs-4 col-md-2 col-md-offset-1 fixer" ng-repeat="recipe in quickRecipes" style="outline:1px solid red fix">
-                    <img class="img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
+           <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-2" ng-repeat="recipe in quickRecipes">
+                    <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
                     <div class="text-center">
                         <!-- {# create a new route recipe, and recipe:id #} -->
                         <a href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
                         <!-- {# <p class="text-muted">Episodes: {{show.episodes.length}}</p> #} -->
                         <br>
-                        <a href="" ng-click="addRecipe(recipe)">Add To Recipe Box</a>
+                        <a href="" ng-click="addRecipe(recipe)" style="font-family: Comic Sans MS">Save To Recipe Box</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="panel-body">
-            <div class="row show-list">
+        <br>
+        <br>
+        <div class="panel-heading col-sm-12">
+            
+                <div class="col-sm-2">
+                    <br>
+                    <br>
+                    <input class="search" type="text" ng-model="query.name" ng-keyup="handleEnterKey($event)" placeholder="Search Here" style=" color:#dd3333;
+                font-family:Helvetica Neue;
+                font-weight:bold">
+                </div>
+      
+            <div class=" col-sm-8">
+               
+            </div>
+        </div>
+     
+        <div class="col-sm-12">
+            <div class="row">
                 <!-- {# put the recipes here #} -->
                 <!-- this is from search: -->
-                <div class="fade-repeat col-xs-4 col-md-2" ng-repeat="recipe in recipes">
-                    <img class="img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
+                <div class="col-sm-2" ng-repeat="recipe in recipes">
+                    <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
                     <div class="text-center">
                         <!-- {# create a new route recipe, and recipe:id #} -->
                         <a href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
@@ -70,6 +83,7 @@
                         <a href="" ng-click="addRecipe(recipe)">Add To Recipe Box</a>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>

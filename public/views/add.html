@@ -21,9 +21,11 @@
                         <img ng-src="{{recipe.image}}">
                         <input type="checkbox" ng-model="recipeDone" ng-change="saveDoneRecipe(recipeDone, recipe)">
                         <br>
-                        <a href="{{recipe.recipeUrl}}" target="_blank">Recipe Link</a>
+                        {{recipe.name}}
+                        <br> 
+                        Servings: {{recipe.numServings}}<br>
+                        <a href="{{recipe.recipeUrl}}" target="_blank">Recipe Link</a><br>
                         <a ng-click="deleteRecipe(recipe)">Delete Recipe</a>
-                        <br> {{recipe.name}} {{recipe.numServings}}
                     </p>
                 </div>
             </div>

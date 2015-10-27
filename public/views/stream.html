@@ -1,5 +1,5 @@
 <head>
-    <style>
+    <!--  <style>
     #dv1 {
         border: 1px solid #DBDCE9;
         margin-left: auto;
@@ -12,14 +12,14 @@
     .textarea {
         style: width: 550px;
     }
-    </style>
+    </style> -->
 </head>
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">Activity Feed</div>
         <div class="panel-body">
             <div class="row show-list">
-                <div class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in lasthourRecipesFull | orderBy: '-upvotes' ">
+                <div class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in lasthourRecipesFull | orderBy: '-upvotes' " style="position:relative">
                     <p>
                         <!-- dont display upvotes if -->
                         <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)">{{recipe.upvotes}}</span>
@@ -33,20 +33,23 @@
                         <br> {{recipe.numServings}}
                     </p>
                     <div id='dv1'>
-                        <form>
+                        <form class="form-group">
                             Post your Comment
                             <form>
-                                <textarea class="textarea" ng-model="txtcomment" placeholder="Your Comment "> </textarea>
-                                <button ng-click='saveComment(recipe, txtcomment)' style='margin-top:10px;'>Post Comment</button>
-                                <h4> Comments </h4>
-                                <ul syle="padding: none; margin:none">
-                                    <li ng-repeat="comnt in recipe.comments" style="font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
-        border-bottom: 1px solid #ccc;"> {{ comnt.body }} <a style="float: right; text-decoration: none;
-        color: #000;
-        display: block;" ng-click="deleteComment(recipe._id, comnt._id) ">x</a > </li>
-                                </ul >
-                        </form> 
-        </div >
+                                <textarea ng-model="txtcomment" placeholder="Your Comment "> </textarea>
+                                <button ng-click='saveComment(recipe, txtcomment)'>Post Comment</button>
+                                <h4> Comments: </h4>
+                                <ul>
+                                    <li ng-repeat="comnt in recipe.comments"> {{ comnt.body }}
+                                        <a class="glyphicon glyphicon-remove pull-right" ng-click="deleteComment(recipe._id, comnt._id) "></a>
+                                    </li>
+                                </ul>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            </form>
+                    </div>
                 </div>
             </div>
             <!-- <div class="addthis_native_toolbox "></div> -->
@@ -55,5 +58,4 @@
 </div>
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <!-- TODO: test this out when deployed -->
-
 <!-- &#128077 0 or  -->
