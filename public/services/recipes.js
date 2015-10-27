@@ -79,7 +79,7 @@ angular.module('MyApp')
             "_app_id": id,
             "_app_key": key,
             "q": query,
-            "maxResult": 8
+            "maxResult": 12
           }
         }).then(function (response) {
           return response.data.matches;
@@ -92,7 +92,7 @@ angular.module('MyApp')
             "_app_id": id,
             "_app_key": key,
             "q": genre,
-            "maxResult": 8
+            "maxResult": 12
           }
         }).then(function (response) {
           console.log(response.data);
@@ -106,7 +106,7 @@ angular.module('MyApp')
             "_app_id": id,
             "_app_key": key,
             "q": genre,
-            "maxResult": 8
+            "maxResult": 12
           }
         }).then(function (response) {
           console.log(response.data);
@@ -120,7 +120,7 @@ angular.module('MyApp')
             "_app_id": id,
             "_app_key": key,
             "q": randGenre,
-            "maxResult": 8,
+            "maxResult": 12,
             "maxTotalTimeInSeconds": 2000,
             "requirePictures": true
           }
