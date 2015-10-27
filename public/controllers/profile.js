@@ -1,16 +1,22 @@
 angular.module('MyApp')
-  .controller('ProfileCtrl', function ($scope, $http, $rootScope, Profile) {
+  .controller('ProfileCtrl', function ($scope, $http, $rootScope, Profile, $cookies) {
     // $rootScope.currentUser = user;
+    // console.log($rootScope.previousPage);
+
+    if($rootScope.currentUser){
+
     $scope.user = $rootScope.currentUser;
+    // console.log($scope.user);
     $scope.picture = $scope.user.picture;
     $scope.name = $scope.user.name;
+    }
     // $scope.imageData = null;
-    $scope.pictures = $scope.user.facebook ? $scope.user.facebook.pictures : $scope.imageData;
+    // $scope.pictures = $scope.user.facebook ? $scope.user.facebook.pictures : $scope.imageData;
     // console.log($scope.user);
     // console.log($scope.user);
     $scope.filesChanged = function (elm) {
       $scope.files = elm.files;
-      console.log($scope.files);
+      // console.log($scope.files);
       $scope.apply();
     };
 
@@ -35,7 +41,8 @@ angular.module('MyApp')
         } else {
           $scope.imageData = "/getpicture?id=" + data.picture;
           $scope.picture = data.picture;
-          console.log('picture is now', $scope.picture);
+          $cookies.user = JSON.stringify(data);
+          // console.log('picture is now', $scope.picture);
         }
         // this is the actual string being returned:
         // console.log($scope.imageData);
@@ -43,13 +50,16 @@ angular.module('MyApp')
     };
 
     $scope.$watch('picture', function(newPic){
-      console.log('newPic', newPic);
+      // console.log('newPic', newPic);
     }, true);
 
     $scope.getRightImage = function () {
-      console.log('getting right image', $scope.picture);
-      if($scope.user.facebook && !$scope.picture){
-        return $scope.pictures;
+      // console.log('getting right image', $scope.picture);
+      if($scope.user && !$scope.user.facebook && !$scope.picture){
+        return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYXjtDxJYz7ZqPSNGyS3cUCWDxhs-UJhVIbAOVj1qjHHxR0Bl_yw"
+      }
+      if($scope.user && $scope.user.facebook && !$scope.picture){
+        return $scope.user.facebook.pictures;
       } else {
         return "/getpicture?id=" + $scope.picture;
       }
@@ -57,7 +67,7 @@ angular.module('MyApp')
 
     $scope.getImage = function (pictureId) {
       Profile.GetProfileImage(pictureId).then(function (response) {
-        console.log(response);
+        // console.log(response);
       });
     };
 

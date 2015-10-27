@@ -1,12 +1,21 @@
-<center>
+<!-- don't show this page if you aren't logged in -->
+<div ng-show="currentUser == undefined">
+                <center>
+                    <a ng-href="/#!/login/" style="text-decoration: underline">
+                        Login</a> to change your profile
+                </center>
+            </div>
+<center ng-show="currentUser != undefined">
     <h3>Your Profile</h3>
-</center>
-<h4 class="col-sm-2 sidebar">{{name}} </h4>
+    <br>
+
+
+<h4>{{name}} </h4>
 <br>
-<pre>
+<!-- <pre>
     {{ currentUser || json }}
-</pre>
-<div class="col sm-2 col-sm-offset-2 sidebar"> 
+</pre> -->
+<div ng-if="currentUser != undefined"> 
     <img ng-src="{{getRightImage()}}"> 
 </div>
 <div>
@@ -33,5 +42,4 @@
         </li>
     </form>
 </div>
-<!-- TODO: Set the response to be the picture in the database and then render it! Set it to user.facebook.pictures -->
-<!-- <img data-ng-src="data:image/png;base64,{{user.data}}" data-err-src="images/png/avatar.png"/ -->## user.picture
+</center>

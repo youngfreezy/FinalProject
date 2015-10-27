@@ -1,17 +1,22 @@
 angular.module('MyApp')
-  .factory('Auth', function($http, $location, $rootScope, $alert, $window, $cookies) {
-  
+  .factory('Auth', function ($http, $location, $rootScope, $alert, $window, $cookies) {
+
     return {
-      login: function(user) {
+      login: function (user) {
         // console.log('loggin in');
         return $http.post('/api/login', user)
-          .success(function(data) {
+          .success(function (data) {
             // $window.localStorage.token = data.token;
             // var payload = JSON.parse($window.atob(data.token.split('.')[1]));
             $cookies.user = JSON.stringify(data);
             $rootScope.currentUser = data;
-            console.log(data);
-            $location.path('/#!');
+            // console.log(data);
+            // console.log($cookies.loginDestintation);
+
+            var loginDestination = $rootScope.loginDestination || '/#!';
+           $rootScope.loginDestination = null;
+            $location.path(loginDestination);
+
             $alert({
               title: 'Cheers!',
               content: 'You have successfully logged in.',
@@ -20,7 +25,7 @@ angular.module('MyApp')
               duration: 3
             });
           })
-          .error(function() {
+          .error(function () {
             delete $window.localStorage.token;
             $alert({
               title: 'Error!',
@@ -31,9 +36,9 @@ angular.module('MyApp')
             });
           });
       },
-      signup: function(user) {
+      signup: function (user) {
         return $http.post('/api/signup', user)
-          .success(function() {
+          .success(function () {
             $location.path('/login');
             $alert({
               title: 'Congratulations!',
@@ -43,7 +48,7 @@ angular.module('MyApp')
               duration: 3
             });
           })
-          .error(function(response) {
+          .error(function (response) {
             $alert({
               title: 'Error!',
               content: response.data,
@@ -53,7 +58,7 @@ angular.module('MyApp')
             });
           });
       },
-      logout: function() {
+      logout: function () {
         window.$rootScope = $rootScope;
         delete $cookies.user;
         $rootScope.currentUser = null;

@@ -268,6 +268,8 @@ module.exports = function (app, io) {
     });
   });
   app.get('/auth/facebook', function (req, res, next) {
+   // var backUrl = req.params.backUrl;
+   // res.session.backUrl = backUrl;
     passport.authenticate('facebook', {
       scope: ['email']
     })(req, res, next);
@@ -299,7 +301,7 @@ module.exports = function (app, io) {
         }
 
         // console.log('=========== here!', user);
-        return res.redirect('/');
+        return res.redirect('/#!');
       });
     })(req, res, next);
   });

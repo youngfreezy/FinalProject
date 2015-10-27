@@ -1,19 +1,15 @@
   // // TODO: replace ngCookies strategy with another authentication strategy.
   // angular.run(document).ready();
   angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap', 'ngCookies', 'ngAnimate'])
-    .run(function ($cookies, $rootScope, ioService) {
+    .run(function ($cookies, $rootScope, ioService, $location) {
       //Fixing facebook bug with redirect 
       if (window.location.hash === '#_=_') {
         window.location.hash = '#!';
       }
-      // console.log($cookies);
-      // console.log("cookies: ", $cookies);
-      
+
+
       var user = $cookies.user;
 
-      // $rootScope.$watch(function() { $cookies.user }, function() { $rootScope.currentUser = $cookies.user; })
-
-      // console.log(user);
       if (user) {
         console.log(user);
         user = JSON.parse(user);
@@ -22,6 +18,32 @@
       console.log("User from angular cookie is: ", user);
       //  console.log('facebook info is ', user);
       ioService.start(io, user);
+
+      // // $rootScope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+      // //   var oldUrlForPath = $location.url(oldUrl);
+      // //   event.preventDefault();
+      // //   console.log(oldUrlForPath);
+      // // });
+      // var history = [];
+      // $rootScope.$on('$locationChangeSuccess', function () {
+      //   history.push($location.$$path);
+      // });
+
+      // console.log(history);
+
+      // $rootScope.back = function () {
+      //   var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
+      //   $location.path(prevUrl);
+      //   history = []; //Delete history array after going back
+      // };
+      if($location.path()){
+
+       $rootScope.loginDestination = $location.path();
+      } else {
+        $rootScope.loginDestination = '/#!';
+      }
+    
+
     })
     .config(function ($locationProvider, $routeProvider) {
       //get rid of #:
@@ -33,23 +55,15 @@
           controller: 'MainCtrl'
         })
 
-      // .when('/recipebox/', {
-      //   templateUrl: 'views/recipes.html',
-      //   controller: 'RecipesCtrl'
-      // })
 
-      // .when('/recipebox:id/', {
-      //   templateUrl: 'views/recipesDetail.html',
-      //   controller: 'RecipesDetailCtrl'
-      // })
       .when('/stream/', {
         templateUrl: 'views/stream.html',
         controller: 'StreamCtrl'
       })
-      .when('/login', {
-        templateUrl: 'views/login.html',
-        controller: 'LoginCtrl'
-      })
+        .when('/login', {
+          templateUrl: 'views/login.html',
+          controller: 'LoginCtrl'
+        })
         .when('/signup', {
           templateUrl: 'views/signup.html',
           controller: 'SignupCtrl'
@@ -59,10 +73,10 @@
           controller: 'ProfileCtrl'
         })
 
-        .when('/add', {
-          templateUrl: 'views/add.html',
-          controller: 'MainCtrl'
-        })
+      .when('/add', {
+        templateUrl: 'views/add.html',
+        controller: 'MainCtrl'
+      })
         .when('/recipe/:id', {
           templateUrl: 'views/recipe.html',
           controller: 'RecipeCtrl'
