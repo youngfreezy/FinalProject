@@ -453,7 +453,7 @@ module.exports = function (app, io) {
       name: req.body.recipe.name,
       totalTime: req.body.recipe.totalTime
     });
-
+    
     Recipe.findOne({
       name: req.body.recipe.name
     }, function (err, result) {
