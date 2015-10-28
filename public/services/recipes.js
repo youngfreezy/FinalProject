@@ -65,7 +65,8 @@ angular.module('MyApp')
         return $http.delete('/api/users/' + currentUser._id + '/recipes/');
       },
       getUserRecipes: function () {
-        return $http.get('/api/:user/recipes').then(function (response) {
+        var currentUser = $rootScope.currentUser;
+        return $http.get('/api/' + currentUser._id + '/recipes').then(function (response) {
           //response has a data aray
           // console.log(response.data);
           return response.data;

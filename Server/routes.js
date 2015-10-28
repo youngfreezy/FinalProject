@@ -277,6 +277,8 @@ module.exports = function (app, io) {
 
   });
   // if no error, this gets hit:
+  //middleware for previous url: 
+
   app.get('/auth/facebook/callback', function (req, res, next) {
 
     // console.log('on the way back');
@@ -483,13 +485,14 @@ module.exports = function (app, io) {
   //get all recipes from the recipebox:
   app.get('/api/:user/recipes', function (req, res) {
     //passport injects req.user.  
-    User.where({
-      _id: req.user._id
-    }).findOne(function (err, user) {
+    console.log(req.user._id);
+    User.findById(
+      req.user._id,
+    function (err, user) {
       // console.log("the user is", user);
-      console.log(user)
+      console.log(user);
       if (err) {
-        res.send(500, err);
+        res.send(500, err.message);
       } else {
         //found the user, get all their recipes
 
@@ -498,7 +501,7 @@ module.exports = function (app, io) {
             .where('_id').in(user.recipeBox)
             .exec(function (err, result) {
               if (err) {
-                res.send(500, err);
+                res.send(500, err.message);
                 return;
               }
 

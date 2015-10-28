@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node server"
+    "start": "nodemon server",
+    "postinstall": "gulp build"
   },
   "dependencies": {
     "agenda": "^0.7.0",
@@ -17,6 +18,13 @@
     "debug": "~2.2.0",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
+    "g": "^2.0.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-if": "^2.0.0",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-uglify": "^1.4.2",
     "jade": "~1.11.0",
     "jwt-simple": "^0.3.1",
     "lodash": "^3.10.1",

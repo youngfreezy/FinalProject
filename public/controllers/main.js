@@ -12,7 +12,7 @@ angular.module('MyApp')
     $scope.dietaryRestrictions = ["Vegan", "Pescatarian", "Peanut Allergy", "Wheat Allergy", "Shellfish", "Kosher", "Gluten-Free", "Dairy Free", "Egg-Free", "Vegan", "Low Carbs", "Low Sugar"];
 
     // $scope.userRecipes = [];
-    console.log($scope.userRecipes);     
+    // console.log($scope.userRecipes);     
 
     $scope.saveDoneRecipe = function (value, recipe) {
       if (value) {
@@ -83,10 +83,10 @@ angular.module('MyApp')
     // };
     window.$location = $location;
     $scope.addRecipe = function (recipe) {
-      if ($scope.currentUser === undefined) {
-        $location.path('/login');
-        return;
-      }
+      // if ($scope.currentUser === undefined) {
+      //   $location.path('/login');
+      //   return;
+      // }
       Recipes.getIndividualRecipe(recipe.id).then(function (response) {
         // console.log(response);
         Recipes.save(response)
