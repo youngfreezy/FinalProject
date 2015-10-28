@@ -6,16 +6,10 @@ angular.module('MyApp')
         // console.log('loggin in');
         return $http.post('/api/login', user)
           .success(function (data) {
-            // $window.localStorage.token = data.token;
-            // var payload = JSON.parse($window.atob(data.token.split('.')[1]));
+            
             $cookies.user = JSON.stringify(data);
             $rootScope.currentUser = data;
-            // console.log(data);
-            // console.log($cookies.loginDestintation);
-
-           //  var loginDestination = $rootScope.loginDestination || '/#!';
-           // $rootScope.loginDestination = null;
-           //  $location.path(loginDestination);
+          
           $rootScope.$broadcast("getUserRecipes");
           
 

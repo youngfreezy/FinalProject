@@ -16,7 +16,7 @@
         <div class="panel-body">
             <div class="row show-list">
                 <!-- <pre>{{currentUser | json }}</pre> -->
-                <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes ">
+                <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
                     <p>
                         <img ng-src="{{recipe.image}}">
                         <input type="checkbox" ng-model="recipeDone" ng-change="saveDoneRecipe(recipeDone, recipe)">

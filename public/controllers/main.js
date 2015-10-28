@@ -12,20 +12,7 @@ angular.module('MyApp')
     $scope.dietaryRestrictions = ["Vegan", "Pescatarian", "Peanut Allergy", "Wheat Allergy", "Shellfish", "Kosher", "Gluten-Free", "Dairy Free", "Egg-Free", "Vegan", "Low Carbs", "Low Sugar"];
 
     $scope.userRecipes = [];
-    // console.log($scope.userRecipes);
-
-    // postRecipesInStreamWithLikesAndComments: function (recipe) {
-    //     return $http.post('/api/stream', recipe).success(function(data) {
-    //       o.stream.push(data);
-    //     });
-
-    //   },
-
-    // $scope.postRecipetoStream = function() {
-    //   //already doing this in the api/add route.
-    // },
-
-  
+     
 
     $scope.saveDoneRecipe = function (value, recipe) {
       if (value) {
@@ -45,16 +32,18 @@ angular.module('MyApp')
     };
 
     $scope.deleteRecipe = function (recipe) {
-      Recipes.deleteRecipe(recipe).then(function () {
+      Recipes.deleteRecipe(recipe).then(function (response) {
         // console.log("This is the response from the delete", response);
         //why this? we are just going to call the function
         //that got the recipes initially, which talks to the backend
         //and gets the current state of the world. since we deleted, it
         //will automatically update it. this sets the $scope.recipes to be what we want.
         //the above $scope.userRecipes
-        RecipeBox.recipeCount = $scope.userRecipes.length;
-        $scope.getUserRecipes();
+        $scope.userRecipes = response.data.recipeBox;
+        RecipeBox.recipeCount = response.data.recipeBox.length;
 
+        // RecipeBox.recipeCount = $scope.userRecipes.length;
+        // console.log();
         console.log("deleted recipe");
       }, function (err) {
         console.log("error occured when deleting", err);
@@ -65,9 +54,9 @@ angular.module('MyApp')
       Recipes.deleteAllRecipes().then(function (response) {
         // RecipeBox.recipeCount = 0;
         // $scope.userRecipes = null;
-
+        console.log(response);
         $scope.userRecipes = response.data.recipeBox;
-        RecipeBox.recipeCount = response.data.recipeBox.length;
+        RecipeBox.recipeCount = 0;
 
         //console.log('$scope.userRecipes', $scope.userRecipes);
         //console.log('RecipeBox.recipeCount', RecipeBox.recipeCount);
@@ -170,6 +159,7 @@ angular.module('MyApp')
     });
     $scope.getUserRecipes = function () {
       Recipes.getUserRecipes().then(function (response) {
+        // console.log(response);
         $scope.userRecipes = response;
         //probably better to store everything in RecipeBox service. 
         // there could be a reset function.  

@@ -67,7 +67,7 @@ angular.module('MyApp')
       getUserRecipes: function () {
         return $http.get('/api/:user/recipes').then(function (response) {
           //response has a data aray
-          console.log(response.data);
+          // console.log(response.data);
           return response.data;
         });
       },
@@ -93,7 +93,7 @@ angular.module('MyApp')
             "maxResult": 6
           }
         }).then(function (response) {
-          console.log(response.data);
+          // console.log(response.data);
           return response.data.matches;
         });
       },

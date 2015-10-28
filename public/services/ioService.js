@@ -36,7 +36,7 @@ angular.module('MyApp')
         firsRun = false;
 
         $rootScope.$apply();
-        console.log(data);
+        // console.log(data);
         $rootScope.$broadcast('stream', data);
       });
 

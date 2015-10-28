@@ -368,59 +368,6 @@ module.exports = function (app, io) {
     });
   }
 
-  function deleteRecipe(userId, recipeId, res) {
-    // console.log("============= this is the userId:", userId);
-    User.where({
-      _id: userId
-    }).findOne(function (err, user) {
-      if (err) {
-        res.status(500).send(err);
-        return;
-      }
-
-      if (!user) {
-        res.status(404);
-        return;
-      }
-
-      var recipeBox = user.recipeBox;
-      if (recipeId === "deleteAll") {
-        recipeBox = [];
-        // console.log("inside the lookup and this is it:",recipeBox)
-
-      } else {
-
-
-        //       console.log(user);
-        // console.log(recipeBox.length);
-
-        for (var r = 0; r < recipeBox.length; r++) {
-
-          // console.log(r, recipeBox[r]);
-          // console.log(recipeBox[r]._id.toString(), recipeId.toString());
-          if (recipeBox[r]._id.toString() == recipeId.toString()) {
-            // console.log("we're deleting", recipeId);
-            if (recipeBox.length == 1) {
-              recipeBox = [];
-
-            }
-
-            recipeBox.splice(r, 1);
-          }
-        }
-      }
-      // console.log(recipeBox.length);
-      user.recipeBox = recipeBox;
-      user.save(function (err, resp) {
-        if (err) {
-          res.status(500).send(err);
-          return;
-        }
-        // console.log('done saving user recipes', resp);
-        return res.json(resp);
-      });
-    });
-  }
 
   app.post('/api/users/:userid/recipes/:recipeId/done', function (req, res) {
     var recipeId = req.params.recipeId;
@@ -584,31 +531,48 @@ module.exports = function (app, io) {
   // });
 
   app.delete('/api/users/:userid/recipes/:recipeId', function (req, res) {
-    // User.where({_id: userId}).findOne{}
-
-    // Comments.remove({_id: req.comment._id}).exec(function(err, removedComment) {
-    //   RecipeStream.findByIdAndUpdate(req.recipe._id, {$pull: {comments: req.comment._id}}).exec(function(err, recipe) {
-    //     if (err) {
-    //       return next(err);
-    //     }
-    //     res.json(recipe)
-    //   })
-    // })
-
     var recipeId = req.params.recipeId;
     var userId = req.user._id;
-    // console.log(userId);
-    // console.log(recipeId);
+    var query = {
+      _id: userId
+    };
+    // User.where({_id: userId}).findOne{}
+    User.findOneAndUpdate(query, {
+      $pull: {
+        recipeBox: {
+          _id: recipeId
+        }
+      }
+    }).exec(function (err, user) {
+      if (err) {
+        throw err;
+      }
 
-    deleteRecipe(userId, recipeId, res);
+      console.log("RECIPE BOX!!!!!!", user);
+      res.json(user);
+
+    });
   });
 
+  //delete all:
   app.delete('/api/users/:userid/recipes', function (req, res) {
     //the user has a recipe box array.  set it to undefined or null.
-
     var userId = req.user._id;
-    // console.log("THIS IS THE MOFO REQUEST:", userId);
-    deleteRecipe(userId, "deleteAll", res);
+    var query = {
+      _id: userId
+    };
+  
+    User.update(query, {
+      $set: {
+        recipeBox: []
+      }
+    },function (err, affected) {
+      if(err) {throw err;}
+      // console.log('affected: ', affected);
+      // console.log(res);
+      res.json(affected);
+    });
+  
   });
   //this is middleware for the recipeStream items. handles :recipe
 

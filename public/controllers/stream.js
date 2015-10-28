@@ -4,7 +4,6 @@ angular.module('MyApp')
   $rootScope.data = {};
   $rootScope.data.count = 0;
   $scope.lasthourRecipes = [];
-  $scope.lasthourRecipesFull = [];
   $scope.txtcomment = "";
   $scope.$watch('lasthourRecipes', function (newRecipes) {
     // console.log('lasthourRecipes changed', newRecipes);
@@ -71,8 +70,8 @@ angular.module('MyApp')
   // we can do this because of $broadcast. we are catching the $broadcasted event.  
   $scope.$on('stream', function (event, data) {
     $scope.lasthourRecipes = data;
-    $scope.recipeStreamLimited = data.slice(-5);
-    console.log($scope.recipeStreamLimited);
+    $scope.recipeStreamLimited = data.slice(-6);
+    // console.log($scope.recipeStreamLimited);
 
     // if (!$scope.lasthourRecipesFull.length) {
     //   $scope.lasthourRecipesFull = data;
