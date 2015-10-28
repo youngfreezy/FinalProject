@@ -13,18 +13,24 @@ angular.module('MyApp')
             // console.log(data);
             // console.log($cookies.loginDestintation);
 
-            var loginDestination = $rootScope.loginDestination || '/#!';
-           $rootScope.loginDestination = null;
-            $location.path(loginDestination);
+           //  var loginDestination = $rootScope.loginDestination || '/#!';
+           // $rootScope.loginDestination = null;
+           //  $location.path(loginDestination);
+          $rootScope.$broadcast("getUserRecipes");
+          
 
-            $alert({
+              $alert({
               title: 'Cheers!',
               content: 'You have successfully logged in.',
               animation: 'fadeZoomFadeDown',
               type: 'material',
               duration: 3
             });
+
+                $window.history.back();
           })
+
+
           .error(function () {
             delete $window.localStorage.token;
             $alert({

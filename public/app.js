@@ -7,11 +7,11 @@
         window.location.hash = '#!';
       }
 
-
+      $rootScope.timestamp = (new Date()).getTime();
       var user = $cookies.user;
 
       if (user) {
-        console.log(user);
+        // console.log(user);
         user = JSON.parse(user);
       }
       $rootScope.currentUser = user;
@@ -19,31 +19,7 @@
       //  console.log('facebook info is ', user);
       ioService.start(io, user);
 
-      // // $rootScope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
-      // //   var oldUrlForPath = $location.url(oldUrl);
-      // //   event.preventDefault();
-      // //   console.log(oldUrlForPath);
-      // // });
-      // var history = [];
-      // $rootScope.$on('$locationChangeSuccess', function () {
-      //   history.push($location.$$path);
-      // });
-
-      // console.log(history);
-
-      // $rootScope.back = function () {
-      //   var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
-      //   $location.path(prevUrl);
-      //   history = []; //Delete history array after going back
-      // };
-      if($location.path()){
-
-       $rootScope.loginDestination = $location.path();
-      } else {
-        $rootScope.loginDestination = '/#!';
-      }
-    
-
+      
     })
     .config(function ($locationProvider, $routeProvider) {
       //get rid of #:

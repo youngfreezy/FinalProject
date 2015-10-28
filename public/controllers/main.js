@@ -1,7 +1,7 @@
 angular.module('MyApp')
   .controller('MainCtrl', function ($scope, Recipes, $alert, $http, $location, RecipeBox, $rootScope, $route) {
-    
-       
+
+
 
     $scope.genres = ['Mexican', 'Italian', 'Chinese', 'Korean',
       'American', 'Comfort Food', 'New American', 'Dessert', 'Fruit', 'Vegetarian',
@@ -24,6 +24,8 @@ angular.module('MyApp')
     // $scope.postRecipetoStream = function() {
     //   //already doing this in the api/add route.
     // },
+
+  
 
     $scope.saveDoneRecipe = function (value, recipe) {
       if (value) {
@@ -163,7 +165,9 @@ angular.module('MyApp')
         // console.log($scope.individualRecipe);
       });
     };
-
+    $scope.$on("getUserRecipes", function(){
+      $scope.getUserRecipes();
+    });
     $scope.getUserRecipes = function () {
       Recipes.getUserRecipes().then(function (response) {
         $scope.userRecipes = response;
@@ -196,7 +200,7 @@ angular.module('MyApp')
       template: [
         '{{lasthourRecipes.userName}}',
         '<ul>',
-        '<li class="animate-repeat" ng-repeat="recipe in lasthourRecipes | orderBy:\'createdAt\':true">',
+        '<li class="animate-repeat" ng-repeat="recipe in recipeStreamLimited | orderBy:\'createdAt\':true">',
         '{{recipe.userName}}  Added: {{recipe.name}}',
         '</li>',
         '</ul>'

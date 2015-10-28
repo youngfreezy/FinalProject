@@ -41,7 +41,7 @@ module.exports = function (app, io) {
 
 
     socket.on('stream', function () {
-      BroadCastStream();
+      broadCastStream();
     });
 
     socket.on('disconnect', function (socket) {
@@ -57,7 +57,7 @@ module.exports = function (app, io) {
     });
   });
 
-  function BroadCastStream() {
+  function broadCastStream() {
     var anHourAgo = moment().subtract(1, 'hour');
     RecipeStream.find({
       createdAt: {
@@ -240,6 +240,7 @@ module.exports = function (app, io) {
           } else {
 
             // console.log("This is the user from local strategy:", req.user);
+            user.password = null;
             res.json(user);
           }
         });
@@ -268,8 +269,8 @@ module.exports = function (app, io) {
     });
   });
   app.get('/auth/facebook', function (req, res, next) {
-   // var backUrl = req.params.backUrl;
-   // res.session.backUrl = backUrl;
+    // var backUrl = req.params.backUrl;
+    // res.session.backUrl = backUrl;
     passport.authenticate('facebook', {
       scope: ['email']
     })(req, res, next);
@@ -307,9 +308,10 @@ module.exports = function (app, io) {
   });
 
   app.get('/profile/:id', function (req, res, next) {
-    //?
+    //shouldn't find it by facebook - find it by other identifier
     User.findOne({
-      'facebook.id': req.params.id
+      // or req.user._id;
+      _id: req.user._id
     }, function (err, user) {
       if (err) {
         throw err;
@@ -480,8 +482,8 @@ module.exports = function (app, io) {
     });
   }
 
-  //TODO: change '/add' to somethign more RESTful like /recipebox
-  app.post('/api/add', function (req, res) {
+
+  app.post('/api/recipebox', function (req, res) {
 
 
     var recipe = new Recipe({
@@ -517,7 +519,7 @@ module.exports = function (app, io) {
             // console.log("Hello");
             recipeStreamItem.save();
             pushToRecipeBox(req.body.email, r._id, res);
-            BroadCastStream();
+            broadCastStream();
           }
         });
         return;
@@ -525,14 +527,14 @@ module.exports = function (app, io) {
 
       recipeStreamItem.save();
       pushToRecipeBox(req.body.email, result._id, res);
-      BroadCastStream();
+      broadCastStream();
     });
   });
 
 
 
   //get all recipes from the recipebox:
-  app.get('/api/add', function (req, res) {
+  app.get('/api/:user/recipes', function (req, res) {
     //passport injects req.user.  
     User.where({
       _id: req.user._id
@@ -582,6 +584,8 @@ module.exports = function (app, io) {
   // });
 
   app.delete('/api/users/:userid/recipes/:recipeId', function (req, res) {
+    // User.where({_id: userId}).findOne{}
+
     // Comments.remove({_id: req.comment._id}).exec(function(err, removedComment) {
     //   RecipeStream.findByIdAndUpdate(req.recipe._id, {$pull: {comments: req.comment._id}}).exec(function(err, recipe) {
     //     if (err) {
@@ -688,7 +692,7 @@ module.exports = function (app, io) {
         return next(err);
       }
 
-      BroadCastStream();
+      broadCastStream();
       res.json(recipe);
     });
   });
@@ -700,7 +704,7 @@ module.exports = function (app, io) {
       if (err) {
         return next(err);
       }
-      BroadCastStream();
+      broadCastStream();
       res.json(comment);
     });
   });
@@ -724,9 +728,10 @@ module.exports = function (app, io) {
         if (err) {
           return next(err);
         }
-        BroadCastStream();
+        broadCastStream();
         res.json(_recipe);
-      })
+      });
+      broadCastStream();
     });
   });
 
@@ -742,6 +747,7 @@ module.exports = function (app, io) {
         if (err) {
           return next(err);
         }
+        broadCastStream();
         res.json(recipe);
       });
     });
@@ -781,7 +787,7 @@ module.exports = function (app, io) {
 
     writestream.on('close', function (file) {
       console.log("============", file);
-     
+
       var userId = req.user._id;
       var query = {
         '_id': userId
@@ -805,22 +811,45 @@ module.exports = function (app, io) {
       });
     });
   });
-//this succesfully gets the picture. now i need to 
-//construct image tag ng-click= to a function makes a call to this route
+  //this succesfully gets the picture. now i need to 
+  //construct image tag ng-click= to a function makes a call to this route
+  app.get('/getpicture/:id', function (req, res) {
+    var id = req.params.id;
+    User.where({
+      _id: id
+    }).findOne(function (err, result) {
+      if (err) {
+        res.send(404);
+        return;
+      }
+      //we have the user
+      var pictureId = result.picture;
+      var readStream = GridFS.createReadStream({
+        _id: pictureId
+      });
 
-app.get('/getpicture', function(req, res, next) {
-  var id = mongoose.Types.ObjectId(req.query.id);
-  var readStream = GridFS.createReadStream({
-    _id: id
+      //error handling, e.g. file does not exist
+      readStream.on('error', function (err) {
+        throw new Error(err);
+      });
+
+      readStream.pipe(res);
+    });
+
   });
+  app.get('/getpicture', function (req, res, next) {
+    var id = mongoose.Types.ObjectId(req.query.id);
+    var readStream = GridFS.createReadStream({
+      _id: id
+    });
 
-  //error handling, e.g. file does not exist
-  readStream.on('error', function (err) {
-    throw new Error(err);
+    //error handling, e.g. file does not exist
+    readStream.on('error', function (err) {
+      throw new Error(err);
+    });
+
+    readStream.pipe(res);
   });
-
-  readStream.pipe(res);
-});
 
 
   function ensureAuthenticated(req, res, next) {

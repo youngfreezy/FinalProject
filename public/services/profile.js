@@ -12,6 +12,9 @@ angular.module('MyApp')
     }
 
     return {
+       getCurrentUser: function(id) {
+        return $http.get('/profile/' + id);
+      },
       getName: function () {
         var name = getUserJSON().name;
 

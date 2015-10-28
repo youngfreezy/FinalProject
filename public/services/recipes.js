@@ -7,7 +7,7 @@ angular.module('MyApp')
       save: function (recipe) {
         //the recipe is being sent to the database.
         //sending recipe object as req.body
-        return $http.post('/api/add', {
+        return $http.post('/api/recipebox', {
           recipe: recipe,
           email: Profile.getEmail()
         });
@@ -19,6 +19,7 @@ angular.module('MyApp')
       //   });
       // },
       // = o.create = function(post)
+     
       SaveRecipeInStreamWithUpvotes: function (recipe) {
         return $http.put('/api/stream/' + recipe._id + '/upvote').success(function (data) {
           recipe.upvotes += 1;
@@ -35,17 +36,14 @@ angular.module('MyApp')
       SaveRecipeInStreamWithComments: function (id, comment) {
         return $http.post('/api/stream/' + id + '/comments', comment);
       },
+      // TODO:
+      // upVoteStreamRecipeComments: function (recipe, comment) {
+      //   return $http.put('/api/stream/' + recipe._id + '/comments/' + comment._id + '/upvote')
+      //     .success(function (data) {
+      //       comment.upvotes += 1;
+      //     });
+      // },
 
-      upVoteStreamRecipeComments: function (recipe, comment) {
-        return $http.put('/api/stream/' + recipe._id + '/comments/' + comment._id + '/upvote')
-          .success(function (data) {
-            comment.upvotes += 1;
-          });
-      },
-
-      getRecipesInStreamWithSavedUpVotes: function () {
-
-      },
 
       saveDoneRecipe: function (recipe) {
         var currentUser = $rootScope.currentUser;
@@ -67,7 +65,7 @@ angular.module('MyApp')
         return $http.delete('/api/users/' + currentUser._id + '/recipes/');
       },
       getUserRecipes: function () {
-        return $http.get('/api/add').then(function (response) {
+        return $http.get('/api/:user/recipes').then(function (response) {
           //response has a data aray
           console.log(response.data);
           return response.data;
