@@ -52,3 +52,47 @@
       });
     });
   }
+
+
+   // User.findOneAndUpdate(query, {
+        //   $addToSet: {
+        //     recipeBox: {
+        //       _id: recipeId
+        //     }
+        //   }
+        // }).exec(function (err, user) {
+        //   if (err) {
+        //     throw err;
+        //   }
+
+        //   console.log("RECIPE BOX!!!!!!", user);
+        //   res.json(user);
+        //   recipeStreamItem.save();
+        //   broadCastStream();
+
+        // });
+
+        // Recipe.findOne({
+        //   name: req.body.recipe.name
+        // }, function (err, result) {
+        //   if (!result) {
+        //     recipe.save(function (err, r) {
+        //       // console.log(r);
+        //       if (err) {
+        //         res.send(500, err);
+        //         // console.log(JSON.stringify(err), "failed to save recipe");
+        //       } else {
+        //         // find the associated user
+        //         // console.log("Hello");
+        //         recipeStreamItem.save();
+        //         pushToRecipeBox(req.body.email, r._id, res);
+        //         broadCastStream();
+        //       }
+        //     });
+        //     return;
+        //   }
+
+        //   recipeStreamItem.save();
+        //   pushToRecipeBox(req.body.email, result._id, res);
+        //   broadCastStream();
+        // });

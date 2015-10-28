@@ -1,65 +1,53 @@
-  app.post('/api/stream/:recipe/comments', function (req, res, next) {
-    var comment = new Comments(req.body);
-    comment.recipe = req.recipe._id;
-
-    comment.save(function (err, comment) {
-      if (err) {
-        return next(err);
-      }
-
+ app.delete('/api/stream/:recipe/comments/:comment', function (req, res, next) {
+    Comments.remove({
+      _id: req.comment._id
+    }).exec(function (err, removedComment) {
       RecipeStream.findByIdAndUpdate(req.recipe._id, {
-        $push: {
-          comments: comment._id
+        $pull: {
+          comments: req.comment._id
         }
-      }).populate('comments').exec(function (err, _recipe) {
+      }).exec(function (err, recipe) {
         if (err) {
           return next(err);
         }
         broadCastStream();
-        res.json(_recipe);
+        res.json(recipe);
       });
-      broadCastStream();
     });
   });
 
-  UserAlerts.findOneAndUpdate({
-    userId: userId
-  }, {
-    $pull: {
-      alerts: {
-        _id: alertId
+   // console.log(req.body);
+    User.findOne({ _id: userId}).populate('recipeBox', function(err, user){
+      if(err){
+        throw err;
       }
-    }
-  }, function (err, data) {
-    console.log(err, data);
+
+      console.log(user);
+    });
+
+   User.findOneAndUpdate(query, {
+        //reference to gridFS saved file.  
+        "picture": file._id
+      }, {
+        'upsert': true,
+        'new': true
+      }, function (err, data) {
+        if (err) {
+          return res.send(500, {
+            error: err
+          });
+        }
+        console.log(data);
+        res.json(data);
+      });
+
+    app.get('/api/stream/:recipe', function (req, res) {
+    //use populate to get all comments associate with this recipe!
+    req.recipe.populate('comments', function (err, recipe) {
+      if (err) {
+        return next(err);
+      }
+
+      res.json(recipe);
+    });
   });
-
-  // User.update({
-  //   _id: userId
-  // }, {
-  //   $pull: {
-  //     'User.recipeBox': {
-  //       recipeBox: recipeId
-  //     }
-  //   }
-  // }).exec(function (err, deletedRecipe) {
-  //   if (err) {
-  //     throw err;
-  //   }
-  //   console.log("PPPPPPPPP", deletedRecipe);
-  //   res.json(deletedRecipe);
-  // });
-  // Comments.remove({_id: req.comment._id}).exec(function(err, removedComment) {
-  //   RecipeStream.findByIdAndUpdate(req.recipe._id, {$pull: {comments: req.comment._id}}).exec(function(err, recipe) {
-  //     if (err) {
-  //       return next(err);
-  //     }
-  //     res.json(recipe)
-  //   })
-  // })
-
-
-  // console.log(userId);
-  // console.log(recipeId);
-
-  // deleteRecipe(userId, recipeId, res);

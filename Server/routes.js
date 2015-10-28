@@ -561,18 +561,20 @@ module.exports = function (app, io) {
     var query = {
       _id: userId
     };
-  
+
     User.update(query, {
       $set: {
         recipeBox: []
       }
-    },function (err, affected) {
-      if(err) {throw err;}
+    }, function (err, affected) {
+      if (err) {
+        throw err;
+      }
       // console.log('affected: ', affected);
       // console.log(res);
       res.json(affected);
     });
-  
+
   });
   //this is middleware for the recipeStream items. handles :recipe
 

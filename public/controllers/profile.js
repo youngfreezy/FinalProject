@@ -52,19 +52,7 @@ angular.module('MyApp')
           $scope.imageData = "data:image/png;base64," + data;
         }
         $rootScope.timestamp = (new Date()).getTime();
-        // } else {
-        //   $scope.imageData = "/getpicture?id=" + data.picture;
-        //   $scope.picture = data.picture;
-        //   // $scope.getCurrentUser();
-
-        //   //this works:
-        //   // $cookies.user = JSON.stringify(data);
-        //   // console.log("Updated User", $cookies.user);
-
-        //   // console.log('picture is now', $scope.picture);
-        // }
-        // this is the actual string being returned:
-        // console.log($scope.imageData);
+        
       });
     };
 

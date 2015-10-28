@@ -12,9 +12,9 @@
 
 <h4>{{name}} </h4>
 <br>
-<pre>
+<!-- <pre>
     {{ currentUser || json }}
-</pre>
+</pre> -->
 <div ng-if="currentUser != undefined"> 
     <img ng-src="/getpicture/{{currentUser._id}}?{{$root.timestamp}}"> 
     <!-- <button ng-click="getCurrentUser(currentUser_id)" >lalala</button> -->
@@ -23,17 +23,20 @@
     <br>
     <br>
     
-    <br> Change Your Profile Picture:
+    <br> 
+    Change Your Profile Picture:
     <br>
     <br>
 
-    <form>
-        <input type="file" file-input="files" multiple />
+    <form class=".form-control">
+        <center style="border: blue">
+            <input class=".form-control" type="file" file-input="files" multiple>
+        </center>
         <br>
         <br>
 
-        <button ng-click="upload('/upload')">Upload</button>
-        <button ng-click="upload('/upload/save')">
+        <button class=".form-group" ng-click="upload('/upload')">Upload</button>
+        <button class=".form-group" ng-click="upload('/upload/save')">
             Save New Profile Picture
         </button>
         <li ng-repeat="file in files">{{file.name}}

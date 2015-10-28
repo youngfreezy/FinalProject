@@ -11,8 +11,8 @@ angular.module('MyApp')
 
     $scope.dietaryRestrictions = ["Vegan", "Pescatarian", "Peanut Allergy", "Wheat Allergy", "Shellfish", "Kosher", "Gluten-Free", "Dairy Free", "Egg-Free", "Vegan", "Low Carbs", "Low Sugar"];
 
-    $scope.userRecipes = [];
-     
+    // $scope.userRecipes = [];
+    console.log($scope.userRecipes);     
 
     $scope.saveDoneRecipe = function (value, recipe) {
       if (value) {
@@ -32,17 +32,22 @@ angular.module('MyApp')
     };
 
     $scope.deleteRecipe = function (recipe) {
-      Recipes.deleteRecipe(recipe).then(function (response) {
+      Recipes.deleteRecipe(recipe).then(function () {
         // console.log("This is the response from the delete", response);
         //why this? we are just going to call the function
         //that got the recipes initially, which talks to the backend
         //and gets the current state of the world. since we deleted, it
         //will automatically update it. this sets the $scope.recipes to be what we want.
         //the above $scope.userRecipes
-        $scope.userRecipes = response.data.recipeBox;
-        RecipeBox.recipeCount = response.data.recipeBox.length;
+        var recipes = $scope.getUserRecipes();
 
-        // RecipeBox.recipeCount = $scope.userRecipes.length;
+        $scope.userRecipes = recipes;
+        // RecipeBox.recipeCount = recipes.recipeBox.length;
+        // console.log(response.data);
+        // $scope.userRecipes = response.data;
+        // RecipeBox.recipeCount = response.data.recipeBox.length;
+
+        RecipeBox.recipeCount--;
         // console.log();
         console.log("deleted recipe");
       }, function (err) {
@@ -163,6 +168,9 @@ angular.module('MyApp')
         $scope.userRecipes = response;
         //probably better to store everything in RecipeBox service. 
         // there could be a reset function.  
+        if(!$scope.userRecipes){
+          RecipeBox.recipeCount = 0;
+        }
         RecipeBox.recipeCount = $scope.userRecipes.length;
         // $scope.$apply();
         // console.log('recipes to display', $scope.userRecipes);

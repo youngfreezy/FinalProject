@@ -1463,7 +1463,8 @@ input[type="checkbox"] {
   line-height: normal; }
 
 input[type="file"] {
-  display: block; }
+  display: block;
+  border-color: blue }
 
 input[type="range"] {
   display: block;

@@ -70,7 +70,7 @@ angular.module('MyApp')
   // we can do this because of $broadcast. we are catching the $broadcasted event.  
   $scope.$on('stream', function (event, data) {
     $scope.lasthourRecipes = data;
-    $scope.recipeStreamLimited = data.slice(-6);
+    $scope.recipeStreamLimited = data.slice(-8);
     // console.log($scope.recipeStreamLimited);
 
     // if (!$scope.lasthourRecipesFull.length) {
