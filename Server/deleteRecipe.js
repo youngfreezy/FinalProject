@@ -29,7 +29,7 @@
 
           // console.log(r, recipeBox[r]);
           // console.log(recipeBox[r]._id.toString(), recipeId.toString());
-          if (recipeBox[r]._id.toString() == recipeId.toString()) {
+          if (recipeBox[r].recipe.toString() == recipeId.toString()) {
             // console.log("we're deleting", recipeId);
             if (recipeBox.length == 1) {
               recipeBox = [];

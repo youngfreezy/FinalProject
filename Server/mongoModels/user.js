@@ -27,10 +27,12 @@ var userSchema = new Schema({
   // each time someone adds a recipe, push it here.
   // recipeBox: [mongoose.Schema.ObjectId]
   // can refactor this with $populate
-   recipeBox: [{
-    id: ObjectId,
+  recipeBox: [Schema({
+    recipe: ObjectId,
     done: Boolean
-  }]
+  }, {
+    _id: false
+  })],
 });
 
 userSchema.pre('save', function (next) {

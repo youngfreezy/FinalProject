@@ -352,8 +352,11 @@ module.exports = function (app, io) {
 
       var recipeBox = user.recipeBox;
       for (var r in recipeBox) {
-        if (recipeBox[r]._id == recipeId.toString())
-          recipeBox[r].done = done;
+        if (recipeBox.hasOwnProperty(r)) {
+          if (recipeBox[r].recipe === recipeId.toString()) {
+            recipeBox[r].done = done;
+          }
+        }
       }
 
       user.recipeBox = recipeBox;
@@ -388,45 +391,24 @@ module.exports = function (app, io) {
   });
 
   function pushToRecipeBox(email, recipeId, res) {
-    User.findOne({
+    User.update({
       email: email
-    }, function (err, user) {
-      if (err) {
-        res.status(500).send(err);
-        return;
-      }
-
-      if (!user) {
-        res.status(404);
-        return;
-      }
-
-      var recipeBox = user.recipeBox;
-      for (var r in user.recipeBox) {
-        if (!user.recipeBox[r]._id) {
-          continue;
-        }
-
-        if (recipeBox[r]._id == recipeId.toString()) {
-          // console.log('recipe is already in recipeBox', recipeId);
-          return res.status(200).send('recipe is already in recipeBox');
+    }, {
+      $addToSet: {
+        recipeBox: {
+          recipe: recipeId,
+          done: false
         }
       }
-
-      user.recipeBox.push({
-        _id: recipeId,
-        done: false
-      });
-
-      user.save(function (err, resp) {
+    })
+      .populate('recipeBox.recipe')
+      .exec(function (err, user) {
         if (err) {
           res.status(500).send(err);
           return;
         }
-        // console.log('added recipe to recipebox', resp);
-        return res.status(200).send(resp);
+        return res.status(200).send(user);
       });
-    });
   }
 
 
@@ -561,18 +543,20 @@ module.exports = function (app, io) {
     var query = {
       _id: userId
     };
-  
+
     User.update(query, {
       $set: {
         recipeBox: []
       }
-    },function (err, affected) {
-      if(err) {throw err;}
+    }, function (err, affected) {
+      if (err) {
+        throw err;
+      }
       // console.log('affected: ', affected);
       // console.log(res);
       res.json(affected);
     });
-  
+
   });
   //this is middleware for the recipeStream items. handles :recipe
 
