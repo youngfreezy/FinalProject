@@ -32,7 +32,7 @@
     "gulp-plumber": "^1.0.1",
     "jade": "~1.11.0",
     "jwt-simple": "^0.3.1",
-     "jshint-stylish": "^2.0.1"
+     "jshint-stylish": "^2.0.1",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "mongoose": "^4.1.12",
