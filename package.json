@@ -2,6 +2,9 @@
   "name": "ThesisProject",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "4.1.2"
+    },
   "scripts": {
     "start": "nodemon server",
     "postinstall": "gulp build"
