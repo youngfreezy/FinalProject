@@ -4,7 +4,7 @@ angular.module('MyApp')
     //refactor to pull users from the database, will need that for the stream!
     function getUserJSON() {
       // console.log($rootScope.currentUser);
-      if ($rootScope.currentUser.facebook) {
+      if ($rootScope.currentUser && $rootScope.currentUser.facebook) {
         return $rootScope.currentUser;
       } else {
         return $rootScope.currentUser;
@@ -18,7 +18,7 @@ angular.module('MyApp')
       getName: function () {
         var name = getUserJSON().name;
 
-        if($rootScope.currentUser.facebook) {
+        if($rootScope.currentUser && $rootScope.currentUser.facebook) {
           return name.split(" ")[0];
         }
         return name.charAt(0).toUpperCase() + name.slice(1);

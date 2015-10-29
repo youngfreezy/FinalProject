@@ -22,6 +22,8 @@ angular.module('MyApp')
             });
                 console.log($location.path());
                 $window.history.back();
+                //if you are asked to sign up, then you signup, then you are asked to login on line 43
+                //once you login
           })
 
 

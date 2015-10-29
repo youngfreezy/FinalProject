@@ -41,6 +41,37 @@ body {
     padding-bottom: 20px;
 }
 
+
+.section {
+    padding: 5px 0;
+}
+
+.mt40 {
+    margin-top: 5px !important;
+    background-color: lightgoldenrodyellow;
+
+}
+
+.row.col-p30 {
+    margin-left: -30px;
+    margin-right: -30px;
+}
+
+.box-services-c {
+    text-align: center;
+}
+
+.title-small {
+    font-family: "Montserrat",sans-serif;
+    margin: 0 0 15px;
+    font-size: 17px;
+    color: #556;
+}
+
+.glyphicon-scale:before {
+    content: "\e230";
+}
+
 em {
     font-style: normal;
     text-decoration: underline;

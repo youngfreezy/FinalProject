@@ -1,17 +1,45 @@
 <div class="jumbotron">
     <div class="container">
         <center>
-            Search By Genre:
+           
+                    <section class=" col-sm-12 section mt40">
+            <div class="container">
+                <div class="row col-p30">
+                    <div class="col-sm-4 xs-box2">
+                        <div class="box-services-c">
+                            
+                            <h3> Daily Recommendations</h3>
+                            <span class="glyphicon glyphicon-cutlery"></span>
+                            <p>Quick Recipes for the Day. All day, everyday.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 xs-box2">
+                        <div class="box-services-c">
+                            
+                            <h3>Get Healthy</h3>
+                            <span class="glyphicon glyphicon-scale"></span>
+                            <p>Know What's In Your Food. Save Money and Feel Better.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 xs-box2">
+                        <div class="box-services-c">
+                            
+                            <h3>Save Recipes For Later</h3>
+                            <span class="glyphicon glyphicon-saved"></span>
+                            <p>Save Recipes in Your Recipe Box and Get Weekly Reminders</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <br>
+             Search By Genre:
             <br>
             <ul class="genres">
                 <li ng-repeat="genre in genres">
                     <span ng-click="getGenreRecipes(genre)">{{genre}}</span>
                 </li>
             </ul>
-            <div>
-                <br> Choose a Random Quick Recipe Everday (First Row): Each One Takes 20 Minutes Or Less &#x1F4AA;
-            </div>
+        </section>
         </center>
     </div>
 </div>
@@ -40,6 +68,7 @@
     <div class="row col-sm-8">
            <div class="col-sm-12">
             <div class="row">
+                <center>Quick Recipes For The Day:</center>
                 <div class="col-sm-2" ng-repeat="recipe in quickRecipes">
                     <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
                     <div class="text-center">
@@ -86,5 +115,15 @@
                 
             </div>
         </div>
+
+        <!-- text explaining the site: -->
+
+
+
+
+
+
+
+
     </div>
 </div>

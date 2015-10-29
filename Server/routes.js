@@ -283,7 +283,7 @@ module.exports = function (app, io) {
   app.get('/auth/facebook/callback', function (req, res, next) {
 
 
-    passport.authenticate('facebook', function (err, user, info) {
+    passport.authenticate('facebook', {successRedirect: req.session.redirectUrl },function (err, user, info) {
       // console.log(' in the callback ');
       var redirectUrl = "/#!/login";
       if (err) {
