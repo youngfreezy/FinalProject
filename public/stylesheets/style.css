@@ -4891,14 +4891,14 @@ button.close {
     display: none !important; } }
 
 body {
-  padding-bottom: 20px; }
+  padding-bottom: 0px;
+  background-color: none; }
 
 .section {
   padding: 5px 0; }
 
 .mt40 {
-  margin-top: 5px !important;
-  background-color: lightgoldenrodyellow; }
+  margin-top: 5px !important; }
 
 .row.col-p30 {
   margin-left: -30px;
@@ -4940,7 +4940,9 @@ em {
 
 .jumbotron {
   margin-top: -20px;
-  border-bottom: 1px solid #dae2e4; }
+  border-bottom: 1px solid #dae2e4;
+  margin-bottom: 0px;
+  background-color: #C63D0F; }
 
 .media-object {
   max-width: 200px;
@@ -5055,7 +5057,7 @@ em {
   padding-left: 15px; }
 
 .navbar-brand {
-  background-color: #ffe939;
+  background-color: #FDF3E7;
   -webkit-transition: 0.25s all;
           transition: 0.25s all;
   margin-left: -15px; }
@@ -5227,3 +5229,8 @@ em {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
+
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #7E8F7C; }

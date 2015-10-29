@@ -1,45 +1,48 @@
 <div class="jumbotron">
     <div class="container">
         <center>
-           
-                    <section class=" col-sm-12 section mt40">
-            <div class="container">
-                <div class="row col-p30">
-                    <div class="col-sm-4 xs-box2">
-                        <div class="box-services-c">
-                            
-                            <h3> Daily Recommendations</h3>
-                            <span class="glyphicon glyphicon-cutlery"></span>
-                            <p>Quick Recipes for the Day. All day, everyday.</p>
+            <section class=" col-sm-12 section mt40">
+                <div class="container">
+                    <div class="row col-p30">
+                        <div class="col-sm-4 xs-box2">
+                            <div class="box-services-c">
+                                <h3> Daily Recommendations</h3>
+                                <span class="glyphicon glyphicon-cutlery"></span>
+                                <p>Quick Recipes for the Day. All day, everyday.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4 xs-box2">
-                        <div class="box-services-c">
-                            
-                            <h3>Get Healthy</h3>
-                            <span class="glyphicon glyphicon-scale"></span>
-                            <p>Know What's In Your Food. Save Money and Feel Better.</p>
+                        <div class="col-sm-4 xs-box2">
+                            <div class="box-services-c">
+                                <h3>Get Healthy</h3>
+                                <span class="glyphicon glyphicon-scale"></span>
+                                <p>Know What's In Your Food. Save Money and Feel Better.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4 xs-box2">
-                        <div class="box-services-c">
-                            
-                            <h3>Save Recipes For Later</h3>
-                            <span class="glyphicon glyphicon-saved"></span>
-                            <p>Save Recipes in Your Recipe Box and Get Weekly Reminders</p>
+                        <div class="col-sm-4 xs-box2">
+                            <div class="box-services-c">
+                                <h3>Save Recipes For Later</h3>
+                                <span class="glyphicon glyphicon-saved"></span>
+                                <p>Save Recipes in Your Recipe Box and Get Weekly Reminders To Start Cooking &#12483</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <br>
-             Search By Genre:
-            <br>
-            <ul class="genres">
-                <li ng-repeat="genre in genres">
-                    <span ng-click="getGenreRecipes(genre)">{{genre}}</span>
-                </li>
-            </ul>
-        </section>
+                <br> <center>
+                <h4>
+            Quick Recipes For The Day:
+                </h4>
+            </center>
+                <div style="background-color: FDF3E7" class="col-sm-2" ng-repeat="recipe in quickRecipes">
+                    <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
+                    <div class="text-center">
+                        <!-- {# create a new route recipe, and recipe:id #} -->
+                        <a href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
+                        <!-- {# <p class="text-muted">Episodes: {{show.episodes.length}}</p> #} -->
+                        <br>
+                        <a href="" ng-click="addRecipe(recipe)" style="font-family: Comic Sans MS">Save To Recipe Box</a>
+                    </div>
+                </div>
+            </section>
         </center>
     </div>
 </div>
@@ -50,54 +53,65 @@
 </div>
 </div> -->
 <div class="container-fluid">
-    <div class="col-sm-3 sidebar">
-         Allergies or Dietary Restrictions?
-                <!-- setting the model here even though not delcared in controller. -->
-                <select ng-model="genre" class="form-control" ng-change="getGenreRecipes(genre)">
-                    <option ng-repeat="item in dietaryRestrictions track by $index">{{item}}</option>
-                </select>
-                <br>
-                <br>
-                What Other Users Are Adding:
+    <div class="col-sm-3 sidebar panel panel-default" style="padding-left: 0px; padding-right:0px;  background-color: #FDF3E7">
+        <center>
+            <h5>
+        Allergies or Dietary Restrictions?
+            </h5>
+        <!-- setting the model here even though not delcared in controller. -->
+        <select ng-model="genre" class="form-control" ng-change="getGenreRecipes(genre)">
+            <option ng-repeat="item in dietaryRestrictions track by $index">{{item}}</option>
+        </select>
+        </center>
+        <br>
+        <br> 
+        
+          <center>
+            <h5>
+
+        What Other Users Are Adding:
+            </h5>
+          </center>  
         <stream-preview>
         </stream-preview>
-
-        <br><br>
+        <br>
+        <br>
+        <div class"col-sm-3 sidebar panel panel-default">
+            
         <recipe-box-preview/>
+        </div>
+       
     </div>
-    <div class="row col-sm-8">
-           <div class="col-sm-12">
+    <div class="row col-sm-8 maincolor" style="margin-left: 0px">
+        <div class="col-sm-12">
             <div class="row">
-                <center>Quick Recipes For The Day:</center>
-                <div class="col-sm-2" ng-repeat="recipe in quickRecipes">
-                    <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
-                    <div class="text-center">
-                        <!-- {# create a new route recipe, and recipe:id #} -->
-                        <a href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
-                        <!-- {# <p class="text-muted">Episodes: {{show.episodes.length}}</p> #} -->
-                        <br>
-                        <a href="" ng-click="addRecipe(recipe)" style="font-family: Comic Sans MS">Save To Recipe Box</a>
-                    </div>
-                </div>
+                 <input class="search" type="text" ng-model="query.name" ng-keyup="handleEnterKey($event)" placeholder="Search Recipes" style=" color:#dd3333;
+                font-family:Helvetica Neue;
+                font-weight:bold">
+               <center>
+                <h5>
+                Search By Genre:
+                </h5>
+                <br>
+                <ul class="genres">
+                    <li ng-repeat="genre in genres">
+                        <span ng-click="getGenreRecipes(genre)">{{genre}}</span>
+                    </li>
+                </ul>
+               </center>
             </div>
         </div>
         <br>
         <br>
         <div class="panel-heading col-sm-12">
-            
-                <div class="col-sm-2">
-                    <br>
-                    <br>
-                    <input class="search" type="text" ng-model="query.name" ng-keyup="handleEnterKey($event)" placeholder="Search Here" style=" color:#dd3333;
-                font-family:Helvetica Neue;
-                font-weight:bold">
-                </div>
-      
-            <div class=" col-sm-8">
+            <div class="col-sm-2">
+                <br>
+                <br>
                
             </div>
+            <div class=" col-sm-8">
+            </div>
         </div>
-     
         <div class="col-sm-12">
             <div class="row">
                 <!-- {# put the recipes here #} -->
@@ -112,18 +126,8 @@
                         <a href="" ng-click="addRecipe(recipe)">Add To Recipe Box</a>
                     </div>
                 </div>
-                
             </div>
         </div>
-
         <!-- text explaining the site: -->
-
-
-
-
-
-
-
-
     </div>
 </div>

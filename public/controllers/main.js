@@ -200,7 +200,7 @@ angular.module('MyApp')
       controller: 'StreamCtrl',
       template: [
         '{{lasthourRecipes.userName}}',
-        '<ul>',
+        '<ul style="list-style-type: none">',
         '<li class="animate-repeat" ng-repeat="recipe in recipeStreamLimited | orderBy:\'createdAt\':true">',
         '{{recipe.userName}}  Added: {{recipe.name}}',
         '</li>',
@@ -211,12 +211,12 @@ angular.module('MyApp')
   .directive('recipeBoxPreview', function () {
     return {
       template: [
-        'Your Recipe Box: ',
-        '<ul>',
+        '<h5><center>Your Recipe Box: </center></h5>',
+        '<ol>',
         '<li class="animate-repeat" ng-repeat="recipe in userRecipes | orderBy:\'createdAt\':true">',
         '<a href="{{recipe.recipeUrl}}" target="_blank">{{recipe.name}}</a>',
         '</li>',
-        '</ul>'
+        '</ol>'
       ].join('')
     };
   });

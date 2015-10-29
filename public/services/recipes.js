@@ -126,7 +126,8 @@ angular.module('MyApp')
             "q": randGenre,
             "maxResult": 6,
             "maxTotalTimeInSeconds": 1200,
-            "requirePictures": true
+            "requirePictures": true,
+            "excludedIngredient[]": ["cookies", "cookie", "dessert"]
           }
         }).then(function (response) {
           // console.log(response.data);

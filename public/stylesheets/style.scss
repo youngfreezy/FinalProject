@@ -38,7 +38,8 @@ $alert-info-text: #25484e;
 $btn-font-weight: bold;
 @import 'bootstrap/bootstrap';
 body {
-    padding-bottom: 20px;
+    padding-bottom: 0px;
+    background-color: none;
 }
 
 
@@ -48,9 +49,7 @@ body {
 
 .mt40 {
     margin-top: 5px !important;
-    background-color: lightgoldenrodyellow;
-
-}
+    }
 
 .row.col-p30 {
     margin-left: -30px;
@@ -106,6 +105,8 @@ em {
 .jumbotron {
     margin-top: -20px;
     border-bottom: 1px solid #dae2e4;
+    margin-bottom: 0px;
+    background-color: #C63D0F;
 }
 
 .media-object {
@@ -243,7 +244,7 @@ em {
 }
 
 .navbar-brand {
-    background-color: #ffe939;
+    background-color: #FDF3E7;
     transition: 0.25s all;
     margin-left: -15px;
 }
@@ -420,3 +421,8 @@ em {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+background-color: #7E8F7C;}
