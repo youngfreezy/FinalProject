@@ -7,11 +7,6 @@ html {
 body {
   margin: 0; }
 
-   /*/ Hiding things until Angular finishes loading*/
-
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
-}
 article,
 aside,
 details,
@@ -5390,3 +5385,6 @@ em {
 
 .badge {
   background-color: red; }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important; }

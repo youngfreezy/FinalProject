@@ -61,4 +61,16 @@
           redirectTo: '/'
         });
 
+    }).config(function($httpProvider) {
+          $httpProvider.interceptors.push(function($q) {
+            return {
+              request: function(request) {
+                  request.lastUrl = window.location.url;
+                return request;
+              },
+              responseError: function(response) {
+                return $q.reject(response);
+              }
+        };
     });
+})

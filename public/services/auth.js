@@ -20,7 +20,7 @@ angular.module('MyApp')
               type: 'material',
               duration: 3
             });
-
+                console.log($location.path());
                 $window.history.back();
           })
 

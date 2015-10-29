@@ -281,7 +281,6 @@ module.exports = function (app, io) {
 
   app.get('/auth/facebook/callback', function (req, res, next) {
 
-    // console.log('on the way back');
 
     passport.authenticate('facebook', function (err, user, redirectURL) {
       // console.log(' in the callback ');
@@ -304,7 +303,9 @@ module.exports = function (app, io) {
         }
 
         // console.log('=========== here!', user);
-        return res.redirect('/#!');
+        res.redirect(req.session.returnTo || '/#!');
+        req.session.returnTo = null;
+        
       });
     })(req, res, next);
   });
@@ -432,7 +433,7 @@ module.exports = function (app, io) {
   }
 
 
-  app.post('/api/recipebox', function (req, res) {
+  app.post('/api/recipebox', ensureAuthenticated, function (req, res) {
 
 
     var recipe = new Recipe({
@@ -453,7 +454,7 @@ module.exports = function (app, io) {
       name: req.body.recipe.name,
       totalTime: req.body.recipe.totalTime
     });
-    
+
     Recipe.findOne({
       name: req.body.recipe.name
     }, function (err, result) {
@@ -488,31 +489,31 @@ module.exports = function (app, io) {
     console.log(req.user._id);
     User.findById(
       req.user._id,
-    function (err, user) {
-      // console.log("the user is", user);
-      console.log(user);
-      if (err) {
-        res.send(500, err.message);
-      } else {
-        //found the user, get all their recipes
+      function (err, user) {
+        // console.log("the user is", user);
+        console.log(user);
+        if (err) {
+          res.send(500, err.message);
+        } else {
+          //found the user, get all their recipes
 
-        if (user.recipeBox.length > 0) {
-          Recipe
-            .where('_id').in(user.recipeBox)
-            .exec(function (err, result) {
-              if (err) {
-                res.send(500, err.message);
-                return;
-              }
+          if (user.recipeBox.length > 0) {
+            Recipe
+              .where('_id').in(user.recipeBox)
+              .exec(function (err, result) {
+                if (err) {
+                  res.send(500, err.message);
+                  return;
+                }
 
-              res.json(result);
-            });
-          return;
+                res.json(result);
+              });
+            return;
+          }
+
+          // res.json(result);
         }
-
-        // res.json(result);
-      }
-    });
+      });
   });
   //remove from recipebox
   //TODO: cache the queries
@@ -822,8 +823,14 @@ module.exports = function (app, io) {
 
 
   function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) next();
-    else res.send(401);
+    if (req.isAuthenticated()) {
+      return next();
+    }
+
+      req.session.returnTo = req.path;
+      console.log("PATHHHHH DURRRRR", req.ression.returnTo);
+      res.redirect('/#!/login');
+      
   }
 
 };

@@ -163,6 +163,9 @@ angular.module('MyApp')
       $scope.getUserRecipes();
     });
     $scope.getUserRecipes = function () {
+      if($rootScope.currentUser === undefined){
+        return;
+      }
       Recipes.getUserRecipes().then(function (response) {
         // console.log(response);
         $scope.userRecipes = response;
