@@ -272,6 +272,7 @@ module.exports = function (app, io) {
     // var backUrl = req.params.backUrl;
     // res.session.backUrl = backUrl;
     passport.authenticate('facebook', {
+      display: 'popup',
       scope: ['email']
     })(req, res, next);
 
@@ -282,11 +283,12 @@ module.exports = function (app, io) {
   app.get('/auth/facebook/callback', function (req, res, next) {
 
 
-    passport.authenticate('facebook', function (err, user, redirectURL) {
+    passport.authenticate('facebook', function (err, user, info) {
       // console.log(' in the callback ');
+      var redirectUrl = "/#!/login";
       if (err) {
-        console.log(err);
-        return res.redirect('/#!/login');
+        // console.log(err);
+        return next(err);
       }
 
       if (!user) {
@@ -296,21 +298,27 @@ module.exports = function (app, io) {
         // console.log("==================== This is the user from routes.js", req.user);
         res.cookie('user', JSON.stringify(user));
       }
-      //actually storing the fact that they are logged in:
-      req.login(user, function (err) {
-        if (err) {
-          return res.redirect('/#!/login');
+     
+        if(req.session.redirectUrl) {
+          redirectUrl = req.session.redirectUrl;
+          req.session.redirectUrl = null;
         }
-
-        // console.log('=========== here!', user);
-        res.redirect(req.session.returnTo || '/#!');
-        req.session.returnTo = null;
-        
+         //actually storing the fact that they are logged in:
+      req.logIn(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+        console.log('=========== here!', user);
       });
+        console.log('=========== here ALSO!!', req.session.redirectUrl);
+        console.log('=========== here ALSO!!', req.session.redirectUrl);
+        res.redirect('/#!');
+        
+        
     })(req, res, next);
   });
 
-  app.get('/profile/:id', function (req, res, next) {
+  app.get('/profile/:id', ensureAuthenticated, function (req, res, next) {
     //shouldn't find it by facebook - find it by other identifier
     User.findOne({
       // or req.user._id;
@@ -484,14 +492,14 @@ module.exports = function (app, io) {
 
 
   //get all recipes from the recipebox:
-  app.get('/api/:user/recipes', function (req, res) {
+  app.get('/api/:user/recipes', ensureAuthenticated, function (req, res) {
     //passport injects req.user.  
-    console.log(req.user._id);
+    // console.log(req.user._id);
     User.findById(
       req.user._id,
       function (err, user) {
         // console.log("the user is", user);
-        console.log(user);
+        // console.log(user);
         if (err) {
           res.send(500, err.message);
         } else {
@@ -552,7 +560,7 @@ module.exports = function (app, io) {
         throw err;
       }
 
-      console.log("RECIPE BOX!!!!!!", user);
+      // console.log("RECIPE BOX!!!!!!", user);
       res.json(user);
 
     });
@@ -733,7 +741,7 @@ module.exports = function (app, io) {
     // console.log('file', req.file);
     // console.log('content', req.file.buffer.toString('base64'));
     var file = req.file.buffer;
-    console.log(req.file);
+    // console.log(req.file);
 
     res.send(200, file.toString('base64'));
 
@@ -745,7 +753,7 @@ module.exports = function (app, io) {
 
 
     var file = req.file;
-    console.log('file', file);
+    // console.log('file', file);
 
     var writestream = GridFS.createWriteStream({
       filename: file.name,
@@ -756,13 +764,13 @@ module.exports = function (app, io) {
     fs.createReadStream(file.path).pipe(writestream);
 
     writestream.on('close', function (file) {
-      console.log("============", file);
+      // console.log("============", file);
 
       var userId = req.user._id;
       var query = {
         '_id': userId
       };
-      console.log('query', query);
+      // console.log('query', query);
       // console.log(newData);
       User.findOneAndUpdate(query, {
         //reference to gridFS saved file.  
@@ -776,7 +784,7 @@ module.exports = function (app, io) {
             error: err
           });
         }
-        console.log(data);
+        // console.log(data);
         res.json(data);
       });
     });
@@ -826,9 +834,10 @@ module.exports = function (app, io) {
     if (req.isAuthenticated()) {
       return next();
     }
-
-      req.session.returnTo = req.path;
-      console.log("PATHHHHH DURRRRR", req.ression.returnTo);
+     
+      req.session.redirectUrl = req.originalUrl;
+      console.log('hahahah',req.session.redirectUrl);
+      console.log('hahahehehehah',req.originalUrl);
       res.redirect('/#!/login');
       
   }

@@ -34,7 +34,7 @@
             <li data-match-route="/signup"><a href="/#!/signup">Sign up</a></li>
         </ul>
         <ul class="nav navbar-nav pull-right" ng-if="currentUser">
-            <li class="navbar-text">{{message}}</li>
+            <li ng-cloak class="navbar-text">{{message}}</li>
             <li><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
         </ul>
     </div>

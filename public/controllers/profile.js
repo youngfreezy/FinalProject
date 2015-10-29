@@ -78,7 +78,7 @@ angular.module('MyApp')
     //     console.log(response);
     //   });
     // };
-    // $scope.getCurrentUser();
+     $scope.getCurrentUser();
   })
   .directive('fileInput', ['$parse',
     function ($parse) {
