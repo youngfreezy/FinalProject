@@ -2,7 +2,7 @@ angular.module('MyApp')
   .controller('ProfileCtrl', function ($scope, $http, $rootScope, Profile, $cookies) {
     // $rootScope.currentUser = user;
     // console.log($rootScope.previousPage);
-// I am templating $scope.image. so that needs to be set to something from the response.  
+    // I am templating $scope.image. so that needs to be set to something from the response.  
 
 
     // $scope.getRightImage = function () {
@@ -10,6 +10,7 @@ angular.module('MyApp')
     //     console.log(data);
     //   });
     // };
+  
 
     $scope.getCurrentUser = function (id) {
       Profile.getCurrentUser(id).then(function (response) {
@@ -25,10 +26,17 @@ angular.module('MyApp')
 
     if ($rootScope.currentUser) {
 
-       var id = $rootScope.currentUser._id;
+      var id = $rootScope.currentUser._id;
       $scope.getCurrentUser(id);
-     
+
+      if ($rootScope.currentUser.facebook && !$rootScope.currentUser.image) {
+        $rootScope.currentUser.image = $rootScope.currentUser.facebook.photos;
+        $scope.getCurrentUser(id);
+      }
+
     }
+
+
 
     $scope.filesChanged = function (elm) {
       $scope.files = elm.files;
@@ -57,16 +65,16 @@ angular.module('MyApp')
 
         }
 
-        if(endpoint === "/upload/save"){
-          $rootScope.currentUser.image  = data.image;
+        if (endpoint === "/upload/save") {
+          $rootScope.currentUser.image = data.image;
           // $scope.apply();
           console.log(data);
         }
-     
+
       });
     };
 
-   
+
   })
   .directive('fileInput', ['$parse',
     function ($parse) {

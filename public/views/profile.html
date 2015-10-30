@@ -16,13 +16,18 @@
     {{ currentUser || json }}
 </pre> -->
 
-
+<div ng-if="currentUser.facebook && !currentUser.image">
+    <img ng-src="{{$root.currentUser.facebook.pictures}}">
+</div>
 
 <div ng-if="currentUser != undefined"> 
     <!-- <img ng-src="/getpicture/{{currentUser._id}}?{{$root.timestamp}}">  -->
      <img data-ng-src="data:image/png;base64,{{currentUser.image}}"/>
+
     <!-- <button ng-click="getCurrentUser(currentUser_id)" >lalala</button> -->
 </div>
+
+
 <div>
     <br>
     <br>
@@ -43,6 +48,7 @@
         <button class=".form-group" ng-click="upload('/upload/save')">
             Save New Profile Picture
         </button>
+    
         <li ng-repeat="file in files">{{file.name}}
         <img ng-src="{{imageData}}" alt="">
 
