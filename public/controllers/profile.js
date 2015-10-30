@@ -2,14 +2,16 @@ angular.module('MyApp')
   .controller('ProfileCtrl', function ($scope, $http, $rootScope, Profile, $cookies) {
     // $rootScope.currentUser = user;
     // console.log($rootScope.previousPage);
+// I am templating $scope.image. so that needs to be set to something from the response.  
 
     if ($rootScope.currentUser) {
 
       $scope.user = $rootScope.currentUser;
-      console.log("User from root scope", $scope.user);
-      // console.log($scope.user);
-      $scope.picture = $scope.user.picture;
-      $scope.name = $scope.user.name;
+     
+    }
+
+    if($scope.user && $scope.user.facebook){
+      $scope.user.image = $scope.user.facebook.pictures;
     }
     // $scope.imageData = null;
     // $scope.pictures = $scope.user.facebook ? $scope.user.facebook.pictures : $scope.imageData;
@@ -52,7 +54,7 @@ angular.module('MyApp')
           $scope.imageData = "data:image/png;base64," + data;
         }
         $rootScope.timestamp = (new Date()).getTime();
-        
+        $scope.user.image = "data:image/png;base64," + data;
       });
     };
 
@@ -62,11 +64,11 @@ angular.module('MyApp')
 
     $scope.getRightImage = function () {
       // console.log('getting right image', $scope.picture);
-      if ($scope.user && !$scope.user.facebook && !$scope.picture) {
-        return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYXjtDxJYz7ZqPSNGyS3cUCWDxhs-UJhVIbAOVj1qjHHxR0Bl_yw";
+      if ($scope.user && !$scope.user.facebook && !$scope.image) {
+        
       }
       if ($scope.user && $scope.user.facebook && !$scope.picture) {
-        return $scope.user.facebook.pictures;
+        $scope.user.image = $scope.user.facebook.pictures;
       } else {
         return "/getpicture?id=" + $scope.picture;
       }
@@ -78,7 +80,7 @@ angular.module('MyApp')
     //     console.log(response);
     //   });
     // };
-     $scope.getCurrentUser();
+     // $scope.getCurrentUser();
   })
   .directive('fileInput', ['$parse',
     function ($parse) {

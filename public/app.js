@@ -7,6 +7,8 @@
         window.location.hash = '#!';
       }
 
+
+
       $rootScope.timestamp = (new Date()).getTime();
       var user = $cookies.user;
 
@@ -19,11 +21,26 @@
       //  console.log('facebook info is ', user);
       ioService.start(io, user);
 
-      
+      $rootScope.$on('$locationChangeStart', function (evt, absNewUrl, absOldUrl) {
+        var hashIndex = absOldUrl.indexOf('#!');
+
+        var oldRoute = absOldUrl.substr(hashIndex + 3);
+        if(oldRoute[oldRoute.length-1] !== "/" && oldRoute.indexOf("login") === -1 && oldRoute.indexOf("signup") === -1) {
+
+        $rootScope.previousPage = oldRoute;
+        }
+
+      });
+
+      console.log($rootScope.previousPage);
+
     })
     .config(function ($locationProvider, $routeProvider) {
       //get rid of #:
       $locationProvider.html5Mode(false).hashPrefix('!');
+
+
+
 
       $routeProvider
         .when('/', {
@@ -61,16 +78,19 @@
           redirectTo: '/'
         });
 
-    }).config(function($httpProvider) {
-          $httpProvider.interceptors.push(function($q) {
-            return {
-              request: function(request) {
-                  request.lastUrl = window.location.url;
-                return request;
-              },
-              responseError: function(response) {
-                return $q.reject(response);
-              }
+    }).config(function ($httpProvider) {
+      $httpProvider.interceptors.push(function ($q) {
+
+        return {
+          request: function (request) {
+            // console.log("hello");
+            // console.log(window.location.href);
+            request.headers.lastUrl = window.location.href;
+            return request;
+          },
+          responseError: function (response) {
+            return $q.reject(response);
+          }
         };
-    });
-})
+      });
+    })

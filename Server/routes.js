@@ -214,6 +214,8 @@ module.exports = function (app, io) {
     start: false,
     timeZone: 'America/Los_Angeles'
   });
+
+
   // job.start();
   // var transporter = nodemailer.createTransport({
   //   service: 'gmail',
@@ -283,7 +285,7 @@ module.exports = function (app, io) {
   app.get('/auth/facebook/callback', function (req, res, next) {
 
 
-    passport.authenticate('facebook', {successRedirect: req.session.redirectUrl },function (err, user, info) {
+    passport.authenticate('facebook', {successRedirect: req.session.returnTo},function (err, user, info) {
       // console.log(' in the callback ');
       var redirectUrl = "/#!/login";
       if (err) {
@@ -312,7 +314,7 @@ module.exports = function (app, io) {
       });
         console.log('=========== here ALSO!!', req.session.redirectUrl);
         console.log('=========== here ALSO!!', req.session.redirectUrl);
-        res.redirect('/#!');
+        res.redirect(req.session.returnTo);
         
         
     })(req, res, next);
@@ -753,17 +755,26 @@ module.exports = function (app, io) {
 
 
     var file = req.file;
-    // console.log('file', file);
+    console.log('file', file);
 
-    var writestream = GridFS.createWriteStream({
-      filename: file.name,
-      mode: 'w',
-      content_type: file.mimetype,
-      metadata: req.body,
-    });
-    fs.createReadStream(file.path).pipe(writestream);
+fs.readFile(file.path, function (err, data) {
+  if (err) throw err;
+  console.log(data);
 
-    writestream.on('close', function (file) {
+  var base64data = new Buffer(data).toString('base64');
+  // image: data.buffer.toString('base64')
+
+
+    // var writestream = GridFS.createWriteStream({
+    //   filename: file.name,
+    //   mode: 'w',
+    //   content_type: file.mimetype,
+    //   metadata: req.body,
+    // });
+    // fs.createReadStream(file.path).pipe(writestream);
+
+
+    // writestream.on('close', function (file) {
       // console.log("============", file);
 
       var userId = req.user._id;
@@ -774,7 +785,7 @@ module.exports = function (app, io) {
       // console.log(newData);
       User.findOneAndUpdate(query, {
         //reference to gridFS saved file.  
-        "picture": file._id
+        "image": base64data
       }, {
         'upsert': true,
         'new': true
@@ -791,43 +802,43 @@ module.exports = function (app, io) {
   });
   //this succesfully gets the picture. now i need to 
   //construct image tag ng-click= to a function makes a call to this route
-  app.get('/getpicture/:id', function (req, res) {
-    var id = req.params.id;
-    User.where({
-      _id: id
-    }).findOne(function (err, result) {
-      if (err) {
-        res.send(404);
-        return;
-      }
-      //we have the user
-      var pictureId = result.picture;
-      var readStream = GridFS.createReadStream({
-        _id: pictureId
-      });
+  // app.get('/getpicture/:id', function (req, res) {
+  //   var id = req.params.id;
+  //   User.where({
+  //     _id: id
+  //   }).findOne(function (err, result) {
+  //     if (err) {
+  //       res.send(404);
+  //       return;
+  //     }
+  //     //we have the user
+  //     var pictureId = result.picture;
+  //     var readStream = GridFS.createReadStream({
+  //       _id: pictureId
+  //     });
 
-      //error handling, e.g. file does not exist
-      readStream.on('error', function (err) {
-        throw new Error(err);
-      });
+  //     //error handling, e.g. file does not exist
+  //     readStream.on('error', function (err) {
+  //       throw new Error(err);
+  //     });
 
-      readStream.pipe(res);
-    });
+  //     readStream.pipe(res);
+  //   });
 
-  });
-  app.get('/getpicture', function (req, res, next) {
-    var id = mongoose.Types.ObjectId(req.query.id);
-    var readStream = GridFS.createReadStream({
-      _id: id
-    });
+  // });
+  // app.get('/getpicture', function (req, res, next) {
+  //   var id = mongoose.Types.ObjectId(req.query.id);
+  //   var readStream = GridFS.createReadStream({
+  //     _id: id
+  //   });
 
-    //error handling, e.g. file does not exist
-    readStream.on('error', function (err) {
-      throw new Error(err);
-    });
+  //   //error handling, e.g. file does not exist
+  //   readStream.on('error', function (err) {
+  //     throw new Error(err);
+  //   });
 
-    readStream.pipe(res);
-  });
+  //   readStream.pipe(res);
+  // });
 
 
   function ensureAuthenticated(req, res, next) {
@@ -835,10 +846,8 @@ module.exports = function (app, io) {
       return next();
     }
      
-      req.session.redirectUrl = req.originalUrl;
-      console.log('hahahah',req.session.redirectUrl);
-      console.log('hahahehehehah',req.originalUrl);
-      res.redirect('/#!/login');
+    
+      res.redirect(req.session.returnTo);
       
   }
 

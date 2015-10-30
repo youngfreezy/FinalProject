@@ -1,7 +1,7 @@
 angular.module('MyApp')
   .controller('MainCtrl', function ($scope, Recipes, $alert, $http, $location, RecipeBox, $rootScope, $route) {
 
-
+    
 
     $scope.genres = ['Mexican', 'Italian', 'Chinese', 'Korean',
       'American', 'Comfort Food', 'New American', 'Dessert', 'Fruit', 'Vegetarian',
@@ -163,9 +163,8 @@ angular.module('MyApp')
       $scope.getUserRecipes();
     });
     $scope.getUserRecipes = function () {
-      if($rootScope.currentUser === undefined){
-        return;
-      }
+      if($rootScope.currentUser){
+        
       Recipes.getUserRecipes().then(function (response) {
         // console.log(response);
         $scope.userRecipes = response;
@@ -178,6 +177,7 @@ angular.module('MyApp')
         // $scope.$apply();
         // console.log('recipes to display', $scope.userRecipes);
       });
+      }
     };
 
     var randGenre = $scope.genres[Math.floor(Math.random() * $scope.genres.length)];

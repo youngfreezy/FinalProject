@@ -12,11 +12,12 @@
 
 <h4>{{name}} </h4>
 <br>
-<!-- <pre>
+<pre>
     {{ currentUser || json }}
-</pre> -->
+</pre>
 <div ng-if="currentUser != undefined"> 
-    <img ng-src="/getpicture/{{currentUser._id}}?{{$root.timestamp}}"> 
+    <!-- <img ng-src="/getpicture/{{currentUser._id}}?{{$root.timestamp}}">  -->
+     <img data-ng-src="data:image/png;base64,{{currentUser.image}}"/>
     <!-- <button ng-click="getCurrentUser(currentUser_id)" >lalala</button> -->
 </div>
 <div>

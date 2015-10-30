@@ -80,6 +80,24 @@ var db = mongoose.connect(config.dbConnection, {}, function (err) {
         protocol == 'https' ? res.redirect('http://' + req.hostname + req.url) : next();
       });
     }
+
+    app.use(function (req, res, next) {
+         //req.session.returnTo is available everywhere in router now.
+         //filter if it not auth/login/signup, then save it.  only update return to when it's not one of those.  
+        if(req.get('lastUrl') !== undefined){
+
+        var lastUrl = req.get('lastUrl');
+
+        if(lastUrl.indexOf("login") === -1 && lastUrl.indexOf("signup") === -1 && lastUrl !== "http://localhost:3000/#!/"){
+
+         req.session.returnTo = lastUrl;
+        }
+         console.log(req.session);
+        }
+                  next();
+      });
+
+
     app.use(express.static(path.join(__dirname, 'public')));
 
 

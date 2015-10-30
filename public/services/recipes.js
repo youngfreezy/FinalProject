@@ -66,15 +66,14 @@ angular.module('MyApp')
       },
       getUserRecipes: function () {
         var currentUser = $rootScope.currentUser;
-        if (currentUser === undefined) {
-          return;
-        } else{
-          
-        return $http.get('/api/' + currentUser._id + '/recipes').then(function (response) {
-          //response has a data aray
-          // console.log(response.data);
-          return response.data;
-        });
+        if (currentUser) {
+
+
+          return $http.get('/api/' + currentUser._id + '/recipes').then(function (response) {
+            //response has a data aray
+            // console.log(response.data);
+            return response.data;
+          });
         }
       },
       getRecipes: function (query) {

@@ -23,13 +23,10 @@ angular.module('MyApp')
         }
         return name.charAt(0).toUpperCase() + name.slice(1);
       },
-      SaveProfileImage: function () {
-        return $http.post('/upload/save');
-      },
+    SaveProfileImage: function (id) {
+      return $http.post('/upload/save');
+    },
 
-      GetProfileImage: function () {
-        return $http.get('/getpicture');
-      },
       getEmail: function () {
         return getUserJSON().email;
       }
