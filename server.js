@@ -73,6 +73,13 @@ var db = mongoose.connect(config.dbConnection, {}, function (err) {
     app.use(passport.initialize());
     app.use(passport.session());
     require('./Server/passport.js')();
+    //heroku sets this to production
+    if (app.get('env') === 'production') {
+      app.use(function (req, res, next) {
+        var protocol = req.get('x-forwarded-proto');
+        protocol == 'https' ? res.redirect('http://' + req.hostname + req.url) : next();
+      });
+    }
     app.use(express.static(path.join(__dirname, 'public')));
 
 
