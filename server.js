@@ -25,6 +25,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var User = require('./Server/mongoModels/user');
 var Comments = require('./Server/mongoModels/comments');
+var config = require('./Server/config');
 
 var transporter = nodemailer.createTransport();
 
@@ -38,7 +39,7 @@ var transporter = nodemailer.createTransport({
 
 //for authentication:
 
-var db = mongoose.connect('localhost/seven', {}, function (err) {
+var db = mongoose.connect(config.dbConnection, {}, function (err) {
   if (!err) {
     app.set('port', process.env.PORT || 3000);
     app.set('views', path.join(__dirname, 'views'));

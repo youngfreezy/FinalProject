@@ -6,7 +6,7 @@
     "node": "4.1.2"
     },
   "scripts": {
-    "start": "nodemon server",
+    "start": "node server",
     "postinstall": "gulp build"
   },
   "dependencies": {
