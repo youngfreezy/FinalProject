@@ -126,13 +126,7 @@ angular.module('MyApp')
             "maxResult": 6,
             "maxTotalTimeInSeconds": 1200,
             "requirePictures": true,
-            "excludedIngredient[]": "cookies",
-            "excludedIngredient[]": "cookie",
-            "excludedIngredient[]": "brownie",
-            "excludedIngredient[]": "cupcakes",
-            "excludedIngredient[]": "cheesecake",
-            "excludedIngredient[]": "frosting",
-            "excludedIngredient[]": "milkshake"
+            "excludedIngredient[]": ["cookies","cookie", "brownie", "cupcakes", "cheesecake", "frosting", "milkshake"]
           }
         }).then(function (response) {
           // console.log(response.data);
