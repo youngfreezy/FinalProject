@@ -329,6 +329,7 @@ module.exports = function (app, io) {
       if (err) {
         throw err;
       }
+      user.password = null;
       res.json(user);
     });
   });
@@ -796,6 +797,7 @@ fs.readFile(file.path, function (err, data) {
           });
         }
         // console.log(data);
+        data.password = null;
         res.json(data);
       });
     });
