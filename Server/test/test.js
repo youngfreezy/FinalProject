@@ -5,16 +5,37 @@ var chai = require('chai');
 var assert = chai.assert;
 var should = chai.should();
 var expect = require('chai').expect;
-var routes = require("../routes")(app);
+var routes = require("../routes");
 var session = require('express-session');
 var path = require("path");
-var user = require('../mongoModels/user');
+var User = require('../mongoModels/user');
 
 var globalUser = {
   _id: 123,
   done: true,
-  r_id: 123
+  recipeBox: [{
+    _id: 'lala',
+    done: false
+  }, {
+    _id: 'hi',
+    done: false
+  }]
 };
+// this is here temporarily. TODO: refactor my routes.js file to separate controllers from routes. Could not access this function from routes.js without that refactor.
+
+function setRecipeDone(user, recipeId, done) {
+
+  var recipeBox = user.recipeBox;
+  for (var r in recipeBox) {
+    if (recipeBox[r]._id == recipeId.toString())
+      recipeBox[r].done = done;
+  }
+
+  user.recipeBox = recipeBox;
+  
+    return user;
+
+}
 
 describe('Routes', function () {
   // console.log("Test");
@@ -48,17 +69,20 @@ describe('Routes', function () {
   });
 
   describe("Set Recipe Done", function () {
+    var res = {};
+
+    res.sendStatus = function (status) {
+      console.log('sendingstatus');
+    };
 
     it('should update a recipe to be done', function (done) {
       var userId = globalUser._id;
       var recipeId = globalUser.r_id;
       var donerecipe = globalUser.done;
 
-      routes.setRecipeDone(userId, recipeId, donerecipe);
+      setRecipeDone(userId, recipeId, donerecipe);
 
-      if (err) {
-        return done(err);
-      }
+
       expect(globalUser.done).to.equal(true);
 
       done();
