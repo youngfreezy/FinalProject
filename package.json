@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "agenda": "^0.7.0",
+    "angular": "^1.4.7",
     "async": "^1.4.2",
     "bcryptjs": "^2.3.0",
     "body-parser": "~1.13.2",
@@ -53,15 +54,31 @@
     "static-favicon": "^1.0.2",
     "sugar": "^1.4.1",
     "supertest": "^1.1.0",
-    "xml2js": "^0.4.13"
+    "xml2js": "^0.4.13",
+    "karma": "^0.13.14",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-jasmine": "^0.3.6",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "phantomjs": "^1.9.18"
   },
   "devDependencies": {
+    "angular-mocks": "^1.4.7",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-if": "^2.0.0",
     "gulp-jshint": "^1.11.2",
     "gulp-plumber": "^1.0.1",
     "gulp-sass": "^2.1.0",
-    "jshint-stylish": "^2.0.1"
+    "jasmine": "^2.3.2",
+    "jshint-stylish": "^2.0.1",
+    "karma": "^0.13.14",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-jasmine": "^0.3.6",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "phantomjs": "^1.9.18"
   }
 }
