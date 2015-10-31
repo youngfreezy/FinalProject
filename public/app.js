@@ -19,7 +19,7 @@
       $rootScope.currentUser = user;
       console.log("User from angular cookie is: ", user);
       //  console.log('facebook info is ', user);
-      // ioService.start(io, user);
+      ioService.start(io, user);
 
       $rootScope.$on('$locationChangeStart', function (evt, absNewUrl, absOldUrl) {
         var hashIndex = absOldUrl.indexOf('#!');
