@@ -1,19 +1,19 @@
 angular.module('MyApp')
   .controller('MainCtrl', function ($scope, Recipes, $alert, $http, $location, RecipeBox, $rootScope, $route) {
 
-    
+    console.log($scope.recipe);
 
     $scope.genres = ['Mexican', 'Italian', 'Chinese', 'Korean',
       'American', 'Comfort Food', 'New American', 'Dessert', 'Fruit', 'Vegetarian',
       'Indian', 'West African', 'Japanese', 'Gluten-Free', 'Quick', 'Pizza', 'Romantic', 'Spicy', 'Bland',
-      'Pescatarian', 'Seafood', 'Lobster', 'Pan-Asian', 'Indonesian', 'Vietnamese', 'Hipster', 'Habanero'
+      'Pescatarian', 'Seafood', 'Lobster', 'Kosher', 'Vegan', 'Pan-Asian', 'Indonesian', 'Vietnamese', 'Hipster', 'Habanero'
     ];
 
-    $scope.dietaryRestrictions = ["Vegan", "Pescatarian", "Peanut Allergy", "Wheat Allergy", "Shellfish", "Kosher", "Gluten-Free", "Dairy Free", "Egg-Free", "Vegan", "Low Carbs", "Low Sugar"];
-
+    $scope.allergies = ["Peanuts", "Wheat", "Shellfish"];
+    $scope.dietaryRestrictions = ["Vegan", "Vegetarian", "Pescatarian", "Kosher", "Gluten-Free", "Low Carbs", "Low Sugar", "Dairy-Free"];
     // $scope.userRecipes = [];
     // console.log($scope.userRecipes);     
-
+    var randGenre = $scope.genres[Math.floor(Math.random() * $scope.genres.length)];
     $scope.saveDoneRecipe = function (value, recipe) {
       if (value) {
         Recipes.saveDoneRecipe(recipe).then(function () {
@@ -136,7 +136,11 @@ angular.module('MyApp')
     };
 
 
-
+    $scope.getAllergyRecipes = function (randGenre, allergy) {
+      Recipes.getRecipesByRestrictions(randGenre, allergy).then(function (response) {
+        $scope.recipes = response;
+      });
+    };
     $scope.getGenreRecipes = function (genre) {
       Recipes.getRecipesByGenre(genre).then(function (response) {
         $scope.recipes = response;
@@ -160,28 +164,28 @@ angular.module('MyApp')
       });
     };
     $scope.getUserRecipes = function () {
-      if($rootScope.currentUser){
-        
-      Recipes.getUserRecipes().then(function (response) {
-        // console.log(response);
-        $scope.userRecipes = response;
-        //probably better to store everything in RecipeBox service. 
-        // there could be a reset function.  
-        if(!$scope.userRecipes){
-          RecipeBox.recipeCount = 0;
-        }
-        RecipeBox.recipeCount = $scope.userRecipes.length;
-        // $scope.$apply();
-        // console.log('recipes to display', $scope.userRecipes);
-      });
+      if ($rootScope.currentUser) {
+
+        Recipes.getUserRecipes().then(function (response) {
+          // console.log(response);
+          $scope.userRecipes = response;
+          //probably better to store everything in RecipeBox service. 
+          // there could be a reset function.  
+          if (!$scope.userRecipes) {
+            RecipeBox.recipeCount = 0;
+          }
+          RecipeBox.recipeCount = $scope.userRecipes.length;
+          // $scope.$apply();
+          // console.log('recipes to display', $scope.userRecipes);
+        });
       }
     };
-    
-    $scope.$on("getUserRecipes", function(){
+
+    $scope.$on("getUserRecipes", function () {
       $scope.getUserRecipes();
     });
 
-    var randGenre = $scope.genres[Math.floor(Math.random() * $scope.genres.length)];
+
     var init = function (randGenre) {
       Recipes.getQuickRecipes(randGenre).then(function (response) {
 

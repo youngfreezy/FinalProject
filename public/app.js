@@ -1,6 +1,6 @@
   // // TODO: replace ngCookies strategy with another authentication strategy.
   // angular.run(document).ready();
-  angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap', 'ngCookies', 'ngAnimate'])
+  angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap', 'ngCookies', 'ngAnimate', 'sn.addthis'])
     .constant('io', window.io)
     .run(function ($cookies, $rootScope, ioService, $location, io) {
       //Fixing facebook bug with redirect 

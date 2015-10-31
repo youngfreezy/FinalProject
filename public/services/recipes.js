@@ -103,13 +103,14 @@ angular.module('MyApp')
         });
       },
 
-      getRecipesByRestrictions: function (allergy) {
+      getRecipesByRestrictions: function (randGenre, allergy) {
         return $http.jsonp("http://api.yummly.com/v1/api/recipes?callback=JSON_CALLBACK", {
           params: {
             "_app_id": id,
             "_app_key": key,
-            "q": genre,
-            "maxResult": 6
+            "maxResult": 6,
+            "requirePictures": true,
+            "excludedIngredient[]": [allergy]
           }
         }).then(function (response) {
           console.log(response.data);

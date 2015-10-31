@@ -26,7 +26,7 @@
                         <img class="img-rounded"ng-src="{{recipe.image}}">
                         </span>
                         <br>
-                        <a href="{{recipe.recipeUrl}}" target="_blank">{{recipe.name}}</a>
+                        <a class="link" style="text-decoration: underline; color: blue" href="{{recipe.recipeUrl}}" target="_blank">{{recipe.name}}</a>
                         <div>
                             Added by {{recipe.userName}}
                         </div>
@@ -44,7 +44,7 @@
                                 
                                 <ul>
                                     <li ng-repeat="comnt in recipe.comments"> {{ comnt.body }}
-                                        <a class="glyphicon glyphicon-remove pull-right" ng-click="deleteComment(recipe._id, comnt._id) "></a>
+                                        <span ng-if="currentUser._id == comnt.author" class="glyphicon glyphicon-remove pull-right" ng-click="deleteComment(recipe._id, comnt._id) "></span>
                                     </li>
                                 </ul>
                                 <br>

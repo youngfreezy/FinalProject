@@ -36,7 +36,7 @@
                     <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
                     <div class="text-center">
                         <!-- {# create a new route recipe, and recipe:id #} -->
-                        <a href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
+                        <a class="link" style="text-decoration: underline; color: blue" href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
                         <!-- {# <p class="text-muted">Episodes: {{show.episodes.length}}</p> #} -->
                         <br>
                         <a href="" ng-click="addRecipe(recipe)" style="font-family: Comic Sans MS">Save To Recipe Box</a>
@@ -56,11 +56,20 @@
     <div class="col-sm-3 sidebar panel panel-default" style="padding-left: 0px; padding-right:0px;  background-color: #FDF3E7">
         <center>
             <h5>
-        Allergies or Dietary Restrictions?
+        Dietary Restrictions
             </h5>
         <!-- setting the model here even though not delcared in controller. -->
         <select ng-model="genre" class="form-control" ng-change="getGenreRecipes(genre)">
             <option ng-repeat="item in dietaryRestrictions track by $index">{{item}}</option>
+        </select>
+        </center>
+        <center>
+            <h5>
+        Allergies
+            </h5>
+        <!-- setting the model here even though not delcared in controller. -->
+        <select ng-model="genre" class="form-control" ng-change="getAllergyRecipes(randGenre, allergy)">
+            <option ng-repeat="item in allergies">{{item}}</option>
         </select>
         </center>
         <br>
@@ -120,7 +129,7 @@
                     <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
                     <div class="text-center">
                         <!-- {# create a new route recipe, and recipe:id #} -->
-                        <a href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
+                        <a class="link" style="text-decoration: underline; color: blue" href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
                         <!-- {# <p class="text-muted">Episodes: {{show.episodes.length}}</p> #} -->
                         <br>
                         <a href="" ng-click="addRecipe(recipe)">Add To Recipe Box</a>

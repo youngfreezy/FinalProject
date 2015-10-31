@@ -9,8 +9,8 @@
             </div>
             <div ng-show="currentUser != undefined" class="pull-right">
                 <button type="submit" ng-click="deleteAllUserRecipes()">
-                        Clear Recipe Box
-                    </button>
+                    Clear Recipe Box
+                </button>
             </div>
         </div>
         <div class="panel-body">
@@ -19,27 +19,30 @@
                 <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
                     <p>
                         <center>
-                        <img class="img-responsive img-rounded" ng-src="{{recipe.image}}">
-                        <input type="checkbox" ng-model="recipeDone" ng-change="saveDoneRecipe(recipeDone, recipe)"> Recipe Complete
-                        <br>
-                        <span>
-                        {{recipe.name}}
-                        </span>
-                        <span>
+                            <img class="img-responsive img-rounded" ng-src="{{recipe.image}}">
+                            <input type="checkbox" ng-model="recipeDone" ng-change="saveDoneRecipe(recipeDone, recipe)"> Recipe Complete
+                            <br>
+                            <!-- <pre>
+                                {{recipe || json }}
+                            </pre> -->
+                            <a class="link" style="text-decoration: underline; color: blue" href="{{recipe.recipeUrl}}">{{recipe.name}}</a>
+                            <span>
                             <br>
                         Servings: {{recipe.numServings}}<br>
-                        <a href="{{recipe.recipeUrl}}" target="_blank">Recipe Link</a><br>
+                       
                         <span class="glyphicon glyphicon-remove" ng-click="deleteRecipe(recipe)"></span>
-                        </span>
+                            </span>
                         </center>
                     </p>
                 </div>
             </div>
-            <div class="addthis_native_toolbox"></div>
+            <sn-addthis-toolbox data-url="http://quickrecipesapp.herokuapp.com/#!/add" data-title="Recipe Box" data-description="foo bar">
+                <a href class="addthis_button_facebook"></a>
+                <a href class="addthis_button_twitter"></a>
+            </sn-addthis-toolbox>
         </div>
     </div>
-
-     <!--TODO: Complete Recipes Box <div class="panel panel-default">
+    <!--TODO: Complete Recipes Box <div class="panel panel-default">
         <div class="panel-heading">Completed Recipes
             <div ng-show="currentUser == undefined">
                 <center>
@@ -53,11 +56,11 @@
                     </button>
             </div>
         </div> -->
-        
-        <!-- <div class="panel-body">
+    <!-- <div class="panel-body">
             <div class="row show-list">
-         -->        <!-- <pre>{{currentUser | json }}</pre> -->
-               <!--  <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
+         -->
+    <!-- <pre>{{currentUser | json }}</pre> -->
+    <!--  <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
                     <p>
                         <center>
                         <img class="img-responsive img-rounded" ng-src="{{recipe.image}}">
