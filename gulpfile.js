@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var mocha = require('gulp-mocha');
 var sass = require('gulp-sass');
 var plumber = require('gulp-plumber');
 var jshint = require('gulp-jshint');
@@ -8,6 +9,7 @@ var angularProof = require('gulp-ng-annotate');
 var autoPrefixCss = require('gulp-autoprefixer');
 var gulpif = require('gulp-if');
 var cssmin = require('gulp-cssmin');
+
 // todo: add concatentation
 
 var production = process.env.NODE_ENV === 'production';
@@ -44,6 +46,11 @@ gulp.task('compress', function () {
     .pipe(gulp.dest('public'));
 });
 
+gulp.task('test', function() {
+  return gulp.src('Server/test/test.js', {read: false})
+  .pipe(mocha({reporter: 'spec'}));
+});
+
 gulp.task('watch', function () {
   gulp.watch('public/stylesheets/*.scss', ['sass']);
   gulp.watch([
@@ -53,5 +60,5 @@ gulp.task('watch', function () {
   ], ['jshint', 'compress']);
 });
 
-gulp.task('default', ['sass', 'watch', 'jshint', 'compress']);
+gulp.task('default', ['sass', 'watch', 'jshint', 'compress', 'test']);
 gulp.task('build', ['sass', 'compress']);
