@@ -20,6 +20,16 @@
             <a class="navbar-brand" href="/">
                 Seven<strong>Steps</strong></a>
         </div>
+        <div class="navbar-header pull-right">
+            <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
+            <li data-match-route="/login"><a href="/#!/login">Login</a></li>
+            <li data-match-route="/signup"><a href="/#!/signup">Sign up</a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right" ng-if="currentUser">
+            <li ng-cloak class="navbar-text">{{message}}</li>
+            <li><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
+        </ul>
+        </div>
         <ul class="nav navbar-nav">
             <li><a href="/#!">Home</a></li>
             <li data-match-route="/add">
@@ -30,14 +40,7 @@
                 <a href="/#!/profile">Profile</a>
             </li>
         </ul>
-        <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
-            <li data-match-route="/login"><a href="/#!/login">Login</a></li>
-            <li data-match-route="/signup"><a href="/#!/signup">Sign up</a></li>
-        </ul>
-        <ul class="nav navbar-nav pull-right" ng-if="currentUser">
-            <li ng-cloak class="navbar-text">{{message}}</li>
-            <li><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
-        </ul>
+        
     </div>
     <div ng-view></div>
     <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
