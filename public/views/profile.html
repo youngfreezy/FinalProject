@@ -18,12 +18,12 @@
 </pre> -->
 
 <div ng-if="currentUser.facebook && !currentUser.image">
-    <img ng-src="{{$root.currentUser.facebook.pictures}}">
+    <img ng-src="{{$root.currentUser.facebook.pictures}}" style="max-height: 200px; max-width: 200px">
 </div>
 
 <div ng-if="currentUser != undefined"> 
     <!-- <img ng-src="/getpicture/{{currentUser._id}}?{{$root.timestamp}}">  -->
-     <img data-ng-src="data:image/png;base64,{{currentUser.image}}"/>
+     <img data-ng-src="data:image/png;base64,{{currentUser.image}}" style="max-height: 200px; max-width: 200px"/>
 
     <!-- <button ng-click="getCurrentUser(currentUser_id)" >lalala</button> -->
 </div>
