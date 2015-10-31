@@ -17,7 +17,7 @@
         user = JSON.parse(user);
       }
       $rootScope.currentUser = user;
-      console.log("User from angular cookie is: ", user);
+      // console.log("User from angular cookie is: ", user);
       //  console.log('facebook info is ', user);
       ioService.start(io, user);
 

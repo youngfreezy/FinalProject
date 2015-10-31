@@ -15,7 +15,7 @@ angular.module('MyApp')
     $scope.getCurrentUser = function (id) {
       Profile.getCurrentUser(id).then(function (response) {
         $rootScope.currentUser = response.data;
-        console.log("GETTTING THE CURRENT USERRRR", response.data);
+        // console.log("GETTTING THE CURRENT USERRRR", response.data);
         // console.log('lalala', $rootScope.currentUser);
       }, function (err) {
         console.log('error occured', err);

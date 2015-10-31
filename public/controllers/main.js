@@ -17,7 +17,7 @@ angular.module('MyApp')
     $scope.saveDoneRecipe = function (value, recipe) {
       if (value) {
         Recipes.saveDoneRecipe(recipe).then(function () {
-          console.log('saved done user recipes');
+          // console.log('saved done user recipes');
         }, function (err) {
           console.log('error occured', err);
         });
@@ -25,7 +25,7 @@ angular.module('MyApp')
       }
 
       Recipes.saveUnDoneRecipe(recipe).then(function () {
-        console.log('saved undone user recipes');
+        // console.log('saved undone user recipes');
       }, function (err) {
         console.log('error occured', err);
       });
@@ -49,7 +49,7 @@ angular.module('MyApp')
 
         RecipeBox.recipeCount--;
         // console.log();
-        console.log("deleted recipe");
+        // console.log("deleted recipe");
       }, function (err) {
         console.log("error occured when deleting", err);
       });
