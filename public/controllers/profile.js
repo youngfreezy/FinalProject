@@ -77,6 +77,7 @@ angular.module('MyApp')
 
   })
   .directive('fileInput', ['$parse',
+    //parse translates a string to an actual expression.
     function ($parse) {
       return {
         restrict: 'A',

@@ -159,9 +159,6 @@ angular.module('MyApp')
         // console.log($scope.individualRecipe);
       });
     };
-    $scope.$on("getUserRecipes", function(){
-      $scope.getUserRecipes();
-    });
     $scope.getUserRecipes = function () {
       if($rootScope.currentUser){
         
@@ -179,6 +176,10 @@ angular.module('MyApp')
       });
       }
     };
+    
+    $scope.$on("getUserRecipes", function(){
+      $scope.getUserRecipes();
+    });
 
     var randGenre = $scope.genres[Math.floor(Math.random() * $scope.genres.length)];
     var init = function (randGenre) {
