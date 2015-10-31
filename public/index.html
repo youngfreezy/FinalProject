@@ -14,13 +14,13 @@
 
 <body style="background-color:#7E8F7C">
     <!-- angular nav strap bar active class is applied automatically to <li> elements when you change routes.  -->
-    <div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar>
+    <div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar style="background-color: #FDF3E7">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
                 Seven<strong>Steps</strong></a>
         </div>
         <ul class="nav navbar-nav">
-            <li data-match-route="/$"><a href="/">Home</a></li>
+            <li><a href="/#!">Home</a></li>
             <li data-match-route="/add">
                 <a href="/#!/add">Recipe Box <span ng-cloak class="badge" ng-if="currentUser != undefined">{{recipeBox.recipeCount}}</span> 
                 </a></li>

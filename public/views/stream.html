@@ -22,23 +22,26 @@
                 <div class="fade-repeat flex-item" ng-repeat="recipe in recipeStreamLimited | orderBy: '-upvotes' ">
                     <p>
                         <!-- dont display upvotes if -->
-                        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)">{{recipe.upvotes}}</span>
-                        <img ng-src="{{recipe.image}}">
+                        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)">{{recipe.upvotes}}
+                        <img class="img-rounded"ng-src="{{recipe.image}}">
+                        </span>
                         <br>
-                        <a href="{{recipe.recipeUrl}}" target="_blank">Recipe Link</a>
+                        <a href="{{recipe.recipeUrl}}" target="_blank">{{recipe.name}}</a>
                         <div>
-                            Recipe added by {{recipe.userName}} :
+                            Added by {{recipe.userName}}
                         </div>
-                        <br> {{recipe.name}}
-                        <br> {{recipe.numServings}}
+                        {{recipe.numServings}}
                     </p>
                     <div id='dv1'>
+                        <center>
+                        </center>
                         <form class="form-group" >
-                            Post your Comment
+                            
                             <form>
-                                <textarea ng-model="txtcomment" placeholder="Your Comment "> </textarea>
+                                <textarea ng-model="txtcomment" placeholder="Comment "> </textarea>
+                                
                                 <button ng-click='saveComment(recipe, txtcomment)'>Post Comment</button>
-                                <h4> Comments: </h4>
+                                
                                 <ul>
                                     <li ng-repeat="comnt in recipe.comments"> {{ comnt.body }}
                                         <a class="glyphicon glyphicon-remove pull-right" ng-click="deleteComment(recipe._id, comnt._id) "></a>
@@ -49,6 +52,7 @@
                                 <br>
                                 <br>
                             </form>
+                        </form>
                     </div>
                 </div>
             </div>

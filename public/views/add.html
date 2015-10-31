@@ -18,20 +18,67 @@
                 <!-- <pre>{{currentUser | json }}</pre> -->
                 <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
                     <p>
-                        <img ng-src="{{recipe.image}}">
-                        <input type="checkbox" ng-model="recipeDone" ng-change="saveDoneRecipe(recipeDone, recipe)">
+                        <center>
+                        <img class="img-responsive img-rounded" ng-src="{{recipe.image}}">
+                        <input type="checkbox" ng-model="recipeDone" ng-change="saveDoneRecipe(recipeDone, recipe)"> Recipe Complete
                         <br>
+                        <span>
                         {{recipe.name}}
-                        <br> 
+                        </span>
+                        <span>
+                            <br>
                         Servings: {{recipe.numServings}}<br>
                         <a href="{{recipe.recipeUrl}}" target="_blank">Recipe Link</a><br>
-                        <a ng-click="deleteRecipe(recipe)">Delete Recipe</a>
+                        <span class="glyphicon glyphicon-remove" ng-click="deleteRecipe(recipe)"></span>
+                        </span>
+                        </center>
                     </p>
                 </div>
             </div>
             <div class="addthis_native_toolbox"></div>
         </div>
     </div>
+
+     <!--TODO: Complete Recipes Box <div class="panel panel-default">
+        <div class="panel-heading">Completed Recipes
+            <div ng-show="currentUser == undefined">
+                <center>
+                    <a href="/#!/login/" style="text-decoration: underline">
+                        Login</a> to add recipes!
+                </center>
+            </div>
+            <div ng-show="currentUser != undefined" class="pull-right">
+                <button type="submit" ng-click="deleteAllUserRecipes()">
+                        Clear Recipe Box
+                    </button>
+            </div>
+        </div> -->
+        
+        <!-- <div class="panel-body">
+            <div class="row show-list">
+         -->        <!-- <pre>{{currentUser | json }}</pre> -->
+               <!--  <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
+                    <p>
+                        <center>
+                        <img class="img-responsive img-rounded" ng-src="{{recipe.image}}">
+                        <input type="checkbox" ng-model="recipeDone" ng-change="saveDoneRecipe(recipeDone, recipe)"> Recipe Complete
+                        <br>
+                        <span>
+                        {{recipe.name}}
+                        </span>
+                        <span>
+                            <br>
+                        Servings: {{recipe.numServings}}<br>
+                        <a href="{{recipe.recipeUrl}}" target="_blank">Recipe Link</a><br>
+                        <span class="glyphicon glyphicon-remove" ng-click="deleteRecipe(recipe)"></span>
+                        </span>
+                        </center>
+                    </p>
+                </div>
+            </div>
+            <div class="addthis_native_toolbox"></div>
+        </div>
+    </div> -->
 </div>
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <!-- TODO: test this out when deployed -->
