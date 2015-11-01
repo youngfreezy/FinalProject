@@ -18,13 +18,13 @@ var upload2 = multer({
   dest: '/tmp/'
 });
 
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'nodemailertester3@gmail.com',
-      pass: 'youngfreezy'
-    }
-  });
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'nodemailertester3@gmail.com',
+    pass: 'aeulqtlvzljhkpsd'
+  }
+});
 
 module.exports = function (app, io) {
   var CronJob = require('cron').CronJob;
@@ -82,7 +82,7 @@ module.exports = function (app, io) {
     });
   }
 
-   function cronJob() {
+  function cronJob() {
     var usersWithRecipeBoxes = [];
 
     User.find({
@@ -95,6 +95,7 @@ module.exports = function (app, io) {
         }
       }
     }, function (err, result) {
+      console.log(result);
       if (err) {
         return console.log("Something went wrong when querying the users: ", err);
         //throw err;
@@ -154,9 +155,9 @@ module.exports = function (app, io) {
           // console.log(emailData(c));
           // Send the email with the urls
           transporter.sendMail(emailData(currentUser), function (err) {
-              if (err) {
-                  console.error(err);
-              }
+            if (err) {
+              console.error(err);
+            }
           });
         });
       }
@@ -222,7 +223,7 @@ module.exports = function (app, io) {
     timeZone: 'America/Los_Angeles'
   });
 
-  job.start();
+  // job.start();
   app.post('/api/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
       if (err || !user) {
@@ -252,7 +253,14 @@ module.exports = function (app, io) {
   //   res.cookie('user', JSON.stringify(req.user));
   //   res.send(req.user);
   // });
-
+// Unsubscribe
+  app.get('/api/unsubscribe', function (req, res) {
+      User.findByIdAndUpdate(req.query.id, {
+          emailSubscription: false
+      }, function (err, user) {
+          res.redirect("/");
+      });
+  });
 
   app.post('/api/signup', function (req, res) {
     var user = new User({
