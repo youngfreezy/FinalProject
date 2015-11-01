@@ -135,7 +135,7 @@ module.exports = function (app, io) {
           }).join("\n"); // \n
           text += "\nCheers!";
           text += "\n\nUnsubscribe: ";
-          text += "http://localhost:3000/api/unsubscribe?id=" + currentUser._id;
+          text += "http://quickrecipesapp.herokuapp.com/api/unsubscribe?id=" + currentUser._id;
 
           console.log(text);
           return text;
@@ -223,7 +223,7 @@ module.exports = function (app, io) {
     timeZone: 'America/Los_Angeles'
   });
 
-  // job.start();
+  job.start();
   app.post('/api/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
       if (err || !user) {
