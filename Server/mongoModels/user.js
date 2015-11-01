@@ -24,9 +24,7 @@ var userSchema = new Schema({
     token: String,
     pictures: String
   },
-  // recipesDone: [mongoose.Schema.ObjectId],
-  // each time someone adds a recipe, push it here.
-  // recipeBox: [mongoose.Schema.ObjectId]
+  
   // can refactor this with $populate
    recipeBox: [{
     id: ObjectId,

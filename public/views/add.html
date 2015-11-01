@@ -26,7 +26,7 @@
                             <!-- <pre>
                                 {{recipe || json}}
                             </pre> -->
-                            <input ng-model ="recipeDone" type="checkbox" ng-checked="recipe.done" ng-change="toggleDoneRecipe(recipeDone, recipe)"/> Recipe Complete <pre>
+                            <input ng-model ="recipe.done" type="checkbox" ng-checked="recipe.done" ng-click="toggleDoneRecipe(recipe.done, recipe)"/> Recipe Complete <pre>
                                 
                             {{recipe.done || json}}
                             </pre> 

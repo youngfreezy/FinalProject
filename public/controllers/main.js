@@ -80,7 +80,7 @@ angular.module('MyApp')
     // $scope.done = $scope.isDone();
     $scope.toggleDoneRecipe = function (value, recipe) {
 
-      if (value) {
+      if (value === false) {
         Recipes.saveDoneRecipe(recipe).then(function (response) {
 
           $rootScope.currentUser = response.data;
@@ -92,6 +92,8 @@ angular.module('MyApp')
         });
         return;
       }
+      if (value === true) {
+
 
       Recipes.saveUnDoneRecipe(recipe).then(function (response) {
         // console.log('saved undone user recipes');
@@ -103,7 +105,9 @@ angular.module('MyApp')
       }, function (err) {
         console.log('error occured', err);
       });
+      }
     };
+
 
     $scope.deleteRecipe = function (recipe) {
       Recipes.deleteRecipe(recipe).then(function () {
