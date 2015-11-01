@@ -125,6 +125,8 @@ module.exports = function (app, io) {
             return c.recipeUrl;
           }).join("\n"); // \n
           text += "Cheers!";
+          // TODO: click here to unsubscribe.
+
           return text;
         }
 

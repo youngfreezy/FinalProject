@@ -44,6 +44,13 @@ angular.module('MyApp')
      $scope.setUsertoSubscribe = function () {
       Recipes.saveUserSubscription($rootScope.currentUser._id).then(function (response) {
         $rootScope.currentUser = response.data;
+          
+            $alert({
+              content: "Thanks for Signing Up!",
+              animation: 'fadeZoomFadeDown',
+              type: 'material',
+              duration: 2
+            });
       });
     };
 

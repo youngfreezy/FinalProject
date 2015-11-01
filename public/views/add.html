@@ -25,10 +25,10 @@
             <br>
             <div class="row show-list">
                 <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
-                <pre>{{$root.currentUser.recipeBox | json }}</pre>
+                <!-- <pre>{{$root.currentUser.recipeBox | json }}</pre>
                     <pre>
                         {{currentUser || json}}
-                    </pre>
+                    </pre> -->
                     <p>
                         <center>
                             <img class="img-responsive img-rounded" ng-src="{{recipe.image}}">
