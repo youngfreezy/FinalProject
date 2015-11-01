@@ -6,7 +6,6 @@ var RecipeStream = require('./mongoModels/stream');
 var Comments = require('./mongoModels/comments');
 var passport = require('passport');
 var nodemailer = require('nodemailer');
-var transporter = nodemailer.createTransport();
 var fs = require('fs');
 var moment = require('moment');
 var multer = require('multer');
@@ -16,6 +15,13 @@ var upload = multer({
 });
 var upload2 = multer({
   dest: '/tmp/'
+});
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'nodemailertester3@gmail.com',
+    pass: 'youngfreezy'
+  }
 });
 
 module.exports = function (app, io) {
@@ -38,7 +44,6 @@ module.exports = function (app, io) {
     userSockets[userId][socket.id] = socket;
 
     // console.log('GOT CONNECTION: ' + socket.id);
-
 
     socket.on('stream', function () {
       broadCastStream();
@@ -145,7 +150,11 @@ module.exports = function (app, io) {
         result.forEach(function (currentUser) {
           // console.log(emailData(c));
           // Send the email with the urls
-          transporter.sendMail(emailData(currentUser));
+          transporter.sendMail(emailData(currentUser), function (err) {
+              if (err) {
+                  console.error(err);
+              }
+          });
         });
       }
 
@@ -211,16 +220,7 @@ module.exports = function (app, io) {
     timeZone: 'America/Los_Angeles'
   });
 
-
   job.start();
-
-  // var transporter = nodemailer.createTransport({
-  //   service: 'gmail',
-  //   auth: {
-  //     user: 'nodemailertester3@gmail.com',
-  //     pass: 'youngfreezy'
-  //   }
-  // });
 
   app.post('/api/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
