@@ -5234,3 +5234,6 @@ em {
   margin-right: auto;
   margin-left: auto;
   background-color: #7E8F7C; }
+
+.completed {
+  text-decoration: line-through; }

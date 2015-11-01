@@ -41,6 +41,12 @@ angular.module('MyApp')
       });
     };
 
+     $scope.setUsertoSubscribe = function () {
+      Recipes.saveUserSubscription($rootScope.currentUser._id).then(function (response) {
+        $rootScope.currentUser = response.data;
+      });
+    };
+
     $scope.getUserRecipeBox = function (id) {
       if ($rootScope.currentUser) {
 
@@ -63,7 +69,7 @@ angular.module('MyApp')
         var box = $rootScope.currentUser.recipeBox;
         var recipes = $scope.userRecipes;
 
-        console.log(box, recipes);
+        // console.log(box, recipes);
         for (i = 0; i < box.length; i++) {
           for (var j = 0; j < recipes.length; j++) {
 

@@ -78,35 +78,38 @@ module.exports = function (app, io) {
     var usersWithRecipeBoxes = [];
 
     User.find({
+      // this finds all the users
+      emailSubscription: true,
       recipeBox: {
         $exists: true,
         $not: {
           $size: 0
         }
       }
+
     }, function (err, result) {
       if (err) {
         return console.log("Something went wrong when querying the users: ", err);
         //throw err;
       }
-      result = result.map(function (c) {
+      result = result.map(function (currentUser) {
+        //currentUser is an element of the result array. 
         return {
-          name: c.name,
-          email: c.email,
-          // {
-          // if you dont want recipe box take this out:
-          recipeBox: c.recipeBox,
+          name: currentUser.name,
+          email: currentUser.email,
+          recipeBox: currentUser.recipeBox,
 
           //  filter: [{ _id: ObjectId, done: false }]
           //  map:    [ ObjectId, ObjectId, ObjectId, ObjectId... ]
-          incompleteRecipes: c.recipeBox.filter(function (cc) {
-            return cc.done === false;
-          }).map(function (cc) {
-            return cc._id;
+          incompleteRecipes: currentUser.recipeBox.filter(function (currentRecipe) {
+            return currentRecipe.done === false;
+          }).map(function (currentRecipe) {
+            return currentRecipe._id;
           })
         };
       });
-
+      //result is now an array of objects (which we return on line 22, filtered with incomplete recipes by Id)
+      //concating to avoid nesting
       usersWithRecipeBoxes = usersWithRecipeBoxes.concat(result);
 
       // [{ incompleteRecips: [ObjectIds] }]
@@ -114,52 +117,46 @@ module.exports = function (app, io) {
 
       function sendEmails() {
 
-        function emailText(cResult) {
+        function emailText(currentUser) {
           var text = "";
-          text += "Hello " + cResult.name;
-          text += "Please review your cart. Your current items are: ";
-          text += cResult.incompleteRecipes.map(function (c) {
+          text += "Hello " + currentUser.name;
+          text += "You have the following recipes waiting to be completed!";
+          text += currentUser.incompleteRecipes.map(function (c) {
             return c.recipeUrl;
           }).join("\n"); // \n
           text += "Cheers!";
           return text;
         }
 
-        function emailData(cResult) {
+        function emailData(currentUser) {
           return {
             from: 'nodemailertester3@gmail.com',
-            to: cResult.email,
+            to: currentUser.email,
             subject: 'hello',
-            text: emailText(cResult)
+            text: emailText(currentUser)
           };
         }
 
         // For every user
-        result.forEach(function (c) {
+        result.forEach(function (currentUser) {
           // console.log(emailData(c));
           // Send the email with the urls
-          transporter.sendMail(emailData(c));
+          transporter.sendMail(emailData(currentUser));
         });
       }
 
-      function done() {
-        // console.log(usersWithRecipeBoxes);
-        // fs.writeFileSync("dbresponse1.json", JSON.stringify(usersWithRecipeBoxes, null, 4));
-        // return;
-
-        //send email inside the callback:
-        sendEmails();
-      }
 
       function checkComplete() {
+        //calling checkComplete each time a DB query is done/executed. don't know when it will end, this 
+        // is a way to handle asynchronicity.
         if (++complete === result.length) {
-          done();
+          sendEmails();
         }
       }
 
-      function findIncompleteRecipes(cResult) {
+      function findIncompleteRecipes(currentUser) {
 
-        Recipe.find().where('_id').in(cResult.incompleteRecipes).select({
+        Recipe.find().where('_id').in(currentUser.incompleteRecipes).select({
           recipeUrl: 1,
           name: 1
         }).exec(function (err, incompleteRecipes) {
@@ -168,27 +165,24 @@ module.exports = function (app, io) {
             checkComplete();
             return console.log("Something went wrong when querying the recipes: ", err);
           }
-          cResult.incompleteRecipes = incompleteRecipes;
+          //this replaces the IDs with actual recipes. similar to populate.
+          currentUser.incompleteRecipes = incompleteRecipes;
           checkComplete();
           return;
         });
       }
+      //if no users with incomplete recipes, call the done function.  
       if (result.length === 0) {
         return done();
       }
+      //go through results of current Users with recipe boxes, and there there will be actual recipes in their recipe boXes.  
       for (var i = 0; i < result.length; ++i) {
         findIncompleteRecipes(result[i]);
       }
     });
   }
 
-  // get all info from the db.
-  // var usersWithRecipeBoxes = User.find({
-  //   recipeBox.length >= 1
-  // });
-  //find all the users where recipeBox.length >= 1
-  //get the recipebox itself
-  //every three days, grab the first three recipes.
+
 
   var job = new CronJob({
     // cronTime: '10 * * * * *' ---> once every minute at the 10 second mark.
@@ -285,7 +279,9 @@ module.exports = function (app, io) {
   app.get('/auth/facebook/callback', function (req, res, next) {
 
 
-    passport.authenticate('facebook', {successRedirect: req.session.returnTo},function (err, user, info) {
+    passport.authenticate('facebook', {
+      successRedirect: req.session.returnTo
+    }, function (err, user, info) {
       // console.log(' in the callback ');
       var redirectUrl = "/#!/login";
       if (err) {
@@ -300,23 +296,23 @@ module.exports = function (app, io) {
         // console.log("==================== This is the user from routes.js", req.user);
         res.cookie('user', JSON.stringify(user));
       }
-     
-        if(req.session.redirectUrl) {
-          redirectUrl = req.session.redirectUrl;
-          req.session.redirectUrl = null;
-        }
-         //actually storing the fact that they are logged in:
+
+      if (req.session.redirectUrl) {
+        redirectUrl = req.session.redirectUrl;
+        req.session.redirectUrl = null;
+      }
+      //actually storing the fact that they are logged in:
       req.logIn(user, function (err) {
         if (err) {
           return next(err);
         }
         console.log('=========== here!', user);
       });
-        console.log('=========== here ALSO!!', req.session.redirectUrl);
-        console.log('=========== here ALSO!!', req.session.redirectUrl);
-        res.redirect(req.session.returnTo);
-        
-        
+      console.log('=========== here ALSO!!', req.session.redirectUrl);
+      console.log('=========== here ALSO!!', req.session.redirectUrl);
+      res.redirect(req.session.returnTo);
+
+
     })(req, res, next);
   });
 
@@ -545,6 +541,23 @@ module.exports = function (app, io) {
   //   });
   // });
 
+  app.put('/api/:user/subscription', function (req, res) {
+    var userId = req.user._id;
+    var query = {
+      _id: userId
+    };
+    console.log("HERRREE", userId);
+    User.findOneAndUpdate(query, {
+
+      emailSubscription: true
+    }).exec(function (err, user) {
+      if (err) {
+        throw err;
+      }
+      res.json(user);
+    });
+  });
+
   app.delete('/api/users/:userid/recipes/:recipeId', function (req, res) {
     var recipeId = req.params.recipeId;
     var userId = req.user._id;
@@ -758,24 +771,24 @@ module.exports = function (app, io) {
     var file = req.file;
     console.log('file', file);
 
-fs.readFile(file.path, function (err, data) {
-  if (err) throw err;
-  console.log(data);
+    fs.readFile(file.path, function (err, data) {
+      if (err) throw err;
+      console.log(data);
 
-  var base64data = new Buffer(data).toString('base64');
-  // image: data.buffer.toString('base64')
-
-
-    // var writestream = GridFS.createWriteStream({
-    //   filename: file.name,
-    //   mode: 'w',
-    //   content_type: file.mimetype,
-    //   metadata: req.body,
-    // });
-    // fs.createReadStream(file.path).pipe(writestream);
+      var base64data = new Buffer(data).toString('base64');
+      // image: data.buffer.toString('base64')
 
 
-    // writestream.on('close', function (file) {
+      // var writestream = GridFS.createWriteStream({
+      //   filename: file.name,
+      //   mode: 'w',
+      //   content_type: file.mimetype,
+      //   metadata: req.body,
+      // });
+      // fs.createReadStream(file.path).pipe(writestream);
+
+
+      // writestream.on('close', function (file) {
       // console.log("============", file);
 
       var userId = req.user._id;
@@ -847,10 +860,10 @@ fs.readFile(file.path, function (err, data) {
     if (req.isAuthenticated()) {
       return next();
     }
-     
-    
-      res.redirect(req.session.returnTo);
-      
+
+
+    res.redirect(req.session.returnTo);
+
   }
 
 };

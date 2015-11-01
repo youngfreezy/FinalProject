@@ -24,6 +24,8 @@ var userSchema = new Schema({
     token: String,
     pictures: String
   },
+
+  emailSubscription: Boolean,
   
   // can refactor this with $populate
    recipeBox: [{

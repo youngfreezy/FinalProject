@@ -32,6 +32,11 @@ angular.module('MyApp')
         //resolve errors with divs in the controller. 
       },
 
+      saveUserSubscription: function(userId) {
+        console.log("Howdy");
+        return $http.put('/api/' + userId + '/subscription');
+      },
+
 
       SaveRecipeInStreamWithComments: function (id, comment) {
         return $http.post('/api/stream/' + id + '/comments', comment);
