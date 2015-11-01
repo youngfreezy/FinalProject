@@ -223,7 +223,7 @@ module.exports = function (app, io) {
     timeZone: 'America/Los_Angeles'
   });
 
-  // job.start();
+  job.start();
   app.post('/api/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
       if (err || !user) {
