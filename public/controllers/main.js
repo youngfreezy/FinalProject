@@ -270,7 +270,7 @@ angular.module('MyApp')
         });
       }
     };
-    var id = $rootScope.currentUser._id;
+    // var id = $rootScope.currentUser._id;
 
 
     $scope.$on("getUserRecipes", function () {
