@@ -200,9 +200,9 @@ module.exports = function (app, io) {
 
   var job = new CronJob({
     // cronTime: '10 * * * * *' ---> once every minute at the 10 second mark.
-    // cronTime: '*/10 * * * * *',
+    cronTime: '*/10 * * * * *',
     //this will be run every three days at 11:30
-    cronTime: '00 30 11 * * */3',
+    // cronTime: '00 30 11 * * */3',
     onTick: function () {
 
       cronJob();
