@@ -86,15 +86,15 @@ module.exports = function (app, io) {
           $size: 0
         }
       }
-
     }, function (err, result) {
       if (err) {
         return console.log("Something went wrong when querying the users: ", err);
         //throw err;
       }
       result = result.map(function (currentUser) {
-        //currentUser is an element of the result array. 
+        //currentUser is an element of the result array.
         return {
+          _id: currentUser._id,
           name: currentUser.name,
           email: currentUser.email,
           recipeBox: currentUser.recipeBox,
@@ -124,9 +124,11 @@ module.exports = function (app, io) {
           text += currentUser.incompleteRecipes.map(function (c) {
             return c.recipeUrl;
           }).join("\n"); // \n
-          text += "Cheers!";
-          // TODO: click here to unsubscribe.
+          text += "\nCheers!";
+          text += "\n\nUnsubscribe: ";
+          text += "http://localhost:3000/api/unsubscribe?id=" + currentUser._id;
 
+          console.log(text);
           return text;
         }
 
@@ -149,7 +151,7 @@ module.exports = function (app, io) {
 
 
       function checkComplete() {
-        //calling checkComplete each time a DB query is done/executed. don't know when it will end, this 
+        //calling checkComplete each time a DB query is done/executed. don't know when it will end, this
         // is a way to handle asynchronicity.
         if (++complete === result.length) {
           sendEmails();
@@ -173,18 +175,16 @@ module.exports = function (app, io) {
           return;
         });
       }
-      //if no users with incomplete recipes, call the done function.  
-      if (result.length === 0) {
-        return done();
-      }
-      //go through results of current Users with recipe boxes, and there there will be actual recipes in their recipe boXes.  
+      //if no users with incomplete recipes, call the done function.
+      //if (result.length === 0) {
+      //    sendEmails();
+      //}
+      //go through results of current Users with recipe boxes, and there there will be actual recipes in their recipe boXes.
       for (var i = 0; i < result.length; ++i) {
         findIncompleteRecipes(result[i]);
       }
     });
   }
-
-
 
   var job = new CronJob({
     // cronTime: '10 * * * * *' ---> once every minute at the 10 second mark.
@@ -202,17 +202,18 @@ module.exports = function (app, io) {
        //make a test route to sendAllEmails and once its working, move it into ontick.
        */
       //    //nodemailer. this works.  use cron, wake it up, query the database, send the email.
-      //    // put it in its own file/directory.  
-      //    // its job is to connect to the database periodically and do this.  
-      // TODO: connect to the database. grab all the users.  find their incomplete recipes, send them an email based upon that.  
-      //need to change 'to ' to what is polled from the database. 
+      //    // put it in its own file/directory.
+      //    // its job is to connect to the database periodically and do this.
+      // TODO: connect to the database. grab all the users.  find their incomplete recipes, send them an email based upon that.
+      //need to change 'to ' to what is polled from the database.
     },
     start: false,
     timeZone: 'America/Los_Angeles'
   });
 
 
-  // job.start();
+  job.start();
+
   // var transporter = nodemailer.createTransport({
   //   service: 'gmail',
   //   auth: {
@@ -251,6 +252,14 @@ module.exports = function (app, io) {
   //   res.send(req.user);
   // });
 
+  // Unsubscribe
+  app.get('/api/unsubscribe', function (req, res) {
+      User.findByIdAndUpdate(req.query.id, {
+          emailSubscription: false
+      }, function (err, user) {
+          res.redirect("/");
+      });
+  });
 
   app.post('/api/signup', function (req, res) {
     var user = new User({
@@ -266,6 +275,7 @@ module.exports = function (app, io) {
       }
     });
   });
+
   app.get('/auth/facebook', function (req, res, next) {
     // var backUrl = req.params.backUrl;
     // res.session.backUrl = backUrl;
@@ -276,7 +286,7 @@ module.exports = function (app, io) {
 
   });
   // if no error, this gets hit:
-  //middleware for previous url: 
+  //middleware for previous url:
 
   app.get('/auth/facebook/callback', function (req, res, next) {
 
@@ -494,7 +504,7 @@ module.exports = function (app, io) {
 
   //get all recipes from the recipebox:
   app.get('/api/:user/recipes', ensureAuthenticated, function (req, res) {
-    //passport injects req.user.  
+    //passport injects req.user.
     // console.log(req.user._id);
     User.findById(
       req.user._id,
@@ -800,7 +810,7 @@ module.exports = function (app, io) {
       // console.log('query', query);
       // console.log(newData);
       User.findOneAndUpdate(query, {
-        //reference to gridFS saved file.  
+        //reference to gridFS saved file.
         "image": base64data
       }, {
         'upsert': true,
@@ -817,7 +827,7 @@ module.exports = function (app, io) {
       });
     });
   });
-  //this succesfully gets the picture. now i need to 
+  //this succesfully gets the picture. now i need to
   //construct image tag ng-click= to a function makes a call to this route
   // app.get('/getpicture/:id', function (req, res) {
   //   var id = req.params.id;
