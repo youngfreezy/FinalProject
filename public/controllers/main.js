@@ -1,19 +1,42 @@
 angular.module('MyApp')
   .controller('MainCtrl', function ($scope, Recipes, $alert, $http, $location, RecipeBox, $rootScope, $route) {
 
-    console.log($scope.recipe);
+    // console.log($scope.recipe);
 
     $scope.genres = ['Mexican', 'Italian', 'Chinese', 'Korean',
-      'American', 'Comfort Food', 'New American', 'Dessert', 'Fruit', 'Vegetarian',
-      'Indian', 'West African', 'Japanese', 'Gluten-Free', 'Quick', 'Pizza', 'Romantic', 'Spicy', 'Bland',
-      'Pescatarian', 'Seafood', 'Lobster', 'Kosher', 'Vegan', 'Pan-Asian', 'Indonesian', 'Vietnamese', 'Hipster', 'Habanero'
+      'American', 'Comfort Food', 'New American', 'Dessert', 'Fruit',
+      'Indian', 'West African', 'Japanese', 'Quick', 'Pizza', 'Romantic', 'Spicy', 'Bland',
+      'Kosher', 'Pan-Asian', 'Indonesian', 'Vietnamese', 'Hipster', 'Habanero'
     ];
 
-    $scope.allergies = ["Peanuts", "Wheat", "Shellfish"];
-    $scope.dietaryRestrictions = ["Vegan", "Vegetarian", "Pescatarian", "Kosher", "Gluten-Free", "Low Carbs", "Low Sugar", "Dairy-Free"];
+    $scope.allergies = ["Peanut-Free", "Wheat-Free", "Seafood-Free", "Dairy-Free", "Gluten-Free", "Egg-Free", "Treenut-Free"];
+    $scope.dietaryRestrictions = ["Vegan", "Vegetarian", "Pescatarian", "Kosher", "Low Carbs", "Low Sugar"];
     // $scope.userRecipes = [];
     // console.log($scope.userRecipes);     
     var randGenre = $scope.genres[Math.floor(Math.random() * $scope.genres.length)];
+    getRandomGenre = function () {
+      var randGenre = $scope.genres[Math.floor(Math.random() * $scope.genres.length)];
+      $scope.randGenre = randGenre;
+
+    };
+
+    $scope.getGenreRecipes = function (genre) {
+      Recipes.getRecipesByGenre(genre).then(function (response) {
+        $scope.recipes = response;
+        // console.log(response);
+      });
+    };
+
+
+    $scope.getAllergyRecipes = function (allergy) {
+      console.log($scope.allergy);
+     
+      Recipes.getRecipesByRestrictions(allergy).then(function (response) {
+        $scope.recipes = response;
+        console.log(response);
+      });
+    };
+
     $scope.saveDoneRecipe = function (value, recipe) {
       if (value) {
         Recipes.saveDoneRecipe(recipe).then(function () {
@@ -136,11 +159,7 @@ angular.module('MyApp')
     };
 
 
-    $scope.getAllergyRecipes = function (randGenre, allergy) {
-      Recipes.getRecipesByRestrictions(randGenre, allergy).then(function (response) {
-        $scope.recipes = response;
-      });
-    };
+
     $scope.getGenreRecipes = function (genre) {
       Recipes.getRecipesByGenre(genre).then(function (response) {
         $scope.recipes = response;

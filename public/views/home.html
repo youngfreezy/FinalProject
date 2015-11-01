@@ -68,7 +68,7 @@
         Allergies
             </h5>
         <!-- setting the model here even though not delcared in controller. -->
-        <select ng-model="genre" class="form-control" ng-change="getAllergyRecipes(randGenre, allergy)">
+        <select ng-model="allergy" class="form-control" ng-change="getAllergyRecipes(allergy)">
             <option ng-repeat="item in allergies">{{item}}</option>
         </select>
         </center>
@@ -94,7 +94,7 @@
     <div class="row col-sm-8 maincolor" style="margin-left: 0px">
         <div class="col-sm-12">
             <div class="row">
-                 <input class="search" type="text" ng-model="query.name" ng-keyup="handleEnterKey($event)" placeholder="Search Recipes" style=" color:#dd3333;
+                 <input class="search" type="text" ng-model="query.name" ng-keyup="handleEnterKey($event)" placeholder="Search Recipes" style=" color: #FDF3E7;
                 font-family:Helvetica Neue;
                 font-weight:bold">
                <center>

@@ -31,7 +31,7 @@
 
       });
 
-      console.log($rootScope.previousPage);
+      // console.log($rootScope.previousPage);
 
     })
     .config(function ($locationProvider, $routeProvider) {
