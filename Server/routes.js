@@ -18,6 +18,14 @@ var upload2 = multer({
   dest: '/tmp/'
 });
 
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'nodemailertester3@gmail.com',
+      pass: 'youngfreezy'
+    }
+  });
+
 module.exports = function (app, io) {
   var CronJob = require('cron').CronJob;
 
@@ -74,7 +82,7 @@ module.exports = function (app, io) {
     });
   }
 
-  function cronJob() {
+   function cronJob() {
     var usersWithRecipeBoxes = [];
 
     User.find({
@@ -86,15 +94,15 @@ module.exports = function (app, io) {
           $size: 0
         }
       }
-
     }, function (err, result) {
       if (err) {
         return console.log("Something went wrong when querying the users: ", err);
         //throw err;
       }
       result = result.map(function (currentUser) {
-        //currentUser is an element of the result array. 
+        //currentUser is an element of the result array.
         return {
+          _id: currentUser._id,
           name: currentUser.name,
           email: currentUser.email,
           recipeBox: currentUser.recipeBox,
@@ -124,9 +132,11 @@ module.exports = function (app, io) {
           text += currentUser.incompleteRecipes.map(function (c) {
             return c.recipeUrl;
           }).join("\n"); // \n
-          text += "Cheers!";
-          // TODO: click here to unsubscribe.
+          text += "\nCheers!";
+          text += "\n\nUnsubscribe: ";
+          text += "http://localhost:3000/api/unsubscribe?id=" + currentUser._id;
 
+          console.log(text);
           return text;
         }
 
@@ -143,13 +153,17 @@ module.exports = function (app, io) {
         result.forEach(function (currentUser) {
           // console.log(emailData(c));
           // Send the email with the urls
-          transporter.sendMail(emailData(currentUser));
+          transporter.sendMail(emailData(currentUser), function (err) {
+              if (err) {
+                  console.error(err);
+              }
+          });
         });
       }
 
 
       function checkComplete() {
-        //calling checkComplete each time a DB query is done/executed. don't know when it will end, this 
+        //calling checkComplete each time a DB query is done/executed. don't know when it will end, this
         // is a way to handle asynchronicity.
         if (++complete === result.length) {
           sendEmails();
@@ -173,18 +187,16 @@ module.exports = function (app, io) {
           return;
         });
       }
-      //if no users with incomplete recipes, call the done function.  
-      if (result.length === 0) {
-        return done();
-      }
-      //go through results of current Users with recipe boxes, and there there will be actual recipes in their recipe boXes.  
+      //if no users with incomplete recipes, call the done function.
+      //if (result.length === 0) {
+      //    sendEmails();
+      //}
+      //go through results of current Users with recipe boxes, and there there will be actual recipes in their recipe boXes.
       for (var i = 0; i < result.length; ++i) {
         findIncompleteRecipes(result[i]);
       }
     });
   }
-
-
 
   var job = new CronJob({
     // cronTime: '10 * * * * *' ---> once every minute at the 10 second mark.
@@ -198,29 +210,19 @@ module.exports = function (app, io) {
        * Runs every weekday (Monday through Friday)
        * at 11:30:00 AM. It does not run on Saturday
        * or Sunday.
-
        //make a test route to sendAllEmails and once its working, move it into ontick.
        */
       //    //nodemailer. this works.  use cron, wake it up, query the database, send the email.
-      //    // put it in its own file/directory.  
-      //    // its job is to connect to the database periodically and do this.  
-      // TODO: connect to the database. grab all the users.  find their incomplete recipes, send them an email based upon that.  
-      //need to change 'to ' to what is polled from the database. 
+      //    // put it in its own file/directory.
+      //    // its job is to connect to the database periodically and do this.
+      // TODO: connect to the database. grab all the users.  find their incomplete recipes, send them an email based upon that.
+      //need to change 'to ' to what is polled from the database.
     },
     start: false,
     timeZone: 'America/Los_Angeles'
   });
 
-
-  // job.start();
-  // var transporter = nodemailer.createTransport({
-  //   service: 'gmail',
-  //   auth: {
-  //     user: 'nodemailertester3@gmail.com',
-  //     pass: 'youngfreezy'
-  //   }
-  // });
-
+  job.start();
   app.post('/api/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
       if (err || !user) {
