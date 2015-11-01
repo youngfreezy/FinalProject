@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('MainCtrl', function ($scope, Recipes, $alert, $http, $location, RecipeBox, $rootScope, $route) {
+  .controller('MainCtrl', function ($scope, Recipes, $alert, $http, $location, RecipeBox, $rootScope, $route, Profile, $cookies) {
 
     // console.log($scope.recipe);
 
@@ -20,6 +20,10 @@ angular.module('MyApp')
 
     };
 
+
+
+    // console.log($scope.currentUser);
+
     $scope.getGenreRecipes = function (genre) {
       Recipes.getRecipesByGenre(genre).then(function (response) {
         $scope.recipes = response;
@@ -30,25 +34,72 @@ angular.module('MyApp')
 
     $scope.getAllergyRecipes = function (allergy) {
       console.log($scope.allergy);
-     
+
       Recipes.getRecipesByRestrictions(allergy).then(function (response) {
         $scope.recipes = response;
         console.log(response);
       });
     };
 
-    $scope.saveDoneRecipe = function (value, recipe) {
+    $scope.getUserRecipeBox = function (id) {
+      if ($rootScope.currentUser) {
+
+        Profile.getCurrentUser(id).then(function (response) {
+          $rootScope.currentUser = response.data;
+          console.log("GETTTING THE CURRENT USERRRR", response.data);
+          // console.log('lalala', $rootScope.currentUser);
+        }, function (err) {
+          console.log('error occured', err);
+        });
+
+
+      }
+    };
+
+    function addDonesToNGModel() {
+
+      if ($scope.userRecipes) {
+
+        var box = $rootScope.currentUser.recipeBox;
+        var recipes = $scope.userRecipes;
+
+        console.log(box, recipes);
+        for (i = 0; i < box.length; i++) {
+          for (var j = 0; j < recipes.length; j++) {
+
+            if (box[i]._id == recipes[j]._id) {
+              recipes[j].done = box[i].done;
+            }
+          }
+        }
+      }
+
+    }
+   
+
+    // $scope.done = $scope.isDone();
+    $scope.toggleDoneRecipe = function (value, recipe) {
+
       if (value) {
-        Recipes.saveDoneRecipe(recipe).then(function () {
-          // console.log('saved done user recipes');
+        Recipes.saveDoneRecipe(recipe).then(function (response) {
+
+          $rootScope.currentUser = response.data;
+          $cookies.user = JSON.stringify(response.data);
+
+
         }, function (err) {
           console.log('error occured', err);
         });
         return;
       }
 
-      Recipes.saveUnDoneRecipe(recipe).then(function () {
+      Recipes.saveUnDoneRecipe(recipe).then(function (response) {
         // console.log('saved undone user recipes');
+        // $scope.currentUser = response.data;
+        $rootScope.currentUser = response.data;
+        // #HACKreactor:
+        $cookies.user = JSON.stringify(response.data);
+
       }, function (err) {
         console.log('error occured', err);
       });
@@ -84,6 +135,7 @@ angular.module('MyApp')
         // $scope.userRecipes = null;
         console.log(response);
         $scope.userRecipes = response.data.recipeBox;
+        $rootScope.currentUser.recipeBox = [];
         RecipeBox.recipeCount = 0;
 
         //console.log('$scope.userRecipes', $scope.userRecipes);
@@ -188,17 +240,21 @@ angular.module('MyApp')
         Recipes.getUserRecipes().then(function (response) {
           // console.log(response);
           $scope.userRecipes = response;
+           addDonesToNGModel();
           //probably better to store everything in RecipeBox service. 
           // there could be a reset function.  
           if (!$scope.userRecipes) {
             RecipeBox.recipeCount = 0;
           }
           RecipeBox.recipeCount = $scope.userRecipes.length;
+          // console.log($scope.userRecipes);
           // $scope.$apply();
           // console.log('recipes to display', $scope.userRecipes);
         });
       }
     };
+    var id = $rootScope.currentUser._id;
+
 
     $scope.$on("getUserRecipes", function () {
       $scope.getUserRecipes();
@@ -214,9 +270,12 @@ angular.module('MyApp')
 
     };
 
+
+
     // for testing: $http.get('/api/add').then(function(response){console.log(response)});
     init(randGenre);
     $scope.getUserRecipes();
+
   })
   .directive('streamPreview', function () {
 

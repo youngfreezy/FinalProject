@@ -15,13 +15,23 @@
         </div>
         <div class="panel-body">
             <div class="row show-list">
-                <!-- <pre>{{currentUser | json }}</pre> -->
                 <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
+                <pre>{{$root.currentUser.recipeBox | json }}</pre>
+                   <!--  <pre>
+                        {{currentUser || json}}
+                    </pre> -->
                     <p>
                         <center>
                             <img class="img-responsive img-rounded" ng-src="{{recipe.image}}">
-                            <input type="checkbox" ng-model="recipeDone" ng-change="saveDoneRecipe(recipeDone, recipe)"> Recipe Complete
+                            <!-- <pre>
+                                {{recipe || json}}
+                            </pre> -->
+                            <input ng-model ="recipeDone" type="checkbox" ng-checked="recipe.done" ng-change="toggleDoneRecipe(recipeDone, recipe)"/> Recipe Complete <pre>
+                                
+                            {{recipe.done || json}}
+                            </pre> 
                             <br>
+
                             <!-- <pre>
                                 {{recipe || json }}
                             </pre> -->
