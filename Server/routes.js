@@ -128,12 +128,12 @@ module.exports = function (app, io) {
 
         function emailText(currentUser) {
           var text = "";
-          text += "Hello " + currentUser.name + "\n";
-          text += "You have the following recipes waiting to be completed!\n";
+          text += "Hello " + currentUser.name + "!\n\n";
+          text += "You have the following recipes waiting in your Recipe Box:\n";
           text += currentUser.incompleteRecipes.map(function (c) {
             return c.recipeUrl;
           }).join("\n"); // \n
-          text += "\nCheers!";
+          text += "\n\nHappy Cooking!";
           text += "\n\nUnsubscribe: ";
           text += "http://quickrecipesapp.herokuapp.com/api/unsubscribe?id=" + currentUser._id;
 
@@ -223,7 +223,7 @@ module.exports = function (app, io) {
     timeZone: 'America/Los_Angeles'
   });
 
-  // job.start();
+  job.start();
   app.post('/api/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
       if (err || !user) {
