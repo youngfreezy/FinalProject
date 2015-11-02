@@ -255,13 +255,13 @@ module.exports = function (app, io) {
   //   res.cookie('user', JSON.stringify(req.user));
   //   res.send(req.user);
   // });
-// Unsubscribe
+  // Unsubscribe
   app.get('/api/unsubscribe', function (req, res) {
-      User.findByIdAndUpdate(req.query.id, {
-          emailSubscription: false
-      }, function (err, user) {
-          res.redirect("/");
-      });
+    User.findByIdAndUpdate(req.query.id, {
+      emailSubscription: false
+    }, function (err, user) {
+      res.redirect("/");
+    });
   });
 
   app.post('/api/signup', function (req, res) {
@@ -349,7 +349,7 @@ module.exports = function (app, io) {
     res.send(200);
   });
 
-  
+
   //handles the querying:
   function setRecipeDone(userId, recipeId, done, res) {
     User.where({
@@ -383,6 +383,75 @@ module.exports = function (app, io) {
       });
     });
   }
+
+  //YUMMLY QUERIES;
+
+  app.get('/api/yummly_recipes', function (req, res) {
+    var id = config.Yummly.id;
+    var key = config.Yummly.key;
+    var q = req.query.q;
+    var max = 6;
+    var url = "http://api.yummly.com/v1/api/recipes?_app_id=" + id + "&_app_key=" + key + "&q=" + q + "&maxResult=" + max;
+    request(url, function (error, response, body) {
+      if (!error) {
+        res.json(JSON.parse(body));
+      }
+    });
+  });
+
+  app.get('/api/yummly_recipes/genre', function (req, res) {
+    var id = config.Yummly.id;
+    var key = config.Yummly.key;
+    var genre = req.query.q;
+    var max = 6;
+    var url = "http://api.yummly.com/v1/api/recipes?_app_id=" + id + "&_app_key=" + key + "&q=" + genre + "&maxResult=" + max;
+    request(url, function (error, response, body) {
+      if (!error) {
+        res.json(JSON.parse(body));
+      }
+    });
+  });
+
+  app.get('/api/yummly_recipes/allergy', function (req, res) {
+    var id = config.Yummly.id;
+    var key = config.Yummly.key;
+    var allergy = req.query.q;
+    var max = 6;
+    var url = "http://api.yummly.com/v1/api/recipes?_app_id=" + id + "&_app_key=" + key + "&q=" + allergy + "&maxResult=" + max + "&requirePictures=true";
+    request(url, function (error, response, body) {
+      if (!error) {
+        res.json(JSON.parse(body));
+      }
+    });
+  });
+
+  app.get('/api/yummly_recipes/initRecipes', function (req, res) {
+    var id = config.Yummly.id;
+    var key = config.Yummly.key;
+    var randGenre = req.query.q;
+    var max = 6;
+    var url = "http://api.yummly.com/v1/api/recipes?_app_id=" + id + "&_app_key=" + key + "&q=" + randGenre + "&maxResult=" + max + "&requirePictures=true";
+    request(url, function (error, response, body) {
+      if (!error) {
+        res.json(JSON.parse(body));
+      }
+    });
+  });
+
+app.get('/api/yummly_recipes/recipe', function (req, res) {
+  console.log(req);
+    var id = config.Yummly.id;
+    var key = config.Yummly.key;
+    var YummlyID = req.query.recipeid;
+    
+    var url = "http://api.yummly.com/v1/api/recipe/" +YummlyID +"?_app_id=" + id + "&_app_key=" + key;
+    request(url, function (error, response, body) {
+      if (!error) {
+        res.json(JSON.parse(body));
+      }
+    });
+  });
+
 
 
   app.post('/api/users/:userid/recipes/:recipeId/done', function (req, res) {
@@ -628,17 +697,7 @@ module.exports = function (app, io) {
     });
   });
 
-  app.get('/api/yummly_recipes', function(req, res) {
-    var id = config.Yummly.id;
-    var key = config.Yummly.key;
-    var q = req.query.q;
-    var url = "http://api.yummly.com/v1/api/recipes?_app_id=" + id + "&_app_key=" + key + "&q=" + q + "&maxResult=" + 6;
-    request(url, function (error, response, body) {
-      if (!error) {
-        res.json(JSON.parse(body));
-      }
-    });
-  });
+
 
   //this is middleware for the comments. handles :comment
 

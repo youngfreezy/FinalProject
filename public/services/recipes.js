@@ -88,66 +88,78 @@ angular.module('MyApp')
       },
 
       getRecipesByGenre: function (genre) {
-        return $http.jsonp("http://api.yummly.com/v1/api/recipes?callback=JSON_CALLBACK", {
-          params: {
-            "_app_id": id,
-            "_app_key": key,
-            "q": genre,
-            "maxResult": 6
-          }
-        }).then(function (response) {
-          // console.log(response.data);
+        return $http.get('/api/yummly_recipes/genre?q=' + genre).then(function (response) {
           return response.data.matches;
         });
+        // return $http.jsonp("http://api.yummly.com/v1/api/recipes?callback=JSON_CALLBACK", {
+        //   params: {
+        //     "_app_id": id,
+        //     "_app_key": key,
+        //     "q": genre,
+        //     "maxResult": 6
+        //   }
+        // }).then(function (response) {
+        //   // console.log(response.data);
+        //   return response.data.matches;
+        // });
       },
 
       getRecipesByRestrictions: function (allergy) {
-        console.log(allergy);
-        return $http.jsonp("http://api.yummly.com/v1/api/recipes?callback=JSON_CALLBACK" , {
-          params: {
-            "_app_id": id,
-            "_app_key": key,
-            "maxResult": 6,
-          "q": allergy,
-
-            "requirePictures": true
-          }
-        }).then(function (response) {
-          console.log(response.data);
+        return $http.get('/api/yummly_recipes/allergy?q=' + allergy).then(function (response) {
           return response.data.matches;
         });
+        // console.log(allergy);
+        // return $http.jsonp("http://api.yummly.com/v1/api/recipes?callback=JSON_CALLBACK" , {
+        //   params: {
+        //     "_app_id": id,
+        //     "_app_key": key,
+        //     "maxResult": 6,
+        //   "q": allergy,
+
+        //     "requirePictures": true
+        //   }
+        // }).then(function (response) {
+        //   console.log(response.data);
+        //   return response.data.matches;
+        // });
       },
 
     
      
       getQuickRecipes: function (randGenre) {
-        return $http.jsonp("http://api.yummly.com/v1/api/recipes?callback=JSON_CALLBACK", {
-          params: {
-            "_app_id": id,
-            "_app_key": key,
-            "q": randGenre,
-            "maxResult": 6,
-            "maxTotalTimeInSeconds": 1200,
-            "requirePictures": true,
-            "excludedIngredient[]": ["cookies","cookie", "brownie", "cupcakes", "cheesecake", "frosting", "milkshake"]
-          }
-        }).then(function (response) {
-          // console.log(response.data);
+        return $http.get('/api/yummly_recipes/initRecipes?q=' + randGenre).then(function (response) {
           return response.data.matches;
         });
+        // return $http.jsonp("http://api.yummly.com/v1/api/recipes?callback=JSON_CALLBACK", {
+        //   params: {
+        //     "_app_id": id,
+        //     "_app_key": key,
+        //     "q": randGenre,
+        //     "maxResult": 6,
+        //     "maxTotalTimeInSeconds": 1200,
+        //     "requirePictures": true,
+        //     "excludedIngredient[]": ["cookies","cookie", "brownie", "cupcakes", "cheesecake", "frosting", "milkshake"]
+        //   }
+        // }).then(function (response) {
+        //   // console.log(response.data);
+        //   return response.data.matches;
+        // });
       },
       // this is what the url needs to look like:
-      // http://api.yummly.com/v1/api/recipe/Creamy-Seafood-Alfredo-652832?_app_id=3ee8ed9f&_app_key=efd918c28d5b710d9583ec24fb2bb362
+      // http://api.yummly.com/v1/api/recipe/French-Onion-Soup-The-Pioneer-Woman-Cooks-_-Ree-Drummond-41364?_app_id=3ee8ed9f&_app_key=efd918c28d5b710d9583ec24fb2bb362
       getIndividualRecipe: function (recipeId) {
-        return $http.jsonp("http://api.yummly.com/v1/api/recipe/" + recipeId + "?callback=JSON_CALLBACK", {
-          params: {
-            "_app_id": id,
-            "_app_key": key,
-          }
-        }).then(function (response) {
-          // console.log(response.data);
+        return $http.get('/api/yummly_recipes/recipe?recipeid=' + recipeId).then(function (response) {
           return response.data;
         });
+        // return $http.jsonp("http://api.yummly.com/v1/api/recipe/" + recipeId + "?callback=JSON_CALLBACK", {
+        //   params: {
+        //     "_app_id": id,
+        //     "_app_key": key,
+        //   }
+        // }).then(function (response) {
+        //   // console.log(response.data);
+        //   return response.data;
+        // });
       }
     };
   });
