@@ -347,15 +347,7 @@ module.exports = function (app, io) {
     res.send(200);
   });
 
-  //for done recipes:
-  //$addToSet was not working.
-  function arrayUnique(array) {
-    var result = [];
-    array.forEach(function (v, k) {
-      if (result.indexOf(v) == -1) result.push(v);
-    });
-    return result;
-  }
+  
   //handles the querying:
   function setRecipeDone(userId, recipeId, done, res) {
     User.where({

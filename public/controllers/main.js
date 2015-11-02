@@ -174,14 +174,9 @@ angular.module('MyApp')
     //   localStorage.setItem('CONFIG', $scope.CONFIG);
     // };
     window.$location = $location;
-    $scope.addRecipe = function (recipe) {
-      if ($scope.currentUser === undefined) {
-        $location.path('/login');
-        return;
-      }
-      Recipes.getIndividualRecipe(recipe.id).then(function (response) {
-        // console.log(response);
-        Recipes.save(response)
+    
+    $scope.saveRecipe = function (response) {
+       Recipes.save(response)
           .then(function (response) {
 
             $scope.getUserRecipes();
@@ -213,6 +208,18 @@ angular.module('MyApp')
               duration: 3
             });
           });
+    };
+
+    $scope.addRecipe = function (recipe) {
+      console.log(recipe);
+      if ($scope.currentUser === undefined) {
+        $location.path('/login');
+        return;
+      }
+      // can just do this directly: $scope.saveRecipe(recipe);
+      Recipes.getIndividualRecipe(recipe.id).then(function (response) {
+        // console.log(response);
+       $scope.saveRecipe(response);
         // console.log($rootScope.recipePropsIWant);
         // console.log($scope.individualRecipe);
       });

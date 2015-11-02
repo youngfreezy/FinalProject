@@ -4,14 +4,15 @@ module.exports = function (config) {
     basePath: '../',
 
     files: [
-      'node_modules/angular/angular.js',
-      'node_modules/angular-mocks/angular-mocks.js',
       'vendor/angular.js',
+      'vender/angular-mocks.js',
+      '../node_modules/socket.io-client/socket.io.js',
       'vendor/*.js',
       'app.js',
       'services/*.js',
       'controllers/*.js',
       'test/unit/*.js'
+
     ],
 
     autoWatch: true,

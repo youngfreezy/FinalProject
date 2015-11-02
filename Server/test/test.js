@@ -9,6 +9,10 @@ var routes = require("../routes");
 var session = require('express-session');
 var path = require("path");
 var User = require('../mongoModels/user');
+// //for accessing private variables inside routes.  
+// var rewire = require('rewire');
+// var routes = rewire('../routes');
+      
 
 var globalUser = {
   _id: 123,
@@ -80,6 +84,7 @@ describe('Routes', function () {
       var recipeId = globalUser.r_id;
       var donerecipe = globalUser.done;
 
+      // var recipeDoneFunction = routes.__get__("setRecipeDone");
       setRecipeDone(userId, recipeId, donerecipe);
 
 
@@ -90,5 +95,12 @@ describe('Routes', function () {
     });
   });
 
+  describe("API RecipeBox", function() {
+    var res = {};
+    res.sendStatus = function(status) {
+      console.log('sendingstatus');
+    } 
+
+  })
 
 });
