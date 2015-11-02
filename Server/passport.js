@@ -72,12 +72,12 @@ module.exports = function () {
               if (err)
                 throw err;
               // if successful, return the new user
-              console.log("successfully saved user into database")
+              console.log("successfully saved user into database");
               done(null, newUser);
             });
 
           }
-        })
-      })
+        });
+      });
     }));
 };

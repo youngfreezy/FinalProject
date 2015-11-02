@@ -36,8 +36,8 @@ angular.module('MyApp')
           type: 'material',
           duration: 2
         });
-        // push this comment to the recipes comments array
-        // recipe.comments.push(comment);
+        
+        
       }).error(function (comment) {
         $alert({
           content: 'Login to Comment :)',
@@ -45,18 +45,13 @@ angular.module('MyApp')
           type: 'material',
           duration: 2
         });
-        // push this comment to the recipes comments array
-        // recipe.comments.push(comment);
+     
       });
-      // recipe.comments.push($scope.txtcomment);
+     
       $scope.txtcomment = "";
     }
   };
 
-  // $scope.incrementCommentUpvotes = function(comment) {
-
-  // Recipes.upVoteStreamRecipeComments(recipe, comment);
-  // } 
 
   $scope.deleteComment = function (recipeid, commentid) {
     //you should only be able to delete your own comment. if $rootScope.currentUser._id === comments[i].author
@@ -71,20 +66,9 @@ angular.module('MyApp')
           duration: 2
         });
     });
-    //recipe.comments.splice($index, 1);
+    
   };
-  //TODO: comments/emojis.
 
-
-  //socket.emit('lasthouractivity');
-  //socket.on('lasthouractivity', function (response) {
-  //this gets the recipeStream model
-  //$scope.lasthourRecipes = response;
-  //console.log(response);
-  // get the right scope
-  //$scope.$apply();
-
-  //});
   ioService.getStream();
   $rootScope.stream.unseen = 0;
 
@@ -92,28 +76,7 @@ angular.module('MyApp')
   $scope.$on('stream', function (event, data) {
     $scope.lasthourRecipes = data;
     $scope.recipeStreamLimited = data.slice(-8);
-    // console.log($scope.recipeStreamLimited);
-
-    // if (!$scope.lasthourRecipesFull.length) {
-    //   $scope.lasthourRecipesFull = data;
-    // } else if ($scope.lasthourRecipesFull.length < data.length) {
-    //   $scope.lasthourRecipesFull.push(data[data.length - 1]);
-    // }
-    // //to get socket.io to talk to the animation nicely. 
-    // if (!$scope.lasthourRecipes.length) {
-    //   $scope.lasthourRecipes = data.slice(-5);
-    // } else {
-    //   $scope.lasthourRecipes.push(data[data.length - 1]);
-
-    //   if ($scope.lasthourRecipes.length > 5) {
-    //     $scope.lasthourRecipes.shift();
-    //   }
-    // }
-    // console.log($scope.lasthourRecipes);
-    // console.log($scope.lasthourRecipesFull);
-    /* angular.forEach(data, function(item){
-      console.log('item', item);
-    }); */
+  
 
     $scope.$apply();
   });

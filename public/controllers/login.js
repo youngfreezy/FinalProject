@@ -14,11 +14,6 @@ angular.module('MyApp')
     //     // console.log(current, previous);
     //   });
 
-
-    $scope.facebookLogin = function () {
-      Auth.facebookLogin();
-    };
-
     $scope.pageClass = 'fadeZoom';
 
   });

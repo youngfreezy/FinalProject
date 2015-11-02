@@ -17,16 +17,14 @@ module.exports = function (config) {
 
     autoWatch: true,
 
-    frameworks: ['mocha', 'chai', 'jasmine'],
+    frameworks: ['jasmine'],
 
     browsers: ['PhantomJS'],
 
     plugins: [
       'karma-phantomjs-launcher',
       'karma-chrome-launcher',
-      'karma-jasmine',
-      'karma-mocha',
-      'karma-chai'
+      'karma-jasmine'
     ]
   });
 };

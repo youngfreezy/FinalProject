@@ -24,9 +24,9 @@
         var hashIndex = absOldUrl.indexOf('#!');
 
         var oldRoute = absOldUrl.substr(hashIndex + 3);
-        if(oldRoute[oldRoute.length-1] !== "/" && oldRoute.indexOf("login") === -1 && oldRoute.indexOf("signup") === -1) {
+        if (oldRoute[oldRoute.length - 1] !== "/" && oldRoute.indexOf("login") === -1 && oldRoute.indexOf("signup") === -1) {
 
-        $rootScope.previousPage = oldRoute;
+          $rootScope.previousPage = oldRoute;
         }
 
       });
@@ -92,4 +92,4 @@
           }
         };
       });
-    })
+    });

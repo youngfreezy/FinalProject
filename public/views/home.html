@@ -27,17 +27,16 @@
                         </div>
                     </div>
                 </div>
-                <br> <center>
-                <h4>
+                <br>
+                <center>
+                    <h4>
             Quick Recipes For The Day:
                 </h4>
-            </center>
+                </center>
                 <div style="background-color: FDF3E7" class="col-sm-2" ng-repeat="recipe in quickRecipes">
                     <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
                     <div class="text-center">
-                        <!-- {# create a new route recipe, and recipe:id #} -->
                         <a class="link" style="text-decoration: underline; color: blue" href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
-                        <!-- {# <p class="text-muted">Episodes: {{show.episodes.length}}</p> #} -->
                         <br>
                         <a href="" ng-click="addRecipe(recipe)" style="font-family: Comic Sans MS">Save To Recipe Box</a>
                     </div>
@@ -46,68 +45,59 @@
         </center>
     </div>
 </div>
-<!-- <div class="container">
-    
-<div class=".col-xs-6 .col-md-4">
-    fdafdafdafdadfa
-</div>
-</div> -->
 <div class="container-fluid">
     <div class="col-sm-3 sidebar panel panel-default" style="padding-left: 0px; padding-right:0px;  background-color: #FDF3E7">
         <center>
             <h5>
         Dietary Restrictions
             </h5>
-        <!-- setting the model here even though not delcared in controller. -->
-        <select ng-model="genre" class="form-control" ng-change="getGenreRecipes(genre)">
-            <option ng-repeat="item in dietaryRestrictions track by $index">{{item}}</option>
-        </select>
+            <!-- setting the model here even though not delcared in controller. -->
+            <select ng-model="genre" class="form-control" ng-change="getGenreRecipes(genre)">
+                <option ng-repeat="item in dietaryRestrictions track by $index">{{item}}</option>
+            </select>
         </center>
         <center>
             <h5>
         Allergies
             </h5>
-        <!-- setting the model here even though not delcared in controller. -->
-        <select ng-model="allergy" class="form-control" ng-change="getAllergyRecipes(allergy)">
-            <option ng-repeat="item in allergies">{{item}}</option>
-        </select>
+            <!-- setting the model here even though not delcared in controller. -->
+            <select ng-model="allergy" class="form-control" ng-change="getAllergyRecipes(allergy)">
+                <option ng-repeat="item in allergies">{{item}}</option>
+            </select>
         </center>
         <br>
-        <br> 
-        
-          <center>
+        <br>
+        <center>
             <h5>
 
         What Other Users Are Adding:
             </h5>
-          </center>  
+        </center>
         <stream-preview>
         </stream-preview>
         <br>
         <br>
-        <div class"col-sm-3 sidebar panel panel-default">
-            
-        <recipe-box-preview/>
+        <div class "col-sm-3 sidebar panel panel-default">
+            <recipe-box-preview/>
         </div>
-       
     </div>
     <div class="row col-sm-8 maincolor" style="margin-left: 0px">
         <div class="col-sm-12">
             <div class="row">
-                 <input class="search" type="text" ng-model="query.name" ng-keyup="handleEnterKey($event)" placeholder="Search Recipes" style=" color: #FDF3E7;
+                <input class="search" type="text" ng-model="query.name" ng-keyup="handleEnterKey($event)" placeholder="Search Recipes" style=" color: #FDF3E7;
                 font-family:Helvetica Neue;
                 font-weight:bold">
-               <center>
-                <h5>
+                <center>
+                    <h5>
                 Search By Genre:
                 </h5>
-                <br>
-                <ul class="genres">
-                    <li ng-repeat="genre in genres">
-                        <span ng-click="getGenreRecipes(genre)">{{genre}}</span>
-                    </li>
-                </ul>
-               </center>
+                    <br>
+                    <ul class="genres">
+                        <li ng-repeat="genre in genres">
+                            <span ng-click="getGenreRecipes(genre)">{{genre}}</span>
+                        </li>
+                    </ul>
+                </center>
             </div>
         </div>
         <br>
@@ -116,27 +106,23 @@
             <div class="col-sm-2">
                 <br>
                 <br>
-               
             </div>
             <div class=" col-sm-8">
             </div>
         </div>
         <div class="col-sm-12">
             <div class="row">
-                <!-- {# put the recipes here #} -->
                 <!-- this is from search: -->
                 <div class="col-sm-2" ng-repeat="recipe in recipes">
                     <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
                     <div class="text-center">
                         <!-- {# create a new route recipe, and recipe:id #} -->
                         <a class="link" style="text-decoration: underline; color: blue" href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
-                        <!-- {# <p class="text-muted">Episodes: {{show.episodes.length}}</p> #} -->
                         <br>
                         <a href="" ng-click="addRecipe(recipe)">Add To Recipe Box</a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- text explaining the site: -->
     </div>
 </div>

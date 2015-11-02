@@ -15,10 +15,9 @@
         </div>
         <div class="panel-body">
             <center>
-                
-            <button class="btn btn-primary btn-lg" ng-click="setUsertoSubscribe()">Sign Up for Reminders</button>
-            <br>
-            <span>
+                <button class="btn btn-primary btn-lg" ng-click="setUsertoSubscribe()">Sign Up for Reminders</button>
+                <br>
+                <span>
                 <br>
             No Spam. We'll Remind of Your Recipe Box Contents Every Few Days So You Can Actually Start Cooking.
             </span>
@@ -26,7 +25,7 @@
             <br>
             <div class="row show-list">
                 <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
-                <!-- <pre>{{$root.currentUser.recipeBox | json }}</pre>
+                    <!-- <pre>{{$root.currentUser.recipeBox | json }}</pre>
                     <pre>
                         {{currentUser || json}}
                     </pre> -->
@@ -36,25 +35,24 @@
                             <!-- <pre>
                                 {{recipe || json}}
                             </pre> -->
-                            <input ng-model ="recipe.done" type="checkbox" ng-checked="recipe.done" ng-click="toggleDoneRecipe(recipe.done, recipe)"/> Recipe Complete 
+                            <input ng-model="recipe.done" type="checkbox" ng-checked="recipe.done" ng-click="toggleDoneRecipe(recipe.done, recipe)" /> Recipe Complete
                             <!-- <pre>
                                 
                             {{recipe.done || json}}
-                            </pre> --> 
+                            </pre> -->
                             <br>
-
                             <!-- <pre>
                                 {{recipe || json }}
                                     
-                            </pre> --><div ng-class="{ 'completed' : recipe.done }">
-                                
-                            <a class="link" style="text-decoration: underline; color: blue" href="{{recipe.recipeUrl}}">{{recipe.name}}</a>
-                            <span>
+                            </pre> -->
+                            <div ng-class="{ 'completed' : recipe.done }">
+                                <a class="link" style="text-decoration: underline; color: blue" href="{{recipe.recipeUrl}}">{{recipe.name}}</a>
+                                <span>
                             <br>
                         Servings: {{recipe.numServings}}<br>
                        
                         <span class="glyphicon glyphicon-remove" ng-click="deleteRecipe(recipe)"></span>
-                            </span>
+                                </span>
                             </div>
                         </center>
                     </p>
@@ -107,7 +105,3 @@
         </div>
     </div> -->
 </div>
-<!-- Go to www.addthis.com/dashboard to customize your tools -->
-<!-- TODO: test this out when deployed -->
-<!-- 
-  -->

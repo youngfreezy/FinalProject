@@ -1,18 +1,4 @@
 <head>
-    <!--  <style>
-    #dv1 {
-        border: 1px solid #DBDCE9;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 7px;
-        padding: 25px;
-        width: 200px;
-    }
-    
-    .textarea {
-        style: width: 550px;
-    }
-    </style> -->
 </head>
 <div class="container">
     <div class="panel panel-default">
@@ -21,7 +7,6 @@
             <div class="row show-list flex-container">
                 <div class="fade-repeat flex-item" ng-repeat="recipe in recipeStreamLimited | orderBy: '-upvotes' ">
                     <p>
-                        <!-- dont display upvotes if -->
                         <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)">{{recipe.upvotes}}
                         <img class="img-rounded"ng-src="{{recipe.image}}">
                         </span>
@@ -35,13 +20,10 @@
                     <div id='dv1'>
                         <center>
                         </center>
-                        <form class="form-group" >
-                            
+                        <form class="form-group">
                             <form>
                                 <textarea ng-model="txtcomment" placeholder="Comment "> </textarea>
-                                
                                 <button ng-click='saveComment(recipe, txtcomment)'>Post Comment</button>
-                                
                                 <ul>
                                     <li ng-repeat="comnt in recipe.comments"> {{ comnt.body }}
                                         <span ng-if="currentUser._id == comnt.author" class="glyphicon glyphicon-remove pull-right" ng-click="deleteComment(recipe._id, comnt._id) "></span>
@@ -56,10 +38,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="addthis_native_toolbox "></div> -->
         </div>
     </div>
 </div>
-<!-- Go to www.addthis.com/dashboard to customize your tools -->
-<!-- TODO: test this out when deployed -->
-<!-- &#128077 0 or  -->

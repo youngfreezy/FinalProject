@@ -82,14 +82,7 @@ angular.module('MyApp')
         }
       },
       getRecipes: function (query) {
-        return $http.jsonp("http://api.yummly.com/v1/api/recipes?callback=JSON_CALLBACK", {
-          params: {
-            "_app_id": id,
-            "_app_key": key,
-            "q": query,
-            "maxResult": 6
-          }
-        }).then(function (response) {
+        return $http.get('/api/yummly_recipes?q=' + query).then(function (response) {
           return response.data.matches;
         });
       },
@@ -125,23 +118,7 @@ angular.module('MyApp')
         });
       },
 
-      //  getRecipesByRestrictions: function (randomGenre, allergy) {
-      //   console.log(allergy);
-      //   console.log(randomGenre);
-      //   return $http.jsonp("http://api.yummly.com/v1/api/recipes?callback=JSON_CALLBACK" , {
-      //     params: {
-      //       "_app_id": id,
-      //       "_app_key": key,
-      //       "q": randomGenre,
-      //       "maxResult": 6,
-      //        "excludedIngredient[]": ["shrimp"],
-      //       "requirePictures": true
-      //     }
-      //   }).then(function (response) {
-      //     console.log(response.data);
-      //     return response.data.matches;
-      //   });
-      // },
+    
      
       getQuickRecipes: function (randGenre) {
         return $http.jsonp("http://api.yummly.com/v1/api/recipes?callback=JSON_CALLBACK", {

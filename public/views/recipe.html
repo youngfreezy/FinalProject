@@ -4,7 +4,6 @@
             {{ recipe.name }}
         </div>
         <div class="panel-body">
-          
             <img ng-src="{{ recipe.images[0].hostedLargeUrl }}" style="max-width: 400px; max-height: 400px" />
             <br>
             <br>
@@ -30,8 +29,7 @@
                         <script>
                         if ()
                         </script>
-                        <!-- TODO: filter out null values -->
-                        {{ (nutrition.description) ? nutrition.description + ":" : ""}}  {{nutrition.value}} {{nutrition.unit.plural}}
+                        {{ (nutrition.description) ? nutrition.description + ":" : ""}} {{nutrition.value}} {{nutrition.unit.plural}}
                     </li>
                 </ul>
             </div>

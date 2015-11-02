@@ -1,16 +1,6 @@
 angular.module('MyApp')
   .controller('ProfileCtrl', function ($scope, $http, $rootScope, Profile, $cookies) {
-    // $rootScope.currentUser = user;
-    // console.log($rootScope.previousPage);
-    // I am templating $scope.image. so that needs to be set to something from the response.  
-
-
-    // $scope.getRightImage = function () {
-    //   Profile.SaveProfileImage().then(function(data){
-    //     console.log(data);
-    //   });
-    // };
-  
+     
 
     $scope.getCurrentUser = function (id) {
       Profile.getCurrentUser(id).then(function (response) {
@@ -28,7 +18,8 @@ angular.module('MyApp')
 
       var id = $rootScope.currentUser._id;
       $scope.getCurrentUser(id);
-
+      //if the user logs in with facebook, show their facebook picture automatically.  
+      // this will be overwritten if user uploads a picture. 
       if ($rootScope.currentUser.facebook && !$rootScope.currentUser.image) {
         $rootScope.currentUser.image = $rootScope.currentUser.facebook.photos;
         $scope.getCurrentUser(id);
@@ -51,11 +42,14 @@ angular.module('MyApp')
       });
       // console.log(elm.files);
       $http.post(endpoint, fd, {
-
+//Angular’s default transformRequest function will try to serialize our FormData object, so we override it with 
+//the identity function to leave the data intact
         transformRequest: angular.identity,
+        // Angular’s default Content-Type header for POST and PUT requests is application/json.
+        // By setting ‘Content-Type’: undefined, the browser sets the Content-Type to multipart/form-data for us. 
         headers: {
           'Content-Type': undefined
-          // 'filename': elm.files[0].name
+          
         }
 
       }).success(function (data) {
@@ -77,15 +71,17 @@ angular.module('MyApp')
 
   })
   .directive('fileInput', ['$parse',
-    //parse translates a string to an actual expression.
+    //parse translates a string to a function
     function ($parse) {
       return {
         restrict: 'A',
         link: function (scope, elm, attrs) {
+          //watching the input element for a change
           elm.bind('change', function () {
+            //parse the file-input attribute to make it a function
             $parse(attrs.fileInput)
               .assign(scope, elm[0].files);
-            // console.log(elm[0].files.name);
+            console.log(elm[0].files);
             scope.$apply();
           });
         }

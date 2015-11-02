@@ -107,21 +107,29 @@ describe('Routes', function () {
 
 describe('POST /api/recipebox', function() {
   it("posts a new recipe to /api/recipebox", function(done){
-   var recipe = {
-      recipeUrl: 'www.google.com',
-      image: 'www.google.com',
-      numServings: 5,
-      Ingredients: 'www.google.com',
-      NutritionalInformation: 'www.google.com',
-      name: 'www.google.com',
-      totalTime: 500
-    };
 
-    request("http://localhost:3000")
-      .post("/api/recipebox")
-      .send(recipe)
-      .expect(200)
-      .expect("marcus is stored", done);
+    var recipe = {
+    recipe: {
+        source: {
+            sourceRecipeUrl: 'www.google.com',
+        },
+        images: [{
+            hostedSmallUrl: 'www.google.com'
+        }],
+        numberOfServings: 5,
+        ingredientLines: 'www.google.com',
+        NutritionalInformation: 'www.google.com',
+        name: 'www.google.com',
+        totalTime: 500
+    }
+};
+
+request("http://localhost:3000")
+.post("/api/recipebox")
+.send(recipe)
+.expect(200, done);
+
+  
   });
 
 

@@ -26,6 +26,7 @@ var transporter = nodemailer.createTransport({
     pass: config.gmail.pass
   }
 });
+var request = require('request');
 
 module.exports = function (app, io) {
   var CronJob = require('cron').CronJob;
@@ -624,6 +625,18 @@ module.exports = function (app, io) {
 
       req.recipe = recipe;
       return next();
+    });
+  });
+
+  app.get('/api/yummly_recipes', function(req, res) {
+    var id = config.Yummly.id;
+    var key = config.Yummly.key;
+    var q = req.query.q;
+    var url = "http://api.yummly.com/v1/api/recipes?_app_id=" + id + "&_app_key=" + key + "&q=" + q + "&maxResult=" + 6;
+    request(url, function (error, response, body) {
+      if (!error) {
+        res.json(JSON.parse(body));
+      }
     });
   });
 

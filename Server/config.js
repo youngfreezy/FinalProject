@@ -6,10 +6,13 @@ module.exports = {
     'callbackURL': "/auth/facebook/callback"
   },
 
-  
+'Yummly': {
+	key:'efd918c28d5b710d9583ec24fb2bb362',
+    id: '3ee8ed9f'
+},
 
    'gmail': {
-    'pass': 'aeulqtlvzljhkpsd'
+    'pass': process.env.GMAIL || 'aeulqtlvzljhkpsd'
   },
   
   "dbConnection" : process.env.DB  || "localhost/seven"

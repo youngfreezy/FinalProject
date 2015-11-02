@@ -1,60 +1,44 @@
-
 <!-- don't show this page if you aren't logged in -->
 <div ng-show="currentUser == undefined">
-                <center>
-                    <a ng-href="/#!/login/" style="text-decoration: underline">
+    <center>
+        <a ng-href="/#!/login/" style="text-decoration: underline">
                         Login</a> to change your profile
-                </center>
-            </div>
+    </center>
+</div>
 <center ng-show="currentUser != undefined">
     <h3>Your Profile</h3>
     <br>
-
-
-<h4>{{currentUser.name}} </h4>
-<br>
-<!-- <pre>
+    <h4>{{currentUser.name}} </h4>
+    <br>
+    <!-- <pre>
     {{ currentUser || json }}
 </pre> -->
-
-<div ng-if="currentUser.facebook && !currentUser.image">
-    <img ng-src="{{$root.currentUser.facebook.pictures}}" style="max-height: 200px; max-width: 200px">
-</div>
-
-<div ng-if="currentUser != undefined"> 
-    <!-- <img ng-src="/getpicture/{{currentUser._id}}?{{$root.timestamp}}">  -->
-     <img data-ng-src="data:image/png;base64,{{currentUser.image}}" style="max-height: 200px; max-width: 200px"/>
-
-    <!-- <button ng-click="getCurrentUser(currentUser_id)" >lalala</button> -->
-</div>
-
-
-<div>
-    <br>
-    <br>
-    
-    <br> 
-    Change Your Profile Picture:
-    <br>
-    <br>
-
-    <form class=".form-control">
-        <center style="border: blue">
-            <input class=".form-control" type="file" file-input="files" multiple>
-        </center>
+    <div ng-if="currentUser.facebook && !currentUser.image">
+        <img ng-src="{{$root.currentUser.facebook.pictures}}" style="max-height: 200px; max-width: 200px">
+    </div>
+    <div ng-if="currentUser != undefined">
+        <!-- <img ng-src="/getpicture/{{currentUser._id}}?{{$root.timestamp}}">  -->
+        <img data-ng-src="data:image/png;base64,{{currentUser.image}}" style="max-height: 200px; max-width: 200px" />
+    </div>
+    <div>
         <br>
         <br>
-
-        <button class=".form-group" ng-click="upload('/upload')">Upload</button>
-        <button class=".form-group" ng-click="upload('/upload/save')">
-            Save New Profile Picture
-        </button>
-    
-        <li ng-repeat="file in files">{{file.name}}
-        <img ng-src="{{imageData}}" style="max-height: 200px; max-width: 200px">
-
-        
-        </li>
-    </form>
-</div>
+        <br> Change Your Profile Picture:
+        <br>
+        <br>
+        <form class=".form-control">
+            <center style="border: blue">
+                <input class=".form-control" type="file" file-input="files" multiple>
+            </center>
+            <br>
+            <br>
+            <button class=".form-group" ng-click="upload('/upload')">Upload</button>
+            <button class=".form-group" ng-click="upload('/upload/save')">
+                Save New Profile Picture
+            </button>
+            <li ng-repeat="file in files">{{file.name}}
+                <img ng-src="{{imageData}}" style="max-height: 200px; max-width: 200px">
+            </li>
+        </form>
+    </div>
 </center>

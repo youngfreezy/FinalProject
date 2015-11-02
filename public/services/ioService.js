@@ -12,7 +12,7 @@ angular.module('MyApp')
       var socket = io.connect(window.location.origin, {query: 'userId='+userId+'&email='+email});
 
       socket.on('connect', function() {
-        // console.info('Connected to server wia socket io');
+        // console.info('Connected to server via socket io');
       });
 
       $rootScope.stream = {};
@@ -20,20 +20,20 @@ angular.module('MyApp')
       $rootScope.stream.unseen = 0;
 
       // stream
-      var firsRun = true;
+      var firstRun = true;
       socket.on('stream', function(data) {
         // console.log('got stream event');
         for(var r=0; r < data.length; r++) {
           var recipe = data[r];
-          recipe = 'user:'+recipe.userId+'|recipe:'+recipe._id;
+          recipe = 'user:'+recipe.userId+'recipe:'+recipe._id;
           if($rootScope.stream.recipes.indexOf(recipe) < 0) {
             $rootScope.stream.recipes.push(recipe);
-            if(!firsRun) {
+            if(!firstRun) {
               $rootScope.stream.unseen++;
             }
           }
         }
-        firsRun = false;
+        firstRun = false;
 
         $rootScope.$apply();
         // console.log(data);

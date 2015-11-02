@@ -1,87 +1,65 @@
 describe('MainController', function () {
   beforeEach(module('MyApp'));
 
-  var $controller;
+  var $scope;
+  var controller;
+  var recipe;
+  var deferred;
+  var Recipes = {
+    getIndividualRecipe: function() {
+      return deferred.promise;
+    },
+    getQuickRecipes: function () {
+      return deferred.promise;
+    },
+    save: function () {
+      return deferred.promise;
+    }
+  };
+  var RecipeBox = {
+    recipeCount: 0
+  };
+  var user = {};
 
-
-  beforeEach(inject(function (_$controller_, $httpBackend, $http) {
+  beforeEach(inject(function ($controller, $httpBackend, $http, $q, $rootScope) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
-    $controller = _$controller_;
     this.$httpBackend = $httpBackend;
     this.$http = $http;
+    deferred = $q.defer();
+
+    recipe = {
+      recipeName: "The Accidental Hipster",
+      id: "The-Accidental-Hipster-1250057"
+    };
+
+    $httpBackend.whenGET('views/home.html').respond(200, '');
+    $scope = $rootScope.$new();
+    $scope.currentUser = user;
+    controller = $controller('MainCtrl', {
+      $scope: $scope,
+      Recipes: Recipes,
+      RecipeBox: RecipeBox
+    });
+    $scope.$apply();
+
   }));
 
   describe('$scope.addRecipe', function () {
-    it('adds a recipe', function ($scope, $httpBackend) {
-      var recipe = {
-        recipeName: "The Accidental Hipster",
-        id: "The-Accidental-Hipster-1250057"
-      };
+    it('calls the Recipes service with the appropriate method', function () {
+      spyOn(Recipes, 'getIndividualRecipe').and.callThrough();
+      $scope.addRecipe(recipe);
+      expect(Recipes.getIndividualRecipe).toHaveBeenCalled();
+    });
 
-
-      var $scope = {
-        $on: function (cb) {
-          return;
-        }
-      };
-      var controller = $controller('MainCtrl', {
-        $scope: $scope
-      });
-
+    it('adds a recipe', function () {
+      spyOn($scope, 'saveRecipe');
       $scope.addRecipe(recipe);
 
-      var recipeId = 'The-Accidental-Hipster-1250057';
-      // Step 2
-      this.$httpBackend.expectJSONP($httpBackend.expectJSONP(/http:\/\/api.yummly.com\/v1\/api\/recipes.*/), function (recipe) {
-        // Step 3
-        expect(recipe).toBeDefined();
-        expect(recipe.id).to.equal('The-Accidental-Hipster-1250057');
-      }).respond({
-        recipeName: "The Accidental Hipster",
-        id: "The-Accidental-Hipster-1250057"
-      });
-      // Step 1. Fire a JSONP request
-      this.$http.jsonp('http://api.yummly.com/v1/api/recipe/' + recipeId + '?callback=JSON_CALLBACK');
-      this.$httpBackend.flush();
+      deferred.resolve();
+      $scope.$apply();
 
+      expect($scope.saveRecipe).toHaveBeenCalled();
+      expect(RecipeBox.recipeCount).toBe(1);
     });
   });
 });
-
-
-
-
-
-
-
-
-
-// describe('controllers', function () {
-//   beforeEach(module('MyApp', function ($provide) {
-//     $provide.constant('io', io);
-//   }));
-
-//   var socket = {
-//     on: function () {},
-//     emit: function () {}
-//   };
-//   var io = {
-//     connect: function () {
-//       return socket;
-//     }
-//   };
-
-//   describe('AddCtrl', function () {
-//     it('should add a new recipe', inject(function ($controller, $rootScope, $httpBackend) {
-//       $httpBackend.expectJSONP('http:\/\/api\.yummly\.com\/.*').return(200, '');
-//       var scope = $rootScope.$new();
-//       var Main = $controller('MainCtrl', {
-//         $scope: scope
-//       });
-//       scope.$digest();
-//       expect(MainCtrl).toBeDefined();
-//     }));
-//   });
-
-
-// });

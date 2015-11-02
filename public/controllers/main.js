@@ -1,6 +1,6 @@
 angular.module('MyApp')
   .controller('MainCtrl', function ($scope, Recipes, $alert, $http, $location, RecipeBox, $rootScope, $route, Profile, $cookies) {
-
+    window.Recipes = Recipes;
     // console.log($scope.recipe);
 
     $scope.genres = ['Mexican', 'Italian', 'Chinese', 'Korean',
@@ -65,21 +65,14 @@ angular.module('MyApp')
       }
     };
 
-    $scope.showAlert = function () {
-      $alert({
-        content: "Sign Up or Log In to Subscribe :)",
-        animation: 'fadeZoomFadeDown',
-        type: 'material',
-        duration: 2
-      });
-    };
+
 
     $scope.getUserRecipeBox = function (id) {
       if ($rootScope.currentUser) {
 
         Profile.getCurrentUser(id).then(function (response) {
           $rootScope.currentUser = response.data;
-          console.log("GETTTING THE CURRENT USERRRR", response.data);
+          // console.log("GETTTING THE CURRENT USERRRR", response.data);
           // console.log('lalala', $rootScope.currentUser);
         }, function (err) {
           console.log('error occured', err);
@@ -149,14 +142,11 @@ angular.module('MyApp')
         //that got the recipes initially, which talks to the backend
         //and gets the current state of the world. since we deleted, it
         //will automatically update it. this sets the $scope.recipes to be what we want.
-        //the above $scope.userRecipes
+        
         var recipes = $scope.getUserRecipes();
 
         $scope.userRecipes = recipes;
-        // RecipeBox.recipeCount = recipes.recipeBox.length;
-        // console.log(response.data);
-        // $scope.userRecipes = response.data;
-        // RecipeBox.recipeCount = response.data.recipeBox.length;
+  
 
         RecipeBox.recipeCount--;
         // console.log();
@@ -175,17 +165,12 @@ angular.module('MyApp')
         $rootScope.currentUser.recipeBox = [];
         RecipeBox.recipeCount = 0;
 
-        //console.log('$scope.userRecipes', $scope.userRecipes);
-        //console.log('RecipeBox.recipeCount', RecipeBox.recipeCount);
-        // console.log(response.data.);
-        // console.log($scope.currentUser);
-
         //  $scope.userRecipes = response;
         // //probably better to store everything in RecipeBox service. 
         // // there could be a reset function.  
         // RecipeBox.recipeCount = $scope.userRecipes.length;
         // // $scope.$apply();
-        // // console.
+    
       }, function (err) {
         console.log("error occured when deleting", err);
       });
@@ -200,11 +185,7 @@ angular.module('MyApp')
         .then(function (response) {
 
           $scope.getUserRecipes();
-          // if (response.data.recipeBox) {
-
-          //   $scope.userRecipes = response.data.recipeBox;
-
-          //   console.log("This is the user recipebox", $scope.userRecipes);
+          
           //   //ideal case would be recipeBox would live in the service
           //   RecipeBox.recipeCount = $scope.userRecipes.length;
           // }
@@ -220,7 +201,6 @@ angular.module('MyApp')
 
           $alert({
 
-            // #3: generally, all three items aren't updating in real time
 
             content: response.data.message,
             animation: 'fadeZoomFadeDown',
@@ -231,14 +211,14 @@ angular.module('MyApp')
     };
 
     $scope.addRecipe = function (recipe) {
-      console.log(recipe);
       if ($scope.currentUser === undefined) {
         $location.path('/login');
         return;
       }
-      // can just do this directly: $scope.saveRecipe(recipe);
+
       Recipes.getIndividualRecipe(recipe.id).then(function (response) {
         // console.log(response);
+
         $scope.saveRecipe(response);
         RecipeBox.recipeCount++;
         // console.log($rootScope.recipePropsIWant);
@@ -274,7 +254,7 @@ angular.module('MyApp')
     $scope.getIndividualRecipe = function (recipeId) {
       Recipes.getIndividualRecipes(recipeId).then(function (response) {
         $scope.individualRecipe = response;
-        // $rootScope.recipePropsIWant = response;
+   
         // console.log($rootScope.recipePropsIWant);
         // console.log($scope.individualRecipe);
       });
