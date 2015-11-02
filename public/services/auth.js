@@ -69,6 +69,7 @@ angular.module('MyApp')
         window.$rootScope = $rootScope;
         delete $cookies.user;
         $rootScope.currentUser = null;
+        RecipeBox.recipeCount = 0;
         $alert({
           content: 'You have been logged out.',
           animation: 'fadeZoomFadeDown',

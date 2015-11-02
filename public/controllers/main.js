@@ -220,6 +220,7 @@ angular.module('MyApp')
       Recipes.getIndividualRecipe(recipe.id).then(function (response) {
         // console.log(response);
        $scope.saveRecipe(response);
+       RecipeBox.recipeCount++;
         // console.log($rootScope.recipePropsIWant);
         // console.log($scope.individualRecipe);
       });

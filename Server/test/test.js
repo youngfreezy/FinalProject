@@ -95,12 +95,38 @@ describe('Routes', function () {
     });
   });
 
-  describe("API RecipeBox", function() {
-    var res = {};
-    res.sendStatus = function(status) {
-      console.log('sendingstatus');
-    } 
+  describe('GET /api/recipebox', function() {
+  it('should return 404 if not logged in', function(done) {
+    request(app)
+      .get('/api/recipebox')
+      .expect(404, done);
+  });
+});
 
-  })
+
+
+describe('POST /api/recipebox', function() {
+  it("posts a new recipe to /api/recipebox", function(done){
+   var recipe = {
+      recipeUrl: 'www.google.com',
+      image: 'www.google.com',
+      numServings: 5,
+      Ingredients: 'www.google.com',
+      NutritionalInformation: 'www.google.com',
+      name: 'www.google.com',
+      totalTime: 500
+    };
+
+    request("http://localhost:3000")
+      .post("/api/recipebox")
+      .send(recipe)
+      .expect(200)
+      .expect("marcus is stored", done);
+  });
+
+
+});
+
+
 
 });

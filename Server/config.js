@@ -6,6 +6,11 @@ module.exports = {
     'callbackURL': "/auth/facebook/callback"
   },
 
-  "dbConnection" : process.env.DB  || "localhost/seven"
   
+
+   'gmail': {
+    'pass': 'aeulqtlvzljhkpsd'
+  },
+  
+  "dbConnection" : process.env.DB  || "localhost/seven"
 };

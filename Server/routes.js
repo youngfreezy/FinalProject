@@ -17,12 +17,13 @@ var upload = multer({
 var upload2 = multer({
   dest: '/tmp/'
 });
+var config = require('./config.js');
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'nodemailertester3@gmail.com',
-    pass: 'aeulqtlvzljhkpsd'
+    pass: config.gmail.pass
   }
 });
 
@@ -444,7 +445,7 @@ module.exports = function (app, io) {
   }
 
 
-  app.post('/api/recipebox', ensureAuthenticated, function (req, res) {
+  app.post('/api/recipebox', function (req, res) {
 
 
     var recipe = new Recipe({

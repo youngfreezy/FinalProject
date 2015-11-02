@@ -27,16 +27,6 @@ var User = require('./Server/mongoModels/user');
 var Comments = require('./Server/mongoModels/comments');
 var config = require('./Server/config');
 
-var transporter = nodemailer.createTransport();
-
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'nodemailertester3@gmail.com',
-    pass: 'youngfreezy'
-  }
-});
-
 //for authentication:
 
 var db = mongoose.connect(config.dbConnection, {}, function (err) {
