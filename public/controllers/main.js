@@ -41,16 +41,36 @@ angular.module('MyApp')
       });
     };
 
-     $scope.setUsertoSubscribe = function () {
-      Recipes.saveUserSubscription($rootScope.currentUser._id).then(function (response) {
-        $rootScope.currentUser = response.data;
-          
-            $alert({
-              content: "Thanks for Signing Up!",
-              animation: 'fadeZoomFadeDown',
-              type: 'material',
-              duration: 2
-            });
+    $scope.setUsertoSubscribe = function () {
+      if (!$scope.currentUser) {
+        $alert({
+          content: "Sign Up or Log In to Subscribe :)",
+          animation: 'fadeZoomFadeDown',
+          type: 'material',
+          duration: 2
+        });
+      } else {
+
+
+        Recipes.saveUserSubscription($rootScope.currentUser._id).then(function (response) {
+          $rootScope.currentUser = response.data;
+
+          $alert({
+            content: "Thanks for Signing Up!",
+            animation: 'fadeZoomFadeDown',
+            type: 'material',
+            duration: 2
+          });
+        });
+      }
+    };
+
+    $scope.showAlert = function () {
+      $alert({
+        content: "Sign Up or Log In to Subscribe :)",
+        animation: 'fadeZoomFadeDown',
+        type: 'material',
+        duration: 2
       });
     };
 
@@ -88,7 +108,7 @@ angular.module('MyApp')
       }
 
     }
-   
+
 
     // $scope.done = $scope.isDone();
     $scope.toggleDoneRecipe = function (value, recipe) {
@@ -108,16 +128,16 @@ angular.module('MyApp')
       if (value === true) {
 
 
-      Recipes.saveUnDoneRecipe(recipe).then(function (response) {
-        // console.log('saved undone user recipes');
-        // $scope.currentUser = response.data;
-        $rootScope.currentUser = response.data;
-        // #HACKreactor:
-        $cookies.user = JSON.stringify(response.data);
+        Recipes.saveUnDoneRecipe(recipe).then(function (response) {
+          // console.log('saved undone user recipes');
+          // $scope.currentUser = response.data;
+          $rootScope.currentUser = response.data;
+          // #HACKreactor:
+          $cookies.user = JSON.stringify(response.data);
 
-      }, function (err) {
-        console.log('error occured', err);
-      });
+        }, function (err) {
+          console.log('error occured', err);
+        });
       }
     };
 
@@ -174,40 +194,40 @@ angular.module('MyApp')
     //   localStorage.setItem('CONFIG', $scope.CONFIG);
     // };
     window.$location = $location;
-    
+
     $scope.saveRecipe = function (response) {
-       Recipes.save(response)
-          .then(function (response) {
+      Recipes.save(response)
+        .then(function (response) {
 
-            $scope.getUserRecipes();
-            // if (response.data.recipeBox) {
+          $scope.getUserRecipes();
+          // if (response.data.recipeBox) {
 
-            //   $scope.userRecipes = response.data.recipeBox;
+          //   $scope.userRecipes = response.data.recipeBox;
 
-            //   console.log("This is the user recipebox", $scope.userRecipes);
-            //   //ideal case would be recipeBox would live in the service
-            //   RecipeBox.recipeCount = $scope.userRecipes.length;
-            // }
-            // console.log(response);
-            $alert({
-              content: response.data.recipeBox ? 'recipe has been added.' : 'This recipe is already in your recipe box',
-              animation: 'fadeZoomFadeDown',
-              type: 'material',
-              duration: 1
-            });
-          })
-          .catch(function (response) {
-
-            $alert({
-
-              // #3: generally, all three items aren't updating in real time
-
-              content: response.data.message,
-              animation: 'fadeZoomFadeDown',
-              type: 'material',
-              duration: 3
-            });
+          //   console.log("This is the user recipebox", $scope.userRecipes);
+          //   //ideal case would be recipeBox would live in the service
+          //   RecipeBox.recipeCount = $scope.userRecipes.length;
+          // }
+          // console.log(response);
+          $alert({
+            content: response.data.recipeBox ? 'recipe has been added.' : 'This recipe is already in your recipe box',
+            animation: 'fadeZoomFadeDown',
+            type: 'material',
+            duration: 1
           });
+        })
+        .catch(function (response) {
+
+          $alert({
+
+            // #3: generally, all three items aren't updating in real time
+
+            content: response.data.message,
+            animation: 'fadeZoomFadeDown',
+            type: 'material',
+            duration: 3
+          });
+        });
     };
 
     $scope.addRecipe = function (recipe) {
@@ -219,8 +239,8 @@ angular.module('MyApp')
       // can just do this directly: $scope.saveRecipe(recipe);
       Recipes.getIndividualRecipe(recipe.id).then(function (response) {
         // console.log(response);
-       $scope.saveRecipe(response);
-       RecipeBox.recipeCount++;
+        $scope.saveRecipe(response);
+        RecipeBox.recipeCount++;
         // console.log($rootScope.recipePropsIWant);
         // console.log($scope.individualRecipe);
       });
@@ -265,7 +285,7 @@ angular.module('MyApp')
         Recipes.getUserRecipes().then(function (response) {
           // console.log(response);
           $scope.userRecipes = response;
-           addDonesToNGModel();
+          addDonesToNGModel();
           //probably better to store everything in RecipeBox service. 
           // there could be a reset function.  
           if (!$scope.userRecipes) {

@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .factory('Auth', function ($http, $location, $rootScope, $alert, $window, $cookies) {
+  .factory('Auth', function ($http, $location, $rootScope, $alert, $window, $cookies, RecipeBox) {
 
     return {
       login: function (user) {
@@ -70,6 +70,7 @@ angular.module('MyApp')
         delete $cookies.user;
         $rootScope.currentUser = null;
         RecipeBox.recipeCount = 0;
+  
         $alert({
           content: 'You have been logged out.',
           animation: 'fadeZoomFadeDown',
