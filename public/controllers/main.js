@@ -106,7 +106,7 @@ angular.module('MyApp')
     // $scope.done = $scope.isDone();
     $scope.toggleDoneRecipe = function (value, recipe) {
 
-      if (value === false) {
+      if (!value) {
         Recipes.saveDoneRecipe(recipe).then(function (response) {
 
           $rootScope.currentUser = response.data;
@@ -118,7 +118,7 @@ angular.module('MyApp')
         });
         return;
       }
-      if (value === true) {
+      if (value) {
 
 
         Recipes.saveUnDoneRecipe(recipe).then(function (response) {
@@ -142,11 +142,11 @@ angular.module('MyApp')
         //that got the recipes initially, which talks to the backend
         //and gets the current state of the world. since we deleted, it
         //will automatically update it. this sets the $scope.recipes to be what we want.
-        
+
         var recipes = $scope.getUserRecipes();
 
         $scope.userRecipes = recipes;
-  
+
 
         RecipeBox.recipeCount--;
         // console.log();
@@ -170,7 +170,7 @@ angular.module('MyApp')
         // // there could be a reset function.  
         // RecipeBox.recipeCount = $scope.userRecipes.length;
         // // $scope.$apply();
-    
+
       }, function (err) {
         console.log("error occured when deleting", err);
       });
@@ -185,7 +185,7 @@ angular.module('MyApp')
         .then(function (response) {
 
           $scope.getUserRecipes();
-          
+
           //   //ideal case would be recipeBox would live in the service
           //   RecipeBox.recipeCount = $scope.userRecipes.length;
           // }
@@ -254,7 +254,7 @@ angular.module('MyApp')
     $scope.getIndividualRecipe = function (recipeId) {
       Recipes.getIndividualRecipes(recipeId).then(function (response) {
         $scope.individualRecipe = response;
-   
+
         // console.log($rootScope.recipePropsIWant);
         // console.log($scope.individualRecipe);
       });

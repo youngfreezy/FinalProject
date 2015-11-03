@@ -106,9 +106,8 @@ describe('Routes', function () {
 
 
 describe('POST /api/recipebox', function() {
-  it("posts a new recipe to /api/recipebox", function(done){
-
-    var recipe = {
+    it("posts a new recipe to /api/recipebox", function (done) {
+      var recipe = {
     recipe: {
         source: {
             sourceRecipeUrl: 'www.google.com',
@@ -123,14 +122,46 @@ describe('POST /api/recipebox', function() {
         totalTime: 500
     }
 };
+      request(app)
+        .get('/api/stream')
+        // .send(recipe)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) {
+            console.log(err);
+            // return done(err);
+          }
+          // done();
+        });
+      done();
 
-request("http://localhost:3000")
-.post("/api/recipebox")
-.send(recipe)
-.expect(200, done);
+    });
+
+//   it("posts a new recipe to /api/recipebox", function(done){
+
+//     var recipe = {
+//     recipe: {
+//         source: {
+//             sourceRecipeUrl: 'www.google.com',
+//         },
+//         images: [{
+//             hostedSmallUrl: 'www.google.com'
+//         }],
+//         numberOfServings: 5,
+//         ingredientLines: 'www.google.com',
+//         NutritionalInformation: 'www.google.com',
+//         name: 'www.google.com',
+//         totalTime: 500
+//     }
+// };
+
+// request("http://localhost:3000")
+// .post("/api/recipebox")
+// .send(recipe)
+// .expect(200, done);
 
   
-  });
+//   });
 
 
 });

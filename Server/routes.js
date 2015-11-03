@@ -1,5 +1,3 @@
-'use strict';
-var async = require('async');
 var User = require('./mongoModels/user');
 var Recipe = require('./mongoModels/recipe');
 var RecipeStream = require('./mongoModels/stream');
@@ -232,7 +230,7 @@ module.exports = function (app, io) {
         res.status(400).send(info);
       } else {
         // if user logs in locally their cookie is being over written, which is great.
-        //associate local/facebook logins?
+   
         if (req.user) {
           // console.log("This is the user from routes.js", req.user);
           // res.cookie('user', JSON.stringify(req.user));
@@ -251,10 +249,7 @@ module.exports = function (app, io) {
     })(req, res, next);
   });
 
-  // app.post('/api/login', passport.authenticate('local'), function (req, res) {
-  //   res.cookie('user', JSON.stringify(req.user));
-  //   res.send(req.user);
-  // });
+
   // Unsubscribe
   app.get('/api/unsubscribe', function (req, res) {
     User.findByIdAndUpdate(req.query.id, {
@@ -357,13 +352,13 @@ module.exports = function (app, io) {
     }).findOne(function (err, user) {
       if (err) {
         console.log(err);
-        res.status(500).send(err);
-        return;
+        return res.status(500).send(err);
+        
       }
 
       if (!user) {
-        res.status(404);
-        return;
+        return res.status(404);
+        
       }
 
       var recipeBox = user.recipeBox;
@@ -375,8 +370,8 @@ module.exports = function (app, io) {
       user.recipeBox = recipeBox;
       user.save(function (err, resp) {
         if (err) {
-          res.status(500).send(err);
-          return;
+        return  res.status(500).send(err);
+          
         }
         // console.log('done saving user recipes', resp);
         return res.status(200).send(resp);
@@ -438,13 +433,13 @@ module.exports = function (app, io) {
     });
   });
 
-app.get('/api/yummly_recipes/recipe', function (req, res) {
-  console.log(req);
+  app.get('/api/yummly_recipes/recipe', function (req, res) {
+    console.log(req);
     var id = config.Yummly.id;
     var key = config.Yummly.key;
     var YummlyID = req.query.recipeid;
-    
-    var url = "http://api.yummly.com/v1/api/recipe/" +YummlyID +"?_app_id=" + id + "&_app_key=" + key;
+
+    var url = "http://api.yummly.com/v1/api/recipe/" + YummlyID + "?_app_id=" + id + "&_app_key=" + key;
     request(url, function (error, response, body) {
       if (!error) {
         res.json(JSON.parse(body));
@@ -477,13 +472,13 @@ app.get('/api/yummly_recipes/recipe', function (req, res) {
       email: email
     }, function (err, user) {
       if (err) {
-        res.status(500).send(err);
-        return;
+        return res.status(500).send(err);
+        
       }
 
       if (!user) {
-        res.status(404);
-        return;
+        return res.status(404);
+        
       }
 
       var recipeBox = user.recipeBox;
@@ -505,8 +500,8 @@ app.get('/api/yummly_recipes/recipe', function (req, res) {
 
       user.save(function (err, resp) {
         if (err) {
-          res.status(500).send(err);
-          return;
+          return res.status(500).send(err);
+          
         }
         // console.log('added recipe to recipebox', resp);
         return res.status(200).send(resp);

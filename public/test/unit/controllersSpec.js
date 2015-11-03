@@ -6,7 +6,7 @@ describe('MainController', function () {
   var recipe;
   var deferred;
   var Recipes = {
-    getIndividualRecipe: function() {
+    getIndividualRecipe: function () {
       return deferred.promise;
     },
     getQuickRecipes: function () {

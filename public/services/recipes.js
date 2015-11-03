@@ -32,7 +32,7 @@ angular.module('MyApp')
         //resolve errors with divs in the controller. 
       },
 
-      saveUserSubscription: function(userId) {
+      saveUserSubscription: function (userId) {
         console.log("Howdy");
         return $http.put('/api/' + userId + '/subscription');
       },
@@ -124,8 +124,8 @@ angular.module('MyApp')
         // });
       },
 
-    
-     
+
+
       getQuickRecipes: function (randGenre) {
         return $http.get('/api/yummly_recipes/initRecipes?q=' + randGenre).then(function (response) {
           return response.data.matches;
