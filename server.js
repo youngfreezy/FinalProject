@@ -97,7 +97,6 @@ var db = mongoose.connect(config.dbConnection, {}, function (err) {
     });
     var io = require('socket.io')(server);
     var routes = require('./Server/routes.js')(app, io);
-    io.set('transports', ['websocket']);
   }
 });
 
@@ -105,6 +104,7 @@ var db = mongoose.connect(config.dbConnection, {}, function (err) {
 
 var allowCrossDomain = function (req, res, next) {
   res.header('Access-Control-Allow-Origin', "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
 
