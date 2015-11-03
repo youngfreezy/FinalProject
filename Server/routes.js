@@ -230,7 +230,7 @@ module.exports = function (app, io) {
         res.status(400).send(info);
       } else {
         // if user logs in locally their cookie is being over written, which is great.
-   
+
         if (req.user) {
           // console.log("This is the user from routes.js", req.user);
           // res.cookie('user', JSON.stringify(req.user));
@@ -283,7 +283,7 @@ module.exports = function (app, io) {
 
   });
   // if no error, this gets hit:
-  //middleware for previous url: 
+  //middleware for previous url:
 
   app.get('/auth/facebook/callback', function (req, res, next) {
 
@@ -353,12 +353,12 @@ module.exports = function (app, io) {
       if (err) {
         console.log(err);
         return res.status(500).send(err);
-        
+
       }
 
       if (!user) {
         return res.status(404);
-        
+
       }
 
       var recipeBox = user.recipeBox;
@@ -371,7 +371,7 @@ module.exports = function (app, io) {
       user.save(function (err, resp) {
         if (err) {
         return  res.status(500).send(err);
-          
+
         }
         // console.log('done saving user recipes', resp);
         return res.status(200).send(resp);
@@ -473,12 +473,10 @@ module.exports = function (app, io) {
     }, function (err, user) {
       if (err) {
         return res.status(500).send(err);
-        
       }
 
       if (!user) {
         return res.status(404);
-        
       }
 
       var recipeBox = user.recipeBox;
@@ -501,7 +499,7 @@ module.exports = function (app, io) {
       user.save(function (err, resp) {
         if (err) {
           return res.status(500).send(err);
-          
+
         }
         // console.log('added recipe to recipebox', resp);
         return res.status(200).send(resp);
@@ -511,8 +509,6 @@ module.exports = function (app, io) {
 
 
   app.post('/api/recipebox', function (req, res) {
-
-
     var recipe = new Recipe({
       recipeUrl: req.body.recipe.source.sourceRecipeUrl,
       image: req.body.recipe.images[0].hostedSmallUrl,
@@ -545,7 +541,7 @@ module.exports = function (app, io) {
             // find the associated user
             // console.log("Hello");
             recipeStreamItem.save();
-            pushToRecipeBox(req.body.email, r._id, res);
+            pushToRecipeBox(req.user.email, r._id, res);
             broadCastStream();
           }
         });
@@ -553,7 +549,7 @@ module.exports = function (app, io) {
       }
 
       recipeStreamItem.save();
-      pushToRecipeBox(req.body.email, result._id, res);
+      pushToRecipeBox(req.user.email, result._id, res);
       broadCastStream();
     });
   });
@@ -562,7 +558,7 @@ module.exports = function (app, io) {
 
   //get all recipes from the recipebox:
   app.get('/api/:user/recipes', ensureAuthenticated, function (req, res) {
-    //passport injects req.user.  
+    //passport injects req.user.
     // console.log(req.user._id);
     User.findById(
       req.user._id,
@@ -870,7 +866,7 @@ module.exports = function (app, io) {
       // console.log('query', query);
       // console.log(newData);
       User.findOneAndUpdate(query, {
-        //reference to gridFS saved file.  
+        //reference to gridFS saved file.
         "image": base64data
       }, {
         'upsert': true,
@@ -887,7 +883,7 @@ module.exports = function (app, io) {
       });
     });
   });
-  //this succesfully gets the picture. now i need to 
+  //this succesfully gets the picture. now i need to
   //construct image tag ng-click= to a function makes a call to this route
   // app.get('/getpicture/:id', function (req, res) {
   //   var id = req.params.id;

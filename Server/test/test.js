@@ -10,16 +10,13 @@ if (process.env.MODE === "heroku") {
   host = 'http://quickrecipesapp.herokuapp.com';
 }
 
-var postValidLoginCredentials = function () {
+function authenticate() {
   return request(host).post('/api/login')
     .send({
       email: "fareez@fareez.com",
       'password': 'fareez'
     });
-
-
-};
-
+}
 
 var globalUser = {
   _id: 123,
@@ -35,32 +32,23 @@ var globalUser = {
 // this is here temporarily. TODO: refactor my routes.js file to separate controllers from routes. Could not access this function from routes.js without that refactor.
 
 function setRecipeDone(user, recipeId, done) {
-
   var recipeBox = user.recipeBox;
   for (var r in recipeBox) {
     if (recipeBox[r]._id == recipeId.toString())
       recipeBox[r].done = done;
   }
-
   user.recipeBox = recipeBox;
-
   return user;
-
 }
 
 describe('Routes', function () {
 
-
   describe('Login Route', function () {
-
     it('responds back with a 400 code if not logged in', function (done) {
-
       request(host)
         .post('/api/login')
         .expect(400, done);
-
     });
-
   });
 
   describe("Set Recipe Done", function () {
@@ -77,12 +65,8 @@ describe('Routes', function () {
 
       // var recipeDoneFunction = routes.__get__("setRecipeDone");
       setRecipeDone(userId, recipeId, donerecipe);
-
-
       expect(globalUser.done).to.equal(true);
-
       done();
-
     });
   });
 
@@ -90,41 +74,35 @@ describe('Routes', function () {
     it('should return 404 if not logged in', function (done) {
       request(host)
         .get('/api/recipebox')
-        .expect(404, done)
-        .end(done);
+        .expect(404, done);
     });
   });
-
-
 
   describe('POST /api/recipebox', function () {
     it("posts a new recipe to /api/recipebox", function (done) {
       var recipe = {
         recipe: {
           source: {
-            sourceRecipeUrl: 'www.google.com',
+            sourceRecipeUrl: 'https://en.wikipedia.org/wiki/Dolma',
           },
           images: [{
-            hostedSmallUrl: 'www.google.com'
+            hostedSmallUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Etli_dolma.JPG/500px-Etli_dolma.JPG'
           }],
           numberOfServings: 5,
-          ingredientLines: 'www.google.com',
-          NutritionalInformation: 'www.google.com',
-          name: 'www.google.com',
+          ingredientLines: 'nothing',
+          NutritionalInformation: 'nothing',
+          name: 'Dolma',
           totalTime: 500
         }
       };
-      postValidLoginCredentials()
-        .end(function (err, res) {
-          // console.log(err);
+
+      authenticate().end(function (err, res) {
           request(host)
             .post('/api/recipebox')
             .set('Cookie', res.headers['set-cookie'])
-            .send(recipe)
-            .expect(200, done)
-            .end(function(err, res){
-              console.log(err, res);
-            })
+            .type('json')
+            .send(JSON.stringify(recipe))
+            .expect(200, done);
         });
 
       // request(host)
