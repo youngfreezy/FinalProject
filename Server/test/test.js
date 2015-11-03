@@ -1,18 +1,25 @@
-var express = require('express');
-var app = express();
 var request = require('supertest');
 var chai = require('chai');
 var assert = chai.assert;
 var should = chai.should();
 var expect = require('chai').expect;
-var routes = require("../routes");
-var session = require('express-session');
 var path = require("path");
-var User = require('../mongoModels/user');
-// //for accessing private variables inside routes.  
-// var rewire = require('rewire');
-// var routes = rewire('../routes');
-      
+
+var host = 'http://localhost:3000';
+if (process.env.MODE === "heroku") {
+  host = 'http://quickrecipesapp.herokuapp.com';
+}
+
+var postValidLoginCredentials = function () {
+  return request(host).post('/api/login')
+    .send({
+      email: "fareez@fareez.com",
+      'password': 'fareez'
+    });
+
+
+};
+
 
 var globalUser = {
   _id: 123,
@@ -36,37 +43,21 @@ function setRecipeDone(user, recipeId, done) {
   }
 
   user.recipeBox = recipeBox;
-  
-    return user;
+
+  return user;
 
 }
 
 describe('Routes', function () {
-  // console.log("Test");
-  app.use(session({
-    secret: 'shhh, it\'s a secret',
-    resave: false,
-    saveUninitialized: true
-  }));
 
 
   describe('Login Route', function () {
 
     it('responds back with a 400 code if not logged in', function (done) {
-      app.post('/api/login', function (req, res) {
 
-      });
-      request(app)
+      request(host)
         .post('/api/login')
-        .expect(400)
-        .end(function (err, res) {
-          if (err) {
-            return done(err);
-          }
-          expect(res.status).to.be(400);
-          // done();
-        });
-      done();
+        .expect(400, done);
 
     });
 
@@ -95,76 +86,90 @@ describe('Routes', function () {
     });
   });
 
-  describe('GET /api/recipebox', function() {
-  it('should return 404 if not logged in', function(done) {
-    request(app)
-      .get('/api/recipebox')
-      .expect(404, done);
+  describe('GET /api/recipebox', function () {
+    it('should return 404 if not logged in', function (done) {
+      request(host)
+        .get('/api/recipebox')
+        .expect(404, done)
+        .end(done);
+    });
   });
-});
 
 
 
-describe('POST /api/recipebox', function() {
+  describe('POST /api/recipebox', function () {
     it("posts a new recipe to /api/recipebox", function (done) {
       var recipe = {
-    recipe: {
-        source: {
+        recipe: {
+          source: {
             sourceRecipeUrl: 'www.google.com',
-        },
-        images: [{
+          },
+          images: [{
             hostedSmallUrl: 'www.google.com'
-        }],
-        numberOfServings: 5,
-        ingredientLines: 'www.google.com',
-        NutritionalInformation: 'www.google.com',
-        name: 'www.google.com',
-        totalTime: 500
-    }
-};
-      request(app)
-        .get('/api/stream')
-        // .send(recipe)
-        .expect(200)
+          }],
+          numberOfServings: 5,
+          ingredientLines: 'www.google.com',
+          NutritionalInformation: 'www.google.com',
+          name: 'www.google.com',
+          totalTime: 500
+        }
+      };
+      postValidLoginCredentials()
         .end(function (err, res) {
-          if (err) {
-            console.log(err);
-            // return done(err);
-          }
-          // done();
+          // console.log(err);
+          request(host)
+            .post('/api/recipebox')
+            .set('Cookie', res.headers['set-cookie'])
+            .send(recipe)
+            .expect(200, done)
+            .end(function(err, res){
+              console.log(err, res);
+            })
         });
-      done();
+
+      // request(host)
+
+      // .post('/api/recipebox')
+      //   .send(recipe)
+      //   .expect(200)
+      //   .end(function (err, res) {
+      //     if (err) {
+      //       return done(err);
+      //     }
+      //     done();
+      //   });
+      // done();
 
     });
 
-//   it("posts a new recipe to /api/recipebox", function(done){
+    //   it("posts a new recipe to /api/recipebox", function(done){
 
-//     var recipe = {
-//     recipe: {
-//         source: {
-//             sourceRecipeUrl: 'www.google.com',
-//         },
-//         images: [{
-//             hostedSmallUrl: 'www.google.com'
-//         }],
-//         numberOfServings: 5,
-//         ingredientLines: 'www.google.com',
-//         NutritionalInformation: 'www.google.com',
-//         name: 'www.google.com',
-//         totalTime: 500
-//     }
-// };
+    //     var recipe = {
+    //     recipe: {
+    //         source: {
+    //             sourceRecipeUrl: 'www.google.com',
+    //         },
+    //         images: [{
+    //             hostedSmallUrl: 'www.google.com'
+    //         }],
+    //         numberOfServings: 5,
+    //         ingredientLines: 'www.google.com',
+    //         NutritionalInformation: 'www.google.com',
+    //         name: 'www.google.com',
+    //         totalTime: 500
+    //     }
+    // };
 
-// request("http://localhost:3000")
-// .post("/api/recipebox")
-// .send(recipe)
-// .expect(200, done);
-
-  
-//   });
+    // request("http://localhost:3000")
+    // .post("/api/recipebox")
+    // .send(recipe)
+    // .expect(200, done);
 
 
-});
+    //   });
+
+
+  });
 
 
 

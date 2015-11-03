@@ -3,7 +3,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var favicon = require('static-favicon');
-var jwt = require('jwt-simple');
 var moment = require('moment');
 var mongoose = require('mongoose');
 var async = require('async');
