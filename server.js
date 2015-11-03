@@ -97,6 +97,7 @@ var db = mongoose.connect(config.dbConnection, {}, function (err) {
     });
     var io = require('socket.io')(server);
     var routes = require('./Server/routes.js')(app, io);
+    io.set('transports', ['websocket']);
   }
 });
 
