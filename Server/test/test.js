@@ -97,55 +97,108 @@ describe('Routes', function () {
       };
 
       authenticate().end(function (err, res) {
-          request(host)
-            .post('/api/recipebox')
-            .set('Cookie', res.headers['set-cookie'])
-            .type('json')
-            .send(JSON.stringify(recipe))
-            .expect(200, done);
-        });
+        request(host)
+          .post('/api/recipebox')
+          .set('Cookie', res.headers['set-cookie'])
+          .type('json')
+          .send(JSON.stringify(recipe))
+          .expect(200, done);
+      });
 
-      // request(host)
 
-      // .post('/api/recipebox')
-      //   .send(recipe)
-      //   .expect(200)
-      //   .end(function (err, res) {
-      //     if (err) {
-      //       return done(err);
-      //     }
-      //     done();
-      //   });
-      // done();
 
     });
 
-    //   it("posts a new recipe to /api/recipebox", function(done){
+    describe('GET /api/stream', function () {
+      it("gets stream feed of newly added itesm to users recipebox", function (done) {
+        authenticate().end(function (err, res) {
+          request(host)
+            .get('/api/stream')
+            .set('Cookie', res.headers['set-cookie'])
+            .expect(200)
+            .end(function (err, res) {
+              if (err) {
+                done(err);
+                return;
+              }
 
-    //     var recipe = {
-    //     recipe: {
-    //         source: {
-    //             sourceRecipeUrl: 'www.google.com',
-    //         },
-    //         images: [{
-    //             hostedSmallUrl: 'www.google.com'
-    //         }],
-    //         numberOfServings: 5,
-    //         ingredientLines: 'www.google.com',
-    //         NutritionalInformation: 'www.google.com',
-    //         name: 'www.google.com',
-    //         totalTime: 500
-    //     }
-    // };
+              if (res.body.length > 0) {
+                done();
+                return;
+              }
 
-    // request("http://localhost:3000")
-    // .post("/api/recipebox")
-    // .send(recipe)
-    // .expect(200, done);
+              done('res.body is empty');
+            });
+        });
+      });
+    });
 
+    describe('GET /api/stream', function () {
+      it("gets stream feed of newly added itesm to users recipebox", function (done) {
+        authenticate().end(function (err, res) {
+          request(host)
+            .get('/api/stream')
+            .set('Cookie', res.headers['set-cookie'])
+            .expect(200)
+            .end(function (err, res) {
+              if (err) {
+                done(err);
+                return;
+              }
 
-    //   });
+              if (res.body.length > 0) {
+                done();
+                return;
+              }
 
+              done('res.body is empty');
+            });
+        });
+      });
+    });
+
+    describe('POST /api/stream/:recipe/comments', function () {
+      it("gets posts comment to last stream feed elements", function (done) {
+        authenticate().end(function (err, res) {
+          var cookies = res.headers['set-cookie'];
+          request(host)
+            .get('/api/stream')
+            .set('Cookie', cookies)
+            .expect(200)
+            .end(function (err, res) {
+              if (err) {
+                done(err);
+                return;
+              }
+
+              if (!(res.body.length > 0)) {
+                done('res.body is empty');
+                return;
+              }
+
+              var lastItem = res.body[res.body.length - 1];
+              var comment = {
+                _id: lastItem._id,
+                body: 'Dolma is yummy!'
+              };
+              request(host)
+                .post('/api/stream/' + lastItem._id + '/comments')
+                .set('Cookie', cookies)
+                .expect(200)
+                .type('json')
+                .send(JSON.stringify(comment))
+                .end(function (err, res) {
+                  if (err) {
+                    done(err);
+                    return;
+                  }
+
+                  done();
+                });
+            });
+        });
+      });
+    });
 
   });
 
