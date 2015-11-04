@@ -1,19 +1,32 @@
+var dotenv = require('dotenv');
+
+// silent supresses the warning is no .env file is found
+dotenv.config({silent: true});
+
+// only if the env is not production, we look for a .local env file
+// otherwise we load the server env vars
+// adjust this condition to suit your needs for staging servers or such
+if (process.env.NODE_ENV != 'production')
+  dotenv.load({path: process.env.PWD +'/.env.local'});
+else
+  dotenv.load();
+
 module.exports = {
 
   'facebookAuth': {
-    'clientID': process.env.FACEBOOK_ID || '1689439597952787',
-    'clientSecret': process.env.FACEBOOK_SECRET || '46f70d0b0cc3495def302e47e4f90513',
+    'clientID': process.env.FACEBOOK_ID,
+    'clientSecret': process.env.FACEBOOK_SECRET,
     'callbackURL': "/auth/facebook/callback"
   },
 
   'Yummly': {
-    key: process.env.YUMMLY_KEY || 'efd918c28d5b710d9583ec24fb2bb362',
-    id: process.env.YUMMLY_ID || '3ee8ed9f'
+    key: process.env.YUMMLY_KEY ,
+    id: process.env.YUMMLY_ID 
   },
 
   'gmail': {
-    'pass': process.env.GMAIL || 'aeulqtlvzljhkpsd'
+    'pass': process.env.GMAIL 
   },
 
-  "dbConnection": process.env.DB || "localhost/seven"
+  "dbConnection": process.env.DB
 };
