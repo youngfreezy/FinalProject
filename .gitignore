@@ -27,5 +27,7 @@ node_modules/
 
 .idea
 #config variables
+config.js
+Server/config.js
 uploads
 public/uploads
