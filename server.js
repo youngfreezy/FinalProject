@@ -24,7 +24,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var User = require('./Server/mongoModels/user');
 var Comments = require('./Server/mongoModels/comments');
-var config = require('./Server/config');
 var dotenv = require('dotenv');
 
 dotenv.load();
