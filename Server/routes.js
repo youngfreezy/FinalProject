@@ -20,7 +20,7 @@ var recipeRoutes = require('./Routes/recipes.js');
 var streamRoutes = require('./Routes/stream.js');
 var yummly = require('./Routes/yummly.js');
 var config = require('./config.js');
-var recipesController = require('./Controllers/recipes.js');
+var helpers = require('./helpers/recipes.js');
 
 module.exports = function (app, io) {
 

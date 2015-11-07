@@ -1,6 +1,6 @@
 var passport = require('passport');
 var User = require('../mongoModels/user');
-var recipesController = require('../Controllers/recipes.js');
+var helpers = require('../helpers/recipes.js');
 var Recipe = require('../mongoModels/recipe');
 var RecipeStream = require('../mongoModels/stream');
 var socketio;
@@ -35,7 +35,7 @@ module.exports = {
     // console.log("this is the userId", userId);
     // console.log(recipeId);
 
-    recipesController.setRecipeDone(userId, recipeId, true, res);
+    helpers.setRecipeDone(userId, recipeId, true, res);
   },
 
  recipeUndone: function (req, res) {
@@ -44,7 +44,7 @@ module.exports = {
     // console.log("this is the userId", userId);
     // console.log(recipeId);
 
-    recipesController.setRecipeDone(userId, recipeId, false, res);
+    helpers.setRecipeDone(userId, recipeId, false, res);
   },
 
     //don't have reference to right socketio object, to solve that, we create
@@ -87,7 +87,7 @@ module.exports = {
             // find the associated user
             // console.log("Hello");
             recipeStreamItem.save();
-            recipesController.pushToRecipeBox(req.user.email, r._id, res);
+            helpers.pushToRecipeBox(req.user.email, r._id, res);
             socketio.broadCastStream();
           }
         });
@@ -95,7 +95,7 @@ module.exports = {
       }
 
       recipeStreamItem.save();
-      recipesController.pushToRecipeBox(req.user.email, result._id, res);
+      helpers.pushToRecipeBox(req.user.email, result._id, res);
       socketio.broadCastStream();
     });
   },
