@@ -28,15 +28,16 @@ module.exports = {
       if (!user) {
         return res.redirect('/#!/signup');
       }
-      if (req.user) {
-        // console.log("==================== This is the user from routes.js", req.user);
+      if (user) {
+        console.log("==================== This is the user from routes.js", user);
         res.cookie('user', JSON.stringify(user));
+        console.log(req.user);
       }
 
-      if (req.session.redirectUrl) {
-        redirectUrl = req.session.redirectUrl;
-        req.session.redirectUrl = null;
-      }
+      // if (req.session.redirectUrl) {
+      //   redirectUrl = req.session.redirectUrl;
+      //   req.session.redirectUrl = null;
+      // }
       //actually storing the fact that they are logged in:
       req.logIn(user, function (err) {
         if (err) {
@@ -44,8 +45,8 @@ module.exports = {
         }
         console.log('=========== here!', user);
       });
-      console.log('=========== here ALSO!!', req.session.redirectUrl);
-      console.log('=========== here ALSO!!', req.session.redirectUrl);
+      // console.log('=========== here ALSO!!', req.session.redirectUrl);
+      // console.log('=========== here ALSO!!', req.session.redirectUrl);
       res.redirect(req.session.returnTo);
 
 

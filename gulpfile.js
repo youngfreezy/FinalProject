@@ -59,6 +59,6 @@ gulp.task('watch', function () {
     'public/app.js'
   ], ['jshint', 'compress']);
 });
-
-gulp.task('default', ['sass', 'watch', 'jshint', 'compress', 'test']);
+//todo: add test back.
+gulp.task('default', ['sass', 'watch', 'jshint', 'compress']);
 gulp.task('build', ['sass', 'compress']);
