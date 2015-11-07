@@ -84,7 +84,7 @@ var db = mongoose.connect(config.dbConnection, {}, function (err) {
 
           req.session.returnTo = lastUrl;
         }
-        console.log(req.session);
+        // console.log(req.session);
       }
       next();
     });
@@ -99,6 +99,7 @@ var db = mongoose.connect(config.dbConnection, {}, function (err) {
     });
     var io = require('socket.io')(server);
     var routes = require('./Server/routes.js')(app, io);
+    var cron = require('./Server/cron.js')();
   }
 });
 
