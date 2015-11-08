@@ -28,7 +28,7 @@ module.exports = {
       if (!user) {
         return res.redirect('/#!/signup');
       }
-      if (req.user) {
+      if (user) {
         console.log("==================== This is the user from routes.js", user);
         res.cookie('user', JSON.stringify(user));
         console.log(req.user);
