@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .factory('Recipes', function ($http, Profile, $rootScope) {
+  .factory('Recipes', function ($http, Profile, $rootScope, $q, RecipeBox) {
     var key = 'efd918c28d5b710d9583ec24fb2bb362';
     var id = '3ee8ed9f';
     // TODO: cache all the api calls.
@@ -43,7 +43,6 @@ angular.module('MyApp')
       //     });
       // },
 
-
       saveDoneRecipe: function (recipe) {
         var currentUser = $rootScope.currentUser;
         return $http.post('/api/users/' + currentUser._id + '/recipes/' + recipe._id + '/done');
@@ -66,13 +65,19 @@ angular.module('MyApp')
       getUserRecipes: function () {
         var currentUser = $rootScope.currentUser;
         if (currentUser) {
-
-
           return $http.get('/api/' + currentUser._id + '/recipes').then(function (response) {
+            var recipes = response.data;
+            RecipeBox.recipeCount = recipes.length;
             //response has a data aray
-            // console.log(response.data);
-            return response.data;
+            return recipes;
           });
+        } else {
+          //handle data here instead of checking in controller. 
+          RecipeBox.recipeCount = 0;
+          var deferred = $q.defer();
+          var promise = deferred.promise.then(function() { return []; });
+          deferred.resolve();
+          return promise;
         }
       },
       getRecipes: function (query) {

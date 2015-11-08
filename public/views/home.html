@@ -34,12 +34,7 @@
                 </h4>
                 </center>
                 <div style="background-color: FDF3E7" class="col-sm-2" ng-repeat="recipe in quickRecipes">
-                    <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
-                    <div class="text-center">
-                        <a class="link" style="text-decoration: underline; color: blue" href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
-                        <br>
-                        <a href="" ng-click="addRecipe(recipe)" style="font-family: Comic Sans MS">Save To Recipe Box</a>
-                    </div>
+                    <recipe value="recipe"></recipe>
                 </div>
             </section>
         </center>
@@ -114,13 +109,9 @@
             <div class="row">
                 <!-- this is from search: -->
                 <div class="col-sm-2" ng-repeat="recipe in recipes">
-                    <img class="img-responsive img-rounded" ng-src="{{recipe.smallImageUrls[0]}}" />
-                    <div class="text-center">
-                        <!-- {# create a new route recipe, and recipe:id #} -->
-                        <a class="link" style="text-decoration: underline; color: blue" href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
-                        <br>
-                        <a href="" ng-click="addRecipe(recipe)">Add To Recipe Box</a>
-                    </div>
+                    <center>
+                    <recipe value="recipe"></recipe>
+                    </center>
                 </div>
             </div>
         </div>

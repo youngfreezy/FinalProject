@@ -10,8 +10,7 @@ var ObjectId = Schema.ObjectId;
 
 var userSchema = new Schema({
   email: {
-    type: String,
-    unique: true
+    type: String
   },
   password: String,
   resetPasswordToken: String,

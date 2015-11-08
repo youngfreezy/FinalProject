@@ -5,8 +5,7 @@ angular.module('MyApp')
     $scope.getCurrentUser = function (id) {
       Profile.getCurrentUser(id).then(function (response) {
         $rootScope.currentUser = response.data;
-        // console.log("GETTTING THE CURRENT USERRRR", response.data);
-        // console.log('lalala', $rootScope.currentUser);
+ 
       }, function (err) {
         console.log('error occured', err);
       });
@@ -18,8 +17,7 @@ angular.module('MyApp')
 
       var id = $rootScope.currentUser._id;
       $scope.getCurrentUser(id);
-      //if the user logs in with facebook, show their facebook picture automatically.  
-      // this will be overwritten if user uploads a picture. 
+
       if ($rootScope.currentUser.facebook && !$rootScope.currentUser.image) {
         $rootScope.currentUser.image = $rootScope.currentUser.facebook.photos;
         $scope.getCurrentUser(id);

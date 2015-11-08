@@ -67,7 +67,7 @@
 
       .when('/add', {
         templateUrl: 'views/add.html',
-        controller: 'MainCtrl'
+        controller: 'AddCtrl'
       })
         .when('/recipe/:id', {
           templateUrl: 'views/recipe.html',

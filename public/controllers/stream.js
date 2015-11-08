@@ -54,10 +54,7 @@ angular.module('MyApp')
 
 
   $scope.deleteComment = function (recipeid, commentid) {
-    //you should only be able to delete your own comment. if $rootScope.currentUser._id === comments[i].author
-    // if($rootScope.currentUser._id === commentAuthorID){
-      //just use ng-if
-    // }
+  
     Recipes.removeCommentFromStreamRecipe(recipeid, commentid).success(function (data) {
       $alert({
           content: 'Comment Deleted!',

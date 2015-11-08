@@ -1,7 +1,7 @@
 angular.module('MyApp')
   .factory('Profile', function ($rootScope, $http) {
     //I have everything stored in $rootScope.currentUser
-    //refactor to pull users from the database, will need that for the stream!
+    
     function getUserJSON() {
       // console.log($rootScope.currentUser);
       if ($rootScope.currentUser && $rootScope.currentUser.facebook) {

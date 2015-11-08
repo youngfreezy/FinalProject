@@ -25,10 +25,7 @@ angular.module('MyApp')
                   } else {
                     $location.path("/#!")
                   }
-                   // console.log(window.history[window.history.length-1]);
-                   // if(window.history){}
-                //if you are asked to sign up, then you signup, then you are asked to login on line 43
-                //once you login
+                
           })
 
 

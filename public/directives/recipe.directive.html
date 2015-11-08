@@ -1,0 +1,9 @@
+<div>
+	<img class="img-responsive img-rounded text-center" ng-src="{{recipe.smallImageUrls[0]}}" align="middle"/>
+	<div class="text-center">
+	    <!-- {# create a new route recipe, and recipe:id #} -->
+	    <a class="link" style="text-decoration: underline; color: blue" href="/#!/recipe/{{recipe.id}}">{{recipe.recipeName}}</a>
+	    <br>
+	    <a href="" ng-click="addRecipe(recipe)">Add To Recipe Box</a>
+	</div>
+</div>

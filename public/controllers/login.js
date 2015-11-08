@@ -8,11 +8,6 @@ angular.module('MyApp')
       });
     };
 
-    // console.log($location.path());
-    // $scope.$on("$routeChangeStart",
-    //   function (event, current, previous, rejection) {
-    //     // console.log(current, previous);
-    //   });
 
     $scope.pageClass = 'fadeZoom';
 
