@@ -1,7 +1,7 @@
 angular.module('MyApp')
   .controller('AddCtrl', function ($scope, $rootScope, $alert, $resource, $cookies, Recipes, RecipeBox) {
-    console.log($scope.recipes);
-    console.log($scope.quickRecipes);
+    // console.log($scope.recipes);
+    // console.log($scope.quickRecipes);
     $scope.addRecipe = function (recipe) {
       console.log('recipe adding', recipe);
       Recipes.save(recipe)

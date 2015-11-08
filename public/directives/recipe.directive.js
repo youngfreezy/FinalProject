@@ -1,6 +1,6 @@
 angular.module('MyApp')
   .directive('recipe', function () {
-    function RecipeCtrl($scope, $rootScope, Recipes, RecipeBox, $alert) {
+    function RecipeCtrl($scope, $rootScope, Recipes, RecipeBox, $alert, $location) {
       $scope.addRecipe = function (recipe) {
         if ($rootScope.currentUser === undefined) {
           $location.path('/login');
