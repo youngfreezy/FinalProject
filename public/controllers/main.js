@@ -63,15 +63,6 @@ angular.module('MyApp')
       }
     };
 
-    $scope.getIndividualRecipe = function (recipeId) {
-      Recipes.getIndividualRecipes(recipeId).then(function (response) {
-        $scope.individualRecipe = response;
-
-        // console.log($rootScope.recipePropsIWant);
-        // console.log($scope.individualRecipe);
-      });
-    };
-
     function getUserRecipes() {
       Recipes.getUserRecipes().then(function (recipes) {
         $scope.userRecipes = recipes;

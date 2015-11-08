@@ -55,7 +55,11 @@ angular.module('MyApp')
       }
     };
 
-
+    // for persisting the "done" state with the checkbox.  The recipes displayed on that page are generated
+    // from recipes which follow the mongoModels/recipe.js schema. these recipes do not have a "done" property.
+    // the recipebox in the User model stores recipes by id, and a done property.  This function adds "dones" to the
+    // recipes (from recipeModel) in this users recipeBox.
+    
     function addDonesToNGModel() {
 
       if ($rootScope.currentUser && $scope.userRecipes) {
