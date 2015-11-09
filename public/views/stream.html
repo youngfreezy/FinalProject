@@ -5,7 +5,7 @@
         <div class="panel-heading">Activity Feed</div>
         <div class="panel-body">
             <div class="row show-list flex-container">
-                <div class="fade-repeat flex-item" ng-repeat="recipe in recipeStreamLimited | orderBy: '-upvotes' ">
+                <div class="fade-repeat flex-item col-sm-12" ng-repeat="recipe in recipeStreamLimited | orderBy: '-upvotes' ">
                     <p>
                         <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)">{{recipe.upvotes}}
                         <img class="img-rounded"ng-src="{{recipe.image}}">
@@ -23,8 +23,8 @@
                         </center>
                         <form class="form-group">
                             <form>
-                                <textarea ng-model="txtcomment" placeholder="Comment "> </textarea>
-                                <button ng-click='saveComment(recipe, txtcomment)'>Post Comment</button>
+                                <textarea ng-model="txtcomment" > </textarea>
+                                <button ng-click='saveComment(recipe, txtcomment)'>Comment</button>
                                 <ul>
                                     <li ng-repeat="comnt in recipe.comments"> {{ comnt.body }}
                                         <span ng-if="currentUser._id == comnt.author" class="glyphicon glyphicon-remove pull-right" ng-click="deleteComment(recipe._id, comnt._id) "></span>
