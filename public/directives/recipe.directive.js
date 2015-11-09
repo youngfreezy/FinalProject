@@ -1,12 +1,13 @@
 angular.module('MyApp')
   .directive('recipe', function () {
     function RecipeCtrl($scope, $rootScope, MainService, RecipeBox, $alert, $location) {
-      
+
       $scope.addRecipe = function (recipe) {
-        if ($rootScope.currentUser === undefined) {
-          $location.path('/login');
-          return;
-        }
+        // taking this out for a better user experience
+        // if ($rootScope.currentUser === undefined) {
+        //   $location.path('/login');
+        //   return;
+        // }
 
         MainService.getIndividualRecipe(recipe.id).then(function (response) {
           saveRecipe(response);

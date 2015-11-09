@@ -4,11 +4,9 @@ angular.module('MyApp')
 
     function getUserJSON() {
       // console.log($rootScope.currentUser);
-      if ($rootScope.currentUser && $rootScope.currentUser.facebook) {
+      
         return $rootScope.currentUser;
-      } else {
-        return $rootScope.currentUser;
-      }
+      
     }
 
     return {

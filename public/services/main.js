@@ -5,8 +5,15 @@ angular.module('MyApp')
     return {
       save: function (recipe) {
         //the recipe is being sent to the database.
-        //sending recipe object as req.body
-        return $http.post('/api/recipebox', {
+        // don't save to database if not logged in.
+        // if(!$rootScope.currentUser){
+        //   var deferred = $q.defer();
+        //   var promise = deferred.promise.then(function() { return []; });
+        //   deferred.resolve();
+        //   return promise;
+        // }
+
+      return $http.post('/api/recipebox', {
           recipe: recipe,
           email: Profile.getEmail()
         });
