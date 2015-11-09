@@ -4944,7 +4944,7 @@ body {
   text-align: center; }
 
 .title-small {
-  font-family: "Montserrat",sans-serif;
+  font-family: "Montserrat", sans-serif;
   margin: 0 0 15px;
   font-size: 17px;
   color: #556; }
@@ -5067,9 +5067,7 @@ em {
   font-weight: bold;
   font-size: 85%;
   text-transform: uppercase;
-  background-color: #f6f6f6;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px; }
+  background-color: #f6f6f6; }
 
 .label, .genres li {
   display: inline-block;
@@ -5259,10 +5257,20 @@ em {
 .badge {
   background-color: red; }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
   display: none !important; }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #007897;
   font-weight: normal; }
 
@@ -5285,3 +5293,26 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 10px;
   padding: 20px;
   background-color: #fff; }
+
+.nav-counter {
+  position: absolute;
+  top: -1px;
+  right: 1px;
+  min-width: 8px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: -11px;
+  padding: 0 6px;
+  font-weight: normal;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+  background: #3b8de2;
+  border: 1px solid #215a96;
+  border-radius: 11px;
+  background-image: -webkit-linear-gradient(top, #e8616c, #dd202f);
+  background-image: -moz-linear-gradient(top, #e8616c, #dd202f);
+  background-image: -o-linear-gradient(top, #e8616c, #dd202f);
+  background-image: linear-gradient(to bottom, #67a7e9, #2580df);
+  -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12); }

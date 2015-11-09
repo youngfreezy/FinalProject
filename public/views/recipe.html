@@ -12,8 +12,13 @@
                 <a href="{{recipe.source.sourceRecipeUrl}}"> Full Recipe </a>
             </div>
             <br>
+            
             <p>Total Preparation Time: {{recipe.totalTime}}</p>
-            <a href="" ng-click="addRecipe(recipe)">Add To Recipe Box</a>
+            <br>
+
+            <button type="button" class="btn btn-primary" ng-click="addRecipe(recipe)">Add To Recipe Box</button>
+            <br>
+            <br>
             <p>Number of Servings: {{recipe.numberOfServings}}</p>
             <p>Ingredients:</p>
             <p>

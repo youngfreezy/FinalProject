@@ -23,8 +23,8 @@
             </span>
             </center>
             <br>
-            <div class="row show-list col-sm-12">
-                <div ng-if="currentUser != undefined" class="fade-repeat col-sm-3" ng-repeat="recipe in userRecipes track by $index">
+            <div class="row show-list flex-container">
+                <div ng-if="currentUser != undefined" class="fade-repeat flex-item" ng-repeat="recipe in userRecipes track by $index">
                     <p>
                         <center>
                             <img class="img-responsive img-rounded" ng-src="{{recipe.image}}">

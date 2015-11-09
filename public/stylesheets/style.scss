@@ -16,7 +16,6 @@ $navbar-default-border: #e3e9ec;
 $navbar-default-brand-color: #333;
 $navbar-default-brand-hover-color: #007897;
 $navbar-default-brand-hover-bg: #333;
-$navbar-default-brand-focus-bg: #007897;
 $btn-success-bg: $brand-success;
 $btn-success-border: darken($btn-success-bg, 3%);
 $btn-primary-bg: $brand-primary;
@@ -38,13 +37,12 @@ $btn-font-weight: bold;
 @import 'bootstrap/bootstrap';
 body {
     font-size: 13.5pt;
-        font-family: sans-serif;
-        background-color: #e3e9dc;
-        font-family: 'Ubuntu Condensed', sans-serif;
-        color: #878e83;
-        letter-spacing: -1px;
+    font-family: sans-serif;
+    background-color: #e3e9dc;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    color: #878e83;
+    letter-spacing: -1px;
 }
-
 
 .section {
     padding: 5px 0;
@@ -52,7 +50,7 @@ body {
 
 .mt40 {
     margin-top: 5px !important;
-    }
+}
 
 .row.col-p30 {
     margin-left: -30px;
@@ -64,7 +62,7 @@ body {
 }
 
 .title-small {
-    font-family: "Montserrat",sans-serif;
+    font-family: "Montserrat", sans-serif;
     margin: 0 0 15px;
     font-size: 17px;
     color: #556;
@@ -111,18 +109,16 @@ em {
     border-bottom: 1px solid #dae2e4;
     margin-bottom: 0px;
     background-color: #fff;
-    border-top-left-radius:30px;
-    border-top-right-radius:30px;
-    border-bottom-right-radius:30px;
-    border-bottom-left-radius:30px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
 }
 
 .media-object {
     max-width: 200px;
     margin-bottom: 10px;
 }
-
-
 
 .alert {
     box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
@@ -205,10 +201,10 @@ em {
     border-color: #cfd9D7;
     border-radius: 2px;
     box-shadow: 0 8px 17px rgba(0, 0, 0, .2);
-    border-top-left-radius:20px;
-    border-top-right-radius:20px;
-    border-bottom-right-radius:20px;
-    border-bottom-left-radius:20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
 .panel-default > .panel-heading {
@@ -218,8 +214,6 @@ em {
     font-size: 85%;
     text-transform: uppercase;
     background-color: #f6f6f6;
-    border-top-left-radius:30px;
-    border-top-right-radius:30px;
 }
 
 .label {
@@ -232,10 +226,12 @@ em {
     transition: 0.1s all;
     -webkit-font-smoothing: antialiased;
 }
+
 .navbar-brand:focus {
     color: #fff;
     background-color: #fff;
 }
+
 .label-default {
     background-color: #e4e7ec;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
@@ -248,23 +244,23 @@ em {
 }
 
 .navbar {
-     background-image: -moz-linear-gradient(top, #008ead, #007b9d);
-        background-image: -webkit-linear-gradient(top, #008ead, #007b9d);
-        background-image: -ms-linear-gradient(top, #008ead, #007b9d);
-        background-image: linear-gradient(top, #008ead, #007b9d);
-        -moz-box-sizing: content-box;
-        -webkit-box-sizing: content-box;
-        -ms-box-sizing: content-box;
-        box-sizing: content-box;
-        position: relative;
-        margin: 2.5% 0 2.5% 0;
-        padding: 40 40px 40 40px;
-        border-radius: 10px;
-        border: solid 1px #006e8b;
-        box-shadow: inset 0px 0px 0px 1px #12a0bf, 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
-        background-color: #007b9d;
-        height: 86px;
-  position: relative;
+    background-image: -moz-linear-gradient(top, #008ead, #007b9d);
+    background-image: -webkit-linear-gradient(top, #008ead, #007b9d);
+    background-image: -ms-linear-gradient(top, #008ead, #007b9d);
+    background-image: linear-gradient(top, #008ead, #007b9d);
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -ms-box-sizing: content-box;
+    box-sizing: content-box;
+    position: relative;
+    margin: 2.5% 0 2.5% 0;
+    padding: 40 40px 40 40px;
+    border-radius: 10px;
+    border: solid 1px #006e8b;
+    box-shadow: inset 0px 0px 0px 1px #12a0bf, 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+    background-color: #007b9d;
+    height: 86px;
+    position: relative;
 }
 
 .navbar-header {
@@ -442,37 +438,72 @@ em {
     float: none;
 }
 
- .badge {
-        background-color: red;
-    }
-
- 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
+.badge {
+    background-color: red;
 }
 
-h1, h2, h3, h4, h5, h6 {
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: #007897;
     font-weight: normal;
 }
+
 .container-fluid {
-  margin-right: auto;
-  margin-left: auto;
-  padding-top: 70px;
-background-color: #e3e9dc;}
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 70px;
+    background-color: #e3e9dc;
+}
+
 .completed {
     text-decoration: line-through;
 }
 
 #banner {
-                -moz-box-sizing: content-box;
-                -webkit-box-sizing: content-box;
-                -ms-box-sizing: content-box;
-                box-sizing: content-box;
-                position: relative;
-                box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
-                border-radius: 10px;
-                padding: 20px;
-                background-color: #fff;
-                
-            }
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -ms-box-sizing: content-box;
+    box-sizing: content-box;
+    position: relative;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.nav-counter {
+    position: absolute;
+    top: -1px;
+    right: 1px;
+    min-width: 8px;
+    height: 20px;
+    line-height: 20px;
+    margin-top: -11px;
+    padding: 0 6px;
+    font-weight: normal;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+    background: #3b8de2;
+    border: 1px solid #215a96;
+    border-radius: 11px;
+    background-image: -webkit-linear-gradient(top, #e8616c, #dd202f);
+    background-image: -moz-linear-gradient(top, #e8616c, #dd202f);
+    background-image: -o-linear-gradient(top, #e8616c, #dd202f);
+    background-image: linear-gradient(to bottom, #67a7e9, #2580df);
+    -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+    box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+}
