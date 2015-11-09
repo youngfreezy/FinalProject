@@ -3399,7 +3399,7 @@ input[type="button"].btn-block {
   .navbar-default .navbar-brand {
     color: #333; }
     .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
-      color: #ffe939;
+      color: #007897;
       background-color: #333; }
   .navbar-default .navbar-text {
     color: #777; }
@@ -5078,6 +5078,10 @@ em {
   font-size: 15px;
   transition: 0.1s all;
   -webkit-font-smoothing: antialiased; }
+
+.navbar-brand:focus {
+  color: #fff;
+  background-color: #fff; }
 
 .label-default, .genres li {
   background-color: #e4e7ec;
