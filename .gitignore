@@ -25,7 +25,10 @@ build/Release
 Project/node_modules
 node_modules/
 
-.idea
+
 #config variables
 uploads
 public/uploads
+.idea
+.env
+.env.local
