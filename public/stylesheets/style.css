@@ -5067,7 +5067,9 @@ em {
   font-weight: bold;
   font-size: 85%;
   text-transform: uppercase;
-  background-color: #f6f6f6; }
+  background-color: #f6f6f6;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px; }
 
 .label, .genres li {
   display: inline-block;

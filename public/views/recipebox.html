@@ -1,5 +1,5 @@
-<div class="container" style="background-color:#7E8F7C">
-    <div class="panel panel-default">
+<div class="container" style="padding-top: 50px">
+    <div class="panel panel-default row col-sm-12">
         <div class="panel-heading">Your Recipes
             <div ng-show="currentUser == undefined">
                 <center>
@@ -13,7 +13,7 @@
                 </button>
             </div>
         </div>
-        <div class="panel-body">
+        <div class="panel-body row col-sm-12" >
             <center>
                 <button class="btn btn-primary btn-lg" ng-click="setUsertoSubscribe()">Sign Up for Reminders</button>
                 <br>
@@ -23,28 +23,16 @@
             </span>
             </center>
             <br>
-            <div class="row show-list">
-                <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
-                    <!-- <pre>{{$root.currentUser.recipeBox | json }}</pre>
-                    <pre>
-                        {{currentUser || json}}
-                    </pre> -->
+            <div class="row show-list col-sm-12">
+                <div ng-if="currentUser != undefined" class="fade-repeat col-sm-3" ng-repeat="recipe in userRecipes track by $index">
                     <p>
                         <center>
                             <img class="img-responsive img-rounded" ng-src="{{recipe.image}}">
-                            <!-- <pre>
-                                {{recipe || json}}
-                            </pre> -->
+                            
                             <input ng-model="recipe.done" type="checkbox" ng-checked="recipe.done" ng-click="toggleDoneRecipe(recipe.done, recipe)" /> Recipe Complete
-                            <!-- <pre>
-                                
-                            {{recipe.done || json}}
-                            </pre> -->
+                            
                             <br>
-                            <!-- <pre>
-                                {{recipe || json }}
-                                    
-                            </pre> -->
+                            
                             <div ng-class="{ 'completed' : recipe.done }">
                                 <a class="link" style="text-decoration: underline; color: blue" href="{{recipe.recipeUrl}}">{{recipe.name}}</a>
                                 <span>
@@ -60,48 +48,8 @@
             </div>
             <sn-addthis-toolbox data-url="http://quickrecipesapp.herokuapp.com/#!/add" data-title="Recipe Box" data-description="foo bar">
             </sn-addthis-toolbox>
-            <!-- Go to www.addthis.com/dashboard to customize your tools -->
+            
             <div class="addthis_sharing_toolbox"></div>
         </div>
     </div>
-    <!--TODO: Complete Recipes Box <div class="panel panel-default">
-        <div class="panel-heading">Completed Recipes
-            <div ng-show="currentUser == undefined">
-                <center>
-                    <a href="/#!/login/" style="text-decoration: underline">
-                        Login</a> to add recipes!
-                </center>
-            </div>
-            <div ng-show="currentUser != undefined" class="pull-right">
-                <button type="submit" ng-click="deleteAllUserRecipes()">
-                        Clear Recipe Box
-                    </button>
-            </div>
-        </div> -->
-    <!-- <div class="panel-body">
-            <div class="row show-list">
-         -->
-    <!-- <pre>{{currentUser | json }}</pre> -->
-    <!--  <div ng-if="currentUser != undefined" class="fade-repeat col-xs-4 col-md-3" ng-repeat="recipe in userRecipes track by $index">
-                    <p>
-                        <center>
-                        <img class="img-responsive img-rounded" ng-src="{{recipe.image}}">
-                        <input type="checkbox" ng-model="recipeDone" ng-change="saveDoneRecipe(recipeDone, recipe)"> Recipe Complete
-                        <br>
-                        <span>
-                        {{recipe.name}}
-                        </span>
-                        <span>
-                            <br>
-                        Servings: {{recipe.numServings}}<br>
-                        <a href="{{recipe.recipeUrl}}" target="_blank">Recipe Link</a><br>
-                        <span class="glyphicon glyphicon-remove" ng-click="deleteRecipe(recipe)"></span>
-                        </span>
-                        </center>
-                    </p>
-                </div>
-            </div>
-            <div class="addthis_native_toolbox"></div>
-        </div>
-    </div> -->
 </div>
