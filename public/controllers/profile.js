@@ -1,11 +1,11 @@
 angular.module('MyApp')
   .controller('ProfileCtrl', function ($scope, $http, $rootScope, Profile, $cookies) {
-     
+
 
     $scope.getCurrentUser = function (id) {
       Profile.getCurrentUser(id).then(function (response) {
         $rootScope.currentUser = response.data;
- 
+
       }, function (err) {
         console.log('error occured', err);
       });
@@ -40,14 +40,14 @@ angular.module('MyApp')
       });
       // console.log(elm.files);
       $http.post(endpoint, fd, {
-//Angular’s default transformRequest function will try to serialize our FormData object, so we override it with 
-//the identity function to leave the data intact
+        //Angular’s default transformRequest function will try to serialize our FormData object, so we override it with 
+        //the identity function to leave the data intact
         transformRequest: angular.identity,
         // Angular’s default Content-Type header for POST and PUT requests is application/json.
         // By setting ‘Content-Type’: undefined, the browser sets the Content-Type to multipart/form-data for us. 
         headers: {
           'Content-Type': undefined
-          
+
         }
 
       }).success(function (data) {

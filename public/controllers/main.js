@@ -1,7 +1,7 @@
 angular.module('MyApp')
-  .controller('MainCtrl', function ($scope, Recipes, $alert, $http, $location, RecipeBox, $rootScope, $route, Profile, $cookies) {
-    window.Recipes = Recipes;
-    // console.log($scope.recipe);
+  .controller('MainCtrl', function ($scope, MainService, $alert, $http, $location, RecipeBox, $rootScope, $route, Profile, $cookies) {
+    // window.Recipes = Recipes;
+    // this is the main controller. associated main service is recipes.js
 
     $scope.genres = ['Mexican', 'Italian', 'Chinese', 'Korean',
       'American', 'Comfort Food', 'New American', 'Dessert', 'Fruit',
@@ -11,7 +11,7 @@ angular.module('MyApp')
 
     $scope.allergies = ["Peanut-Free", "Wheat-Free", "Seafood-Free", "Dairy-Free", "Gluten-Free", "Egg-Free", "Treenut-Free"];
     $scope.dietaryRestrictions = ["Vegan", "Vegetarian", "Pescatarian", "Low Carbs", "Low Sugar"];
-   
+
     var randGenre = $scope.genres[Math.floor(Math.random() * $scope.genres.length)];
     getRandomGenre = function () {
       var randGenre = $scope.genres[Math.floor(Math.random() * $scope.genres.length)];
@@ -22,9 +22,9 @@ angular.module('MyApp')
 
 
     $scope.getGenreRecipes = function (genre) {
-      Recipes.getRecipesByGenre(genre).then(function (response) {
+      MainService.getRecipesByGenre(genre).then(function (response) {
         $scope.recipes = response;
-        
+
       });
     };
 
@@ -32,7 +32,7 @@ angular.module('MyApp')
     $scope.getAllergyRecipes = function (allergy) {
       console.log($scope.allergy);
 
-      Recipes.getRecipesByRestrictions(allergy).then(function (response) {
+      MainService.getRecipesByRestrictions(allergy).then(function (response) {
         $scope.recipes = response;
         console.log(response);
       });
@@ -40,7 +40,7 @@ angular.module('MyApp')
 
     $scope.searchRecipes = function () {
 
-      Recipes.getRecipes($scope.query.name).then(function (response) {
+      MainService.getRecipes($scope.query.name).then(function (response) {
         $scope.recipes = response;
         // console.log($scope.recipes);
       });
@@ -50,7 +50,7 @@ angular.module('MyApp')
 
 
     $scope.getGenreRecipes = function (genre) {
-      Recipes.getRecipesByGenre(genre).then(function (response) {
+      MainService.getRecipesByGenre(genre).then(function (response) {
         $scope.recipes = response;
         // console.log(response);
       });
@@ -64,7 +64,7 @@ angular.module('MyApp')
     };
 
     function getUserRecipes() {
-      Recipes.getUserRecipes().then(function (recipes) {
+      MainService.getUserRecipes().then(function (recipes) {
         $scope.userRecipes = recipes;
       });
     }
@@ -75,7 +75,7 @@ angular.module('MyApp')
 
 
     function init(randGenre) {
-      Recipes.getQuickRecipes(randGenre).then(function (response) {
+      MainService.getQuickRecipes(randGenre).then(function (response) {
 
         $scope.quickRecipes = response;
         // console.log('quick recipes',$scope.quickRecipes);

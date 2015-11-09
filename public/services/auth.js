@@ -6,39 +6,39 @@ angular.module('MyApp')
         // console.log('loggin in');
         return $http.post('/api/login', user)
           .success(function (data) {
-            
+
             $cookies.user = JSON.stringify(data);
             $rootScope.currentUser = data;
-          
-          $rootScope.$broadcast("getUserRecipes");
-          
 
-              $alert({
+            $rootScope.$broadcast("getUserRecipes");
+
+
+            $alert({
               title: 'Cheers!',
               content: 'You have successfully logged in.',
               animation: 'fadeZoomFadeDown',
               type: 'material',
               duration: 3
             });
-                  if($rootScope.previousPage){
-                    $location.path($rootScope.previousPage);
-                  } else {
-                    $location.path("/#!")
-                  }
-                
+            if ($rootScope.previousPage) {
+              $location.path($rootScope.previousPage);
+            } else {
+              $location.path("/#!");
+            }
+
           })
 
 
-          .error(function () {
-            delete $window.localStorage.token;
-            $alert({
-              title: 'Error!',
-              content: 'Invalid username or password.',
-              animation: 'fadeZoomFadeDown',
-              type: 'material',
-              duration: 3
-            });
+        .error(function () {
+          delete $window.localStorage.token;
+          $alert({
+            title: 'Error!',
+            content: 'Invalid username or password.',
+            animation: 'fadeZoomFadeDown',
+            type: 'material',
+            duration: 3
           });
+        });
       },
       signup: function (user) {
         return $http.post('/api/signup', user)
@@ -67,7 +67,7 @@ angular.module('MyApp')
         delete $cookies.user;
         $rootScope.currentUser = null;
         RecipeBox.recipeCount = 0;
-  
+
         $alert({
           content: 'You have been logged out.',
           animation: 'fadeZoomFadeDown',

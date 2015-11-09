@@ -1,10 +1,10 @@
 angular.module('MyApp')
-  .controller('RecipeCtrl', function ($scope, $routeParams, Recipes) {
-   
+   //for individual recipes
+  .controller('RecipeCtrl', function ($scope, $routeParams, MainService) {
     $scope.recipe = {};
    
    
-      Recipes.getIndividualRecipe($routeParams.id).then(function (response) {
+      MainService.getIndividualRecipe($routeParams.id).then(function (response) {
         $scope.recipe = response;
         // console.log(response);
       });

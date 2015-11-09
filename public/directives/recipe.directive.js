@@ -1,13 +1,14 @@
 angular.module('MyApp')
   .directive('recipe', function () {
-    function RecipeCtrl($scope, $rootScope, Recipes, RecipeBox, $alert, $location) {
+    function RecipeCtrl($scope, $rootScope, MainService, RecipeBox, $alert, $location) {
+      
       $scope.addRecipe = function (recipe) {
         if ($rootScope.currentUser === undefined) {
           $location.path('/login');
           return;
         }
 
-        Recipes.getIndividualRecipe(recipe.id).then(function (response) {
+        MainService.getIndividualRecipe(recipe.id).then(function (response) {
           saveRecipe(response);
           RecipeBox.recipeCount++;
         });
@@ -15,14 +16,10 @@ angular.module('MyApp')
 
 
       function saveRecipe(response) {
-        Recipes.save(response)
+        MainService.save(response)
           .then(function (response) {
 
             $scope.$broadcast('getUserRecipes');
-            //   //ideal case would be recipeBox would live in the service
-            //   RecipeBox.recipeCount = $scope.userRecipes.length;
-            // }
-            // console.log(response);
             $alert({
               content: response.data.recipeBox ? 'recipe has been added.' : 'This recipe is already in your recipe box',
               animation: 'fadeZoomFadeDown',

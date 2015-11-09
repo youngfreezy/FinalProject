@@ -65,9 +65,9 @@
           controller: 'ProfileCtrl'
         })
 
-      .when('/add', {
-        templateUrl: 'views/add.html',
-        controller: 'AddCtrl'
+      .when('/recipebox', {
+        templateUrl: 'views/recipebox.html',
+        controller: 'RecipeBoxCtrl'
       })
         .when('/recipe/:id', {
           templateUrl: 'views/recipe.html',

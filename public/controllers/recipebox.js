@@ -1,7 +1,7 @@
 angular.module('MyApp')
-  .controller('AddCtrl', function ($scope, $rootScope, $alert, $resource, $cookies, Recipes, RecipeBox) {
+  .controller('RecipeBoxCtrl', function ($scope, $rootScope, $alert, $resource, $cookies, MainService, RecipeBox) {
     $scope.deleteRecipe = function (recipe) {
-      Recipes.deleteRecipe(recipe).then(function () {
+      RecipeBox.deleteRecipe(recipe).then(function () {
 
         var recipes = getUserRecipes();
 
@@ -15,8 +15,8 @@ angular.module('MyApp')
       });
     };
 
-        $scope.deleteAllUserRecipes = function () {
-      Recipes.deleteAllRecipes().then(function (response) {
+    $scope.deleteAllUserRecipes = function () {
+      RecipeBox.deleteAllRecipes().then(function (response) {
         // RecipeBox.recipeCount = 0;
         // $scope.userRecipes = null;
         console.log(response);
@@ -24,7 +24,7 @@ angular.module('MyApp')
         $rootScope.currentUser.recipeBox = [];
         RecipeBox.recipeCount = 0;
 
-       
+
 
       }, function (err) {
         console.log("error occured when deleting", err);
@@ -42,7 +42,7 @@ angular.module('MyApp')
       } else {
 
 
-        Recipes.saveUserSubscription($rootScope.currentUser._id).then(function (response) {
+        RecipeBox.saveUserSubscription($rootScope.currentUser._id).then(function (response) {
           $rootScope.currentUser = response.data;
 
           $alert({
@@ -59,7 +59,7 @@ angular.module('MyApp')
     // from recipes which follow the mongoModels/recipe.js schema. these recipes do not have a "done" property.
     // the recipebox in the User model stores recipes by id, and a done property.  This function adds "dones" to the
     // recipes (from recipeModel) in this users recipeBox.
-    
+
     function addDonesToNGModel() {
 
       if ($rootScope.currentUser && $scope.userRecipes) {
@@ -84,7 +84,7 @@ angular.module('MyApp')
     $scope.toggleDoneRecipe = function (value, recipe) {
 
       if (!value) {
-        Recipes.saveDoneRecipe(recipe).then(function (response) {
+        RecipeBox.saveDoneRecipe(recipe).then(function (response) {
 
           $rootScope.currentUser = response.data;
           $cookies.user = JSON.stringify(response.data);
@@ -98,11 +98,11 @@ angular.module('MyApp')
       if (value) {
 
 
-        Recipes.saveUnDoneRecipe(recipe).then(function (response) {
-          
- 
+        RecipeBox.saveUnDoneRecipe(recipe).then(function (response) {
+
+
           $rootScope.currentUser = response.data;
-    
+
           $cookies.user = JSON.stringify(response.data);
 
         }, function (err) {
@@ -111,14 +111,14 @@ angular.module('MyApp')
       }
     };
 
-    function getUserRecipes () {
-      Recipes.getUserRecipes().then(function (recipes) {
+    function getUserRecipes() {
+      MainService.getUserRecipes().then(function (recipes) {
         $scope.userRecipes = recipes;
         addDonesToNGModel();
       });
     }
 
-    function init () {
+    function init() {
       getUserRecipes();
     }
 

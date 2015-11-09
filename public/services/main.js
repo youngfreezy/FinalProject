@@ -1,8 +1,7 @@
 angular.module('MyApp')
-  .factory('Recipes', function ($http, Profile, $rootScope, $q, RecipeBox) {
-    var key = 'efd918c28d5b710d9583ec24fb2bb362';
-    var id = '3ee8ed9f';
+  .factory('MainService', function ($http, Profile, $rootScope, $q, RecipeBox) {
     // TODO: cache all the api calls.
+    // this is the service corresponding to the main.js controller.
     return {
       save: function (recipe) {
         //the recipe is being sent to the database.
@@ -13,55 +12,7 @@ angular.module('MyApp')
         });
       },
 
-
-      SaveRecipeInStreamWithUpvotes: function (recipe) {
-        return $http.put('/api/stream/' + recipe._id + '/upvote').success(function (data) {
-          recipe.upvotes += 1;
-        });
-
-      },
-      removeCommentFromStreamRecipe: function (recipeId, commentId) {
-        return $http.delete('/api/stream/' + recipeId + '/comments/' + commentId);
-        //resolve promise in controller where you can handle error. you can also
-        //resolve errors with divs in the controller. 
-      },
-
-      saveUserSubscription: function (userId) {
-        console.log("Howdy");
-        return $http.put('/api/' + userId + '/subscription');
-      },
-
-
-      SaveRecipeInStreamWithComments: function (id, comment) {
-        return $http.post('/api/stream/' + id + '/comments', comment);
-      },
-      // TODO:
-      // upVoteStreamRecipeComments: function (recipe, comment) {
-      //   return $http.put('/api/stream/' + recipe._id + '/comments/' + comment._id + '/upvote')
-      //     .success(function (data) {
-      //       comment.upvotes += 1;
-      //     });
-      // },
-
-      saveDoneRecipe: function (recipe) {
-        var currentUser = $rootScope.currentUser;
-        return $http.post('/api/users/' + currentUser._id + '/recipes/' + recipe._id + '/done');
-      },
-      saveUnDoneRecipe: function (recipe) {
-        var currentUser = $rootScope.currentUser;
-        return $http.post('/api/users/' + currentUser._id + '/recipes/' + recipe._id + '/undone');
-      },
-
-      deleteRecipe: function (recipe) {
-        var currentUser = $rootScope.currentUser;
-        return $http.delete('/api/users/' + currentUser._id + '/recipes/' + recipe._id);
-      },
-
-      deleteAllRecipes: function () {
-        // console.log($rootScope.currentUser);
-        var currentUser = $rootScope.currentUser;
-        return $http.delete('/api/users/' + currentUser._id + '/recipes/');
-      },
+     
       getUserRecipes: function () {
         var currentUser = $rootScope.currentUser;
         if (currentUser) {

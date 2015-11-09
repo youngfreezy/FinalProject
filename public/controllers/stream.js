@@ -1,6 +1,6 @@
 angular.module('MyApp')
 //we have the Stream/Socket.io service is in vendor/socket.min.js "socketFactory"
-.controller('StreamCtrl', function ($scope, $alert, $rootScope, Recipes, ioService) {
+.controller('StreamCtrl', function ($scope, $alert, $rootScope, Stream, ioService) {
   $rootScope.data = {};
   $rootScope.data.count = 0;
   $scope.lasthourRecipes = [];
@@ -11,7 +11,7 @@ angular.module('MyApp')
   // $scope.lasthour.upvotes = 0;
   $scope.incrementUpvotes = function (recipe) {
     // recipe.upvotes += 1;
-    Recipes.SaveRecipeInStreamWithUpvotes(recipe);
+    Stream.SaveRecipeInStreamWithUpvotes(recipe);
   };
 
 
@@ -26,7 +26,7 @@ angular.module('MyApp')
         });
     }
     else if (comment !== '') {
-      Recipes.SaveRecipeInStreamWithComments(recipe._id, {
+      Stream.SaveRecipeInStreamWithComments(recipe._id, {
         body: comment,
         author: $rootScope.currentUser._id
       }).success(function (comment) {
@@ -55,7 +55,7 @@ angular.module('MyApp')
 
   $scope.deleteComment = function (recipeid, commentid) {
   
-    Recipes.removeCommentFromStreamRecipe(recipeid, commentid).success(function (data) {
+    Stream.removeCommentFromStreamRecipe(recipeid, commentid).success(function (data) {
       $alert({
           content: 'Comment Deleted!',
           animation: 'fadeZoomFadeDown',
