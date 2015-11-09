@@ -19,7 +19,7 @@ gulp.task('sass', function () {
   gulp.src('public/stylesheets/style.scss')
     .pipe(plumber())
     .pipe(sass())
-    .pipe(autoPrefixCss())
+    // .pipe(autoPrefixCss())
     .pipe(gulpif(production, cssmin()))
     .pipe(gulp.dest('public/stylesheets'));
 });
