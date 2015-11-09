@@ -14,8 +14,6 @@ $navbar-default-link-color: #fff;
 $navbar-default-bg: #fff;
 $navbar-default-border: #e3e9ec;
 $navbar-default-brand-color: #333;
-$navbar-default-brand-hover-color: #007897;
-$navbar-default-brand-hover-bg: #333;
 $btn-success-bg: $brand-success;
 $btn-success-border: darken($btn-success-bg, 3%);
 $btn-primary-bg: $brand-primary;
@@ -226,12 +224,24 @@ em {
     transition: 0.1s all;
     -webkit-font-smoothing: antialiased;
 }
-
-.navbar-brand:focus {
-    color: #fff;
-    background-color: #fff;
+a:focus{
+     border-top-left-radius: 10px;
+     border-top-right-radius: 10px;
+     border-bottom-left-radius: 10px;
+     border-bottom-right-radius: 10px;
 }
-
+.navbar-default .navbar-nav .active a {
+    border-top-left-radius: 10px;
+     border-top-right-radius: 10px;
+     border-bottom-left-radius: 10px;
+     border-bottom-right-radius: 10px;
+}
+.navbar-nav .active a:focus{
+     border-top-left-radius: 10px;
+     border-top-right-radius: 10px;
+     border-bottom-left-radius: 10px;
+     border-bottom-right-radius: 10px;
+}
 .label-default {
     background-color: #e4e7ec;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
