@@ -5125,8 +5125,9 @@ em {
   .navbar-nav > li {
     float: left; }
     .navbar-nav > li > a {
-      padding: 15px;
-      color: #fff; }
+      padding: 12px;
+      color: #fff;
+      font-size: 13.5pt; }
 
 .alert-material {
   font-family: 'Roboto', sans-serif;
