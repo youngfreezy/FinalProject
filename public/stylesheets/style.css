@@ -5113,7 +5113,8 @@ em {
 
 .navbar-header {
   float: left;
-  padding-left: 15px; }
+  padding-left: 11px;
+  font-size: 13pt; }
 
 .navbar-brand {
   transition: 0.25s all;
