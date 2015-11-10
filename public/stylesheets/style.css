@@ -5064,13 +5064,18 @@ em {
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px; }
 
+.panel-default {
+  margin: 0 auto; }
+
 .panel-default > .panel-heading {
   color: #444;
   border-color: #cfd9db;
   font-weight: bold;
   font-size: 85%;
   text-transform: uppercase;
-  background-color: #f6f6f6; }
+  background-color: #f6f6f6;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px; }
 
 .label, .genres li {
   display: inline-block;
