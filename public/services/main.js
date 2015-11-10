@@ -4,22 +4,13 @@ angular.module('MyApp')
     // this is the service corresponding to the main.js controller.
     return {
       save: function (recipe) {
-        //the recipe is being sent to the database.
-        // don't save to database if not logged in.
-        // if(!$rootScope.currentUser){
-        //   var deferred = $q.defer();
-        //   var promise = deferred.promise.then(function() { return []; });
-        //   deferred.resolve();
-        //   return promise;
-        // }
-
-      return $http.post('/api/recipebox', {
+        return $http.post('/api/recipebox', {
           recipe: recipe,
           email: Profile.getEmail()
-        });
+        })
       },
 
-     
+
       getUserRecipes: function () {
         var currentUser = $rootScope.currentUser;
         if (currentUser) {
@@ -33,7 +24,9 @@ angular.module('MyApp')
           //handle data here instead of checking in controller. 
           RecipeBox.recipeCount = 0;
           var deferred = $q.defer();
-          var promise = deferred.promise.then(function() { return []; });
+          var promise = deferred.promise.then(function () {
+            return [];
+          });
           deferred.resolve();
           return promise;
         }
@@ -48,14 +41,14 @@ angular.module('MyApp')
         return $http.get('/api/yummly_recipes/genre?q=' + genre).then(function (response) {
           return response.data.matches;
         });
-      
+
       },
 
       getRecipesByRestrictions: function (allergy) {
         return $http.get('/api/yummly_recipes/allergy?q=' + allergy).then(function (response) {
           return response.data.matches;
         });
-     
+
       },
 
 
@@ -64,7 +57,7 @@ angular.module('MyApp')
         return $http.get('/api/yummly_recipes/initRecipes?q=' + randGenre).then(function (response) {
           return response.data.matches;
         });
-      
+
       },
       // this is what the url needs to look like:
       // http://api.yummly.com/v1/api/recipe/French-Onion-Soup-The-Pioneer-Woman-Cooks-_-Ree-Drummond-41364?_app_id=3ee8ed9f&_app_key=efd918c28d5b710d9583ec24fb2bb362
@@ -72,7 +65,7 @@ angular.module('MyApp')
         return $http.get('/api/yummly_recipes/recipe?recipeid=' + recipeId).then(function (response) {
           return response.data;
         });
-       
+
       }
     };
   });
