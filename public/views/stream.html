@@ -4,6 +4,11 @@
     <div class="panel panel-default">
         <div class="panel-heading">Activity Feed</div>
         <div class="panel-body">
+            <h4>
+                <center>
+                Recipes Added in the Last Hour:
+                </center>
+            </h4>
             <div class="row show-list flex-container">
                 <div class="fade-repeat flex-item col-sm-12" ng-repeat="recipe in recipeStreamLimited | orderBy: '-upvotes' ">
                     <p>
