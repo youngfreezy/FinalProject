@@ -5124,7 +5124,11 @@ a:focus {
   background-color: #007b9d;
   height: 50px;
   position: relative;
-  margin-right: 25px; }
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 30px; }
 
 .navbar-header {
   float: left;
