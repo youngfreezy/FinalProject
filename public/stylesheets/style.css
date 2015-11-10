@@ -5123,7 +5123,8 @@ a:focus {
   box-shadow: inset 0px 0px 0px 1px #12a0bf, 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
   background-color: #007b9d;
   height: 50px;
-  position: relative; }
+  position: relative;
+  margin-right: 20px; }
 
 .navbar-header {
   float: left;
