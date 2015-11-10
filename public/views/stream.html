@@ -4,13 +4,18 @@
     <div class="panel panel-default">
         <div class="panel-heading">Activity Feed</div>
         <div class="panel-body">
-            <h4>
+            <h5>
                 <center>
                 Recipes Added in the Last Hour:
                 </center>
-            </h4>
+            </h5>
             <div class="row show-list flex-container">
                 <div class="fade-repeat flex-item col-sm-12" ng-repeat="recipe in recipeStreamLimited | orderBy: '-upvotes' ">
+                    <div ng-if="recipeStreamLimited.length===0">
+                        <h4>
+                        No Recipes For Now -- Check Back Soon!
+                        </h4>
+                    </div>
                     <p>
                         <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)">{{recipe.upvotes}}
                         <img class="img-rounded"ng-src="{{recipe.image}}">
