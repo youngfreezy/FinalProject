@@ -7,22 +7,21 @@
             <h5>
                 <center>
                 Recipes Added in the Last Hour:
-                </center>
-            </h5>
-            <div class="row show-list flex-container">
-                <div class="fade-repeat flex-item col-sm-12" ng-repeat="recipe in recipeStreamLimited | orderBy: '-upvotes' ">
-                    <div ng-if="recipeStreamLimited.length===0">
+                <div ng-if="recipeStreamLimited.length===0">
                         <h4>
                         No Recipes For Now -- Check Back Soon!
                         </h4>
                     </div>
+                </center>
+            </h5>
+            <div class="row show-list flex-container">
+                <div class="fade-repeat flex-item col-sm-12" ng-repeat="recipe in recipeStreamLimited | orderBy: '-upvotes' ">
                     <p>
                         <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)">{{recipe.upvotes}}
                         <img class="img-rounded"ng-src="{{recipe.image}}">
                         </span>
                         <br>
                         <a class="link" style="text-decoration: underline; color: blue" href="{{recipe.recipeUrl}}" target="_blank">{{recipe.name}}</a>
-                        
                         <div>
                             Added by {{recipe.userName}}
                         </div>
@@ -33,7 +32,7 @@
                         </center>
                         <form class="form-group">
                             <form>
-                                <textarea ng-model="txtcomment" > </textarea>
+                                <textarea ng-model="txtcomment"> </textarea>
                                 <button ng-click='saveComment(recipe, txtcomment)'>Comment</button>
                                 <ul>
                                     <li ng-repeat="comnt in recipe.comments"> {{ comnt.body }}
