@@ -14,8 +14,8 @@
                     </div>
                 </center>
             </h5>
-            <div class="row show-list flex-container">
-                <div class="fade-repeat flex-item col-sm-12" ng-repeat="recipe in recipeStreamLimited | orderBy: '-upvotes' ">
+                <div class="row-fluid show-list">
+                <div class="recipe-container col-xs-12 col-sm-4 fade-repeat" ng-repeat="recipe in recipeStreamLimited | orderBy: '-upvotes' ">
                     <p>
                         <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)">{{recipe.upvotes}}
                         <img class="img-rounded"ng-src="{{recipe.image}}">
@@ -28,11 +28,10 @@
                         {{recipe.numServings}}
                     </p>
                     <div id='dv1'>
-                        <center>
-                        </center>
                         <form class="form-group">
                             <form>
                                 <textarea ng-model="txtcomment"> </textarea>
+                                <br>
                                 <button ng-click='saveComment(recipe, txtcomment)'>Comment</button>
                                 <ul>
                                     <li ng-repeat="comnt in recipe.comments"> {{ comnt.body }}
@@ -48,6 +47,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </div>

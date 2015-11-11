@@ -5056,6 +5056,8 @@ em {
   background: #ebeef1; }
 
 .panel {
+  padding-left: 0;
+  padding-right: 0;
   border-color: #cfd9D7;
   border-radius: 2px;
   box-shadow: 0 8px 17px rgba(0, 0, 0, 0.2);
@@ -5076,6 +5078,11 @@ em {
   background-color: #f6f6f6;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px; }
+
+.panel-default > .panel-body,
+.panel-default > .panel-heading {
+  padding-left: 15px;
+  padding-right: 15px; }
 
 .label, .genres li {
   display: inline-block;
@@ -5355,3 +5362,6 @@ h6 {
   padding-left: 0px;
   padding-right: 0px;
   background-color: #fff; }
+
+.recipe-container {
+  height: 340px; }
