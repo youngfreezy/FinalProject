@@ -106,12 +106,12 @@ em {
 }
 
 .jumbotron {
-    margin-top: 20px;
+    margin-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     border-bottom: 1px solid #dae2e4;
     margin-bottom: 0px;
     background-color: #fff;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     border-bottom-left-radius: 30px;
 }
@@ -520,7 +520,6 @@ h6 {
     position: relative;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    padding: 20px;
     background-color: #fff;
     /*center the banner*/
     width: 100%;
@@ -561,4 +560,9 @@ h6 {
 
 .recipe-container {
     height: 340px; 
+}
+
+.navbar-container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
