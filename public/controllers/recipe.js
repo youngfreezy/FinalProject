@@ -1,6 +1,6 @@
 angular.module('MyApp')
 //for individual recipes
-.controller('RecipeCtrl', function ($scope, $routeParams, MainService, $rootScope, RecipeBox, $alert) {
+.controller('RecipeCtrl', function ($scope, $location, $routeParams, MainService, $rootScope, RecipeBox, $alert) {
   $scope.recipe = {};
 
 
