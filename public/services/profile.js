@@ -16,6 +16,7 @@ angular.module('MyApp')
         return $http.get('/profile/' + id);
       },
       getName: function () {
+        
         var name = getUserJSON().name;
 
         if ($rootScope.currentUser && $rootScope.currentUser.facebook) {
@@ -28,6 +29,9 @@ angular.module('MyApp')
       },
 
       getEmail: function () {
+        if(!$rootScope.currentUser){
+          return;
+        }
         return getUserJSON().email;
       }
     };
