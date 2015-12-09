@@ -4,7 +4,7 @@ angular.module('MyApp')
 
     function getUserJSON() {
       // console.log($rootScope.currentUser);
-        if(!rootScope.currentUser){
+        if(!$rootScope.currentUser){
           return;
         }
         return $rootScope.currentUser;
