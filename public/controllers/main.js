@@ -88,7 +88,7 @@ angular.module('MyApp')
 
   })
   .directive('streamPreview', function () {
-
+    // TODO: remove deprecated tags
     return {
       controller: 'StreamCtrl',
       template: [
