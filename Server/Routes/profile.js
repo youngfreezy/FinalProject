@@ -35,6 +35,7 @@ module.exports = {
 
     // console.log(file);
   },
+  //TODO: sign up for AWS and store images there instead of in DB. 
   uploadSave: function (req, res, next) {
 
 
